@@ -1,0 +1,401 @@
+name: juz_amma_kids
+description: "A new Flutter project."
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+# In Windows, build-name is used as the major, minor, and patch parts
+# of the product and file versions while build-number is used as the build suffix.
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.6.2
+
+# Dependencies specify other packages that your package needs in order to work.
+# To automatically upgrade your package dependencies to the latest versions
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# dependencies can be manually updated by changing the version numbers below to
+# the latest version available on pub.dev. To see which dependencies have newer
+# versions available, run `flutter pub outdated`.
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.8
+  shared_preferences: ^2.3.2
+  docx_template: ^0.4.0
+  svg_flutter: ^0.0.1
+  bloc: ^8.1.4
+  flutter_bloc: ^8.1.3
+  equatable: ^2.0.5
+  # soundpool: ^2.4.1
+  lottie: ^3.1.2
+  flutter_svg: ^1.0.3
+  auto_size_text: ^3.0.0
+  # sqflite: ^2.3.3
+  path_provider: ^2.1.4
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+  intl_utils: ^2.8.7
+  percent_indicator: ^4.2.3
+  firebase_core: ^3.6.0
+  firebase_auth: ^5.3.1
+  firebase_storage: ^12.3.4
+  cloud_firestore: ^5.4.4
+  either_dart: ^1.0.0
+  uuid: ^4.5.1
+  encrypt: ^5.0.3
+  crypto: ^3.0.6
+  loading_overlay: ^0.4.2
+  loader_overlay: ^4.0.3
+  # record: ^5.2.0
+  flutter_unity_widget: ^2022.2.1
+  permission_handler: ^11.3.1
+  http: ^1.2.2
+  ffmpeg_kit_flutter: ^6.0.3
+  flutter_launcher_icons: ^0.14.1
+  flutter_sound: ^9.17.4
+  image_picker: ^1.1.2
+  cached_network_image: ^3.4.1
+  audio_session: ^0.1.23
+  drift: ^2.25.0
+  drift_dev: ^2.25.0
+  drift_flutter: ^0.2.4
+  sqlite3_flutter_libs: ^0.5.5 #enable this when build to native
+  sqlite3: ^2.0.0
+  vibration: ^3.1.0
+  logger: ^2.5.0
+  sizer: ^3.0.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^5.0.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+
+  assets:
+    - assets/bg-home-menu.png
+    - assets/icons-ayat.png
+    - assets/voice/
+    - assets/titles/
+    - assets/border/
+    - assets/Al-Nas.docx
+    - assets/repeat.png
+    - assets/next2.png
+    - assets/prev.png
+    - assets/search.png
+    - assets/borderTitle.png
+    - assets/bg_banner.png
+    - assets/icons/
+    - assets/icons/boys/
+    - assets/icons/girls/
+    - assets/frame2.png
+    - assets/animations/star_animation.json
+    - assets/soraname/a17622.svg
+    - assets/quran-db.db
+    - assets/images/
+    - assets/voice/recitation/001/
+    - assets/voice/recitation/058/
+    - assets/voice/recitation/059/
+    - assets/voice/recitation/060/
+    - assets/voice/recitation/061/
+    - assets/voice/recitation/062/
+    - assets/voice/recitation/063/
+    - assets/voice/recitation/064/
+    - assets/voice/recitation/065/
+    - assets/voice/recitation/066/
+    - assets/voice/recitation/067/
+    - assets/voice/recitation/068/
+    - assets/voice/recitation/069/
+    - assets/voice/recitation/070/
+    - assets/voice/recitation/071/
+    - assets/voice/recitation/072/
+    - assets/voice/recitation/073/
+    - assets/voice/recitation/074/
+    - assets/voice/recitation/075/
+    - assets/voice/recitation/076/
+    - assets/voice/recitation/077/
+    - assets/voice/recitation/078/
+    - assets/voice/recitation/079/
+    - assets/voice/recitation/080/
+    - assets/voice/recitation/081/
+    - assets/voice/recitation/082/
+    - assets/voice/recitation/083/
+    - assets/voice/recitation/084/
+    - assets/voice/recitation/085/
+    - assets/voice/recitation/086/
+    - assets/voice/recitation/087/
+    - assets/voice/recitation/088/
+    - assets/voice/recitation/089/
+    - assets/voice/recitation/090/
+    - assets/voice/recitation/091/
+    - assets/voice/recitation/092/
+    - assets/voice/recitation/093/
+    - assets/voice/recitation/094/
+    - assets/voice/recitation/095/
+    - assets/voice/recitation/096/
+    - assets/voice/recitation/097/
+    - assets/voice/recitation/098/
+    - assets/voice/recitation/099/
+    - assets/voice/recitation/100/
+    - assets/voice/recitation/101/
+    - assets/voice/recitation/102/
+    - assets/voice/recitation/103/
+    - assets/voice/recitation/104/
+    - assets/voice/recitation/105/
+    - assets/voice/recitation/106/
+    - assets/voice/recitation/107/
+    - assets/voice/recitation/108/
+    - assets/voice/recitation/109/
+    - assets/voice/recitation/110/
+    - assets/voice/recitation/111/
+    - assets/voice/recitation/112/
+    - assets/voice/recitation/113/
+    - assets/voice/recitation/114/
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/to/resolution-aware-images
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/to/asset-from-package
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+
+  fonts:
+    - family: testfont
+      fonts:
+        - asset: assets/QCF4_Hafs_2D.ttf
+    - family: titleFont
+      fonts:
+        - asset: assets/Al Majeed Quranic Font_shiped.ttf
+    - family: QCF2542
+      fonts:
+        - asset: assets/fonts/QCF2542.ttf
+    - family: QCF2543
+      fonts:
+        - asset: assets/fonts/QCF2543.ttf
+    - family: QCF2544
+      fonts:
+        - asset: assets/fonts/QCF2544.ttf
+    - family: QCF2545
+      fonts:
+        - asset: assets/fonts/QCF2545.ttf
+    - family: QCF2546
+      fonts:
+        - asset: assets/fonts/QCF2546.ttf
+    - family: QCF2547
+      fonts:
+        - asset: assets/fonts/QCF2547.ttf
+    - family: QCF2548
+      fonts:
+        - asset: assets/fonts/QCF2548.ttf
+    - family: QCF2549
+      fonts:
+        - asset: assets/fonts/QCF2549.ttf
+    - family: QCF2550
+      fonts:
+        - asset: assets/fonts/QCF2550.ttf
+    - family: QCF2551
+      fonts:
+        - asset: assets/fonts/QCF2551.ttf
+    - family: QCF2552
+      fonts:
+        - asset: assets/fonts/QCF2552.ttf
+    - family: QCF2553
+      fonts:
+        - asset: assets/fonts/QCF2553.ttf
+    - family: QCF2554
+      fonts:
+        - asset: assets/fonts/QCF2554.ttf
+    - family: QCF2555
+      fonts:
+        - asset: assets/fonts/QCF2555.ttf
+    - family: QCF2556
+      fonts:
+        - asset: assets/fonts/QCF2556.ttf
+    - family: QCF2557
+      fonts:
+        - asset: assets/fonts/QCF2557.ttf
+    - family: QCF2558
+      fonts:
+        - asset: assets/fonts/QCF2558.ttf
+    - family: QCF2559
+      fonts:
+        - asset: assets/fonts/QCF2559.ttf
+    - family: QCF2560
+      fonts:
+        - asset: assets/fonts/QCF2560.ttf
+    - family: QCF2561
+      fonts:
+        - asset: assets/fonts/QCF2561.ttf
+    - family: QCF2562
+      fonts:
+        - asset: assets/fonts/QCF2562.ttf
+    - family: QCF2563
+      fonts:
+        - asset: assets/fonts/QCF2563.ttf
+    - family: QCF2564
+      fonts:
+        - asset: assets/fonts/QCF2564.ttf
+    - family: QCF2565
+      fonts:
+        - asset: assets/fonts/QCF2565.ttf
+    - family: QCF2566
+      fonts:
+        - asset: assets/fonts/QCF2566.ttf
+    - family: QCF2567
+      fonts:
+        - asset: assets/fonts/QCF2567.ttf
+    - family: QCF2568
+      fonts:
+        - asset: assets/fonts/QCF2568.ttf
+    - family: QCF2569
+      fonts:
+        - asset: assets/fonts/QCF2569.ttf
+    - family: QCF2570
+      fonts:
+        - asset: assets/fonts/QCF2570.ttf
+    - family: QCF2571
+      fonts:
+        - asset: assets/fonts/QCF2571.ttf
+    - family: QCF2572
+      fonts:
+        - asset: assets/fonts/QCF2572.ttf
+    - family: QCF2573
+      fonts:
+        - asset: assets/fonts/QCF2573.ttf
+    - family: QCF2574
+      fonts:
+        - asset: assets/fonts/QCF2574.ttf
+    - family: QCF2575
+      fonts:
+        - asset: assets/fonts/QCF2575.ttf
+    - family: QCF2576
+      fonts:
+        - asset: assets/fonts/QCF2576.ttf
+    - family: QCF2577
+      fonts:
+        - asset: assets/fonts/QCF2577.ttf
+    - family: QCF2578
+      fonts:
+        - asset: assets/fonts/QCF2578.ttf
+    - family: QCF2579
+      fonts:
+        - asset: assets/fonts/QCF2579.ttf
+    - family: QCF2580
+      fonts:
+        - asset: assets/fonts/QCF2580.ttf
+    - family: QCF2581
+      fonts:
+        - asset: assets/fonts/QCF2581.ttf
+    - family: QCF2582
+      fonts:
+        - asset: assets/fonts/QCF2582.ttf
+    - family: QCF2583
+      fonts:
+        - asset: assets/fonts/QCF2583.ttf
+    - family: QCF2584
+      fonts:
+        - asset: assets/fonts/QCF2584.ttf
+    - family: QCF2585
+      fonts:
+        - asset: assets/fonts/QCF2585.ttf
+    - family: QCF2586
+      fonts:
+        - asset: assets/fonts/QCF2586.ttf
+    - family: QCF2587
+      fonts:
+        - asset: assets/fonts/QCF2587.ttf
+    - family: QCF2588
+      fonts:
+        - asset: assets/fonts/QCF2588.ttf
+    - family: QCF2589
+      fonts:
+        - asset: assets/fonts/QCF2589.ttf
+    - family: QCF2590
+      fonts:
+        - asset: assets/fonts/QCF2590.ttf
+    - family: QCF2591
+      fonts:
+        - asset: assets/fonts/QCF2591.ttf
+    - family: QCF2592
+      fonts:
+        - asset: assets/fonts/QCF2592.ttf
+    - family: QCF2593
+      fonts:
+        - asset: assets/fonts/QCF2593.ttf
+    - family: QCF2594
+      fonts:
+        - asset: assets/fonts/QCF2594.ttf
+    - family: QCF2595
+      fonts:
+        - asset: assets/fonts/QCF2595.ttf
+    - family: QCF2596
+      fonts:
+        - asset: assets/fonts/QCF2596.ttf
+    - family: QCF2597
+      fonts:
+        - asset: assets/fonts/QCF2597.ttf
+    - family: QCF2598
+      fonts:
+        - asset: assets/fonts/QCF2598.ttf
+    - family: QCF2599
+      fonts:
+        - asset: assets/fonts/QCF2599.ttf
+    - family: QCF2600
+      fonts:
+        - asset: assets/fonts/QCF2600.ttf
+    - family: QCF2601
+      fonts:
+        - asset: assets/fonts/QCF2601.ttf
+    - family: QCF2602
+      fonts:
+        - asset: assets/fonts/QCF2602.ttf
+    - family: QCF2603
+      fonts:
+        - asset: assets/fonts/QCF2603.ttf
+    - family: QCF2604
+      fonts:
+        - asset: assets/fonts/QCF2604.ttf
+    - family: QCF2001
+      fonts:
+        - asset: assets/fonts/QCF2001.ttf
+
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/to/font-from-package
