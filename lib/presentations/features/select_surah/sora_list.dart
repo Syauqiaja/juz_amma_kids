@@ -28,6 +28,7 @@ class _SoraListState extends State<SoraList> {
   late AppLocalizations _localization;
   late SelectSoraCubit _selectSoraCubit;
   late PageController _pageController;
+  final ScrollController _scrollController = ScrollController();
   int _currentPage = 0;
   int? _selectedIndex;
 
@@ -36,6 +37,14 @@ class _SoraListState extends State<SoraList> {
     _selectSoraCubit = BlocProvider.of(context);
     _selectSoraCubit.load();
     _pageController = PageController();
+
+    _scrollController.addListener((){
+      if(_selectedIndex != null){
+        setState(() {
+          _selectedIndex = null;
+        });
+      }
+    });
 
     super.initState();
   }
@@ -84,21 +93,25 @@ class _SoraListState extends State<SoraList> {
                         print("CUrrent page : $_currentPage");
                         if (state is SelectSoraWithData) {
                           return ListView.builder(
+                            controller: _scrollController,
                             scrollDirection: Axis.horizontal,
                             itemCount: state.surahs.length,
                             itemBuilder: (context, index) {
-                              return SoraItem(
-                                surah: state.surahs[index],
-                                isSelected: index == _selectedIndex,
-                                onTap: () {
-                                  setState(() {
-                                    if(_selectedIndex == index){
-                                      _selectedIndex = null;
-                                    }else{
-                                      _selectedIndex = index;
-                                    }
-                                  });
-                                },
+                              return Padding(
+                                padding: index == 0 ? EdgeInsets.only(left: 48) : index == state.surahs.length - 1 ? EdgeInsets.only(right: 48) : EdgeInsets.all(0),
+                                child: SoraItem(
+                                  surah: state.surahs[index],
+                                  isSelected: index == _selectedIndex,
+                                  onTap: () {
+                                    setState(() {
+                                      if(_selectedIndex == index){
+                                        _selectedIndex = null;
+                                      }else{
+                                        _selectedIndex = index;
+                                      }
+                                    });
+                                  },
+                                ),
                               );
                             },
                           );
@@ -107,12 +120,17 @@ class _SoraListState extends State<SoraList> {
                             child: Text(state.message),
                           );
                         } else {
-                          return Center(
-                            child: SizedBox(
-                              height: 32,
-                              width: 32,
-                              child: CircularProgressIndicator(),
-                            ),
+                          return ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: 5,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: index == 0 ? EdgeInsets.only(left: 48) : index == 4 ? EdgeInsets.only(right: 48) : EdgeInsets.all(0),
+                                child: SoraItem(
+                                  surah: null,
+                                ),
+                              );
+                            },
                           );
                         }
                       },
