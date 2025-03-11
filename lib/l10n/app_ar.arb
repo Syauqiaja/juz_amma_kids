@@ -1,0 +1,156 @@
+{
+  "@@locale": "ar",
+
+  "code": "ar",
+  "parent": "ولي الأمر",
+  "boy": "متعلم",
+  "girl": "متعلمة",
+  "choose_identity": "اختر الشخصية",
+  "language": "اللغة",
+  "aya": "آية",
+  "aya_index": "{index} آية",
+  "aya_index_reversed": "آية {index}",
+  "repeatSettings": "تحديد التكرار",
+  "from": "المقطع من",
+  "to": "إلى",
+  "confirm": "موافق",
+  "progress_save": "حفظ التقدم",
+  "number_of_verses": "عدد الآيات",
+  "@aya_index": {
+    "description": "Set aya index",
+    "placeholders": {
+      "index": {
+        "type": "String",
+        "example": "1"
+      }
+    }
+  },"@aya_index_reversed": {
+    "description": "Set aya index",
+    "placeholders": {
+      "index": {
+        "type": "String",
+        "example": "1"
+      }
+    }
+  },
+  "basmalah" : "بسملة",
+  "something_wrong": "شئ مخطئ",
+  "not_logged_in": "لم يدخل الحساب",
+  "guest": "الضيوف",
+  "settings": "لغة الواجهة",
+  "family_group": "المجموعة العائلية",
+  "boy_student": "متعلم",
+  "girl_student": "متعلمة",
+  "guardians": "ولي الأمر",
+  "exit_from_family_group": "تسجيل خروج",
+  "no_family_group_registered": "ما لديت أسرة المنظومة",
+  "create_a_family_group": "أضف مستخدم او قم بإنشاء ملف شخصي جديد",
+  "you_are_not_logged_in_yet": "لم تقم بتسجيل الدخول بعد",
+  "login_first": "ادخل من هنا",
+  "id_username": "اسم المستخدم",
+  "add": "إضافة",
+  "create_family_group": "أضف مستخدم او قم بإنشاء ملف شخصي جديد",
+  "family_name": "إسم المنظومة",
+  "boys": "متعلم",
+  "girls": "متعلمة",
+  "something_wrong_on_family_group": "شئ مخطئ من أسرة المنظومة",
+  "something_wrong_on_auth": "شئ مخطئ من إثبات",
+  "tracking_progress": "متابعة الأبناء",
+  "you_dont_have_any_family_groyp_right_now_add_them_from_settings": "ليس لديك مجموعة عائلية قم بالإضافة أولا",
+  "progress_of_memorization": "تحريب الحفظ",
+  "progress_of_reading_quran": "تحريب القراءة",
+  "you_dont_have_any_students_right_now_add_them_from_settings": "ما لديت الطلاب الآن، زد من النظام الآن",
+  "error_loading_surah_words": "شئ مخطئ من تحريب السورة",
+  "loading": "تحريب",
+  "click_here_to_login": "إضافة حساب هنا",
+  "back": "الرجوع",
+  "login": "دخول",
+  "logout": "تسجيل الخروج",
+  "are_you_sure_want_to_logout": "هل أنت متأكد من أنك تريد تسجيل الخروج؟",
+  "username": "البريد الإلكتروني",
+  "please_enter_your_username": "أدخل البريد الإلكتروني",
+  "password": "كلمة المرور",
+  "please_enter_your_password": "أدخل كلمة المرور",
+  "dont_have_an_account": "ليس لديك حساب؟",
+  "sign_up": "إنشاء ملف شخصي",
+  "create_profile": "إنشاء ملف شخصي",
+  "name": "اسم المستخدم",
+  "please_enter_your_name": "أدخل إسمك",
+  "password_confirmation": "إثبات كلمة المرور",
+  "please_confirm_your_password": "أدخل كلمة مرورك",
+  "password_doesnt_match": "كلمة المرور لم وفق",
+  "register": "تسجيل",
+  "already_have_an_account": "هل لديك حساب؟",
+  "login_now": "دخول",
+  "add_existing_profile": "إضافة مستخدم",
+  "mode_3d": "المسجد الكبير",
+  "mode_normal": "التحفيظ",
+  "mode_list": "مراجعة الحفظ",
+  "title_asset": "assets/icons/title_ar.png",
+  "no_user_saved": "لا يوجد مستخدم",
+  "please_add_or_create_a_profile": "أضف مستخدم او قم بإنشاء ملف شخصي جديد",
+  "profiles": "الملف الشخصي",
+  "page_reverse": "1",
+  "year_index": "الصف {year}",
+  "@year_index": {
+    "description": "Displays the year index in Arabic",
+    "placeholders": {
+      "year": {
+        "type": "String",
+        "example": "١"
+      }
+    }
+  },
+  "ayah_range": "آية {startAya} - {endAya}",
+  "@ayah_range": {
+    "description": "Displays the range of Ayahs in Arabic",
+    "placeholders": {
+      "startAya": {
+        "type": "String",
+        "example": "١"
+      },
+      "endAya": {
+        "type": "String",
+        "example": "١٠"
+      }
+    }
+  },
+  "back_to_home": "العودة إلى الصفحة الرئيسية",
+  "change_language": "تغيير اللغة",
+  "select_year": "اختر السنة",
+  "select": "اختر",
+  "all_year": "كل السنوات",
+  "year_1": "السنة ١",
+  "year_2": "السنة ٢",
+  "year_3": "السنة ٣",
+  "year_4": "السنة ٤",
+  "year_5": "السنة ٥",
+  "year_6": "السنة ٦",
+  "year_7": "السنة ٧",
+  "year_8": "السنة ٨",
+  "year_9": "السنة ٩",
+  "year_10": "السنة ١٠",
+  "year_11": "السنة ١١",
+  "year_12": "السنة ١٢",
+  "remove_person_from_family_group": "إزالة {person} من مجموعة العائلة",
+  "@remove_person_from_family_group": {
+    "placeholders": {
+      "person": {
+        "type": "String",
+        "example": "الطالب ١"
+      }
+    }
+  },
+  "are_you_sure_you_still_can_add_them": "هل أنت متأكد؟ يمكنك إضافتهم إلى مجموعة العائلة لاحقاً",
+  "cancel": "إلغاء",
+  "yes": "نعم",
+  "are_you_sure": "هل أنت متأكد؟",
+  "all_guardian_will_lost_their_access": "سيتم فقدان وصول جميع الأوصياء إلى هذه المجموعة العائلية",
+  "memorization": "مراجعة الحفظ",
+  "reading_quran": "قراءة القرآن",
+  "lesson": "درس",
+  "no_progress_saved": "لم يتم حفظ أي تقدم",
+  "do_a_littile_progress": "قم بإحراز تقدم بسيط باستخدام الفتاة أو الصبي لرؤية تقدمهم",
+  "loading_students": "تحميل الطلاب",
+  "tracking_their_progress": "تتبع تقدمهم"
+}

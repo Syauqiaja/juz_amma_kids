@@ -1,20 +1,16 @@
 import 'package:equatable/equatable.dart';
 
 class MemorizationModel {
-  final int year;
-  final int lesson;
   final int sora;
   final Map<int, bool> memorized;
   final Map<int, bool> read;
 
-  MemorizationModel({required this.year, required this.lesson, required this.memorized, required this.read, required this.sora});
+  MemorizationModel({required this.memorized, required this.read, required this.sora});
 
   // Factory constructor to create an instance from a JSON map
   factory MemorizationModel.fromJson(Map<String, dynamic> json) {
     return MemorizationModel(
-      year: json['year'],
       sora: json['sora'],
-      lesson: json['lesson'],
       memorized: (json['memorized'] as Map<String, dynamic>).map((key, value) => MapEntry(int.parse(key), value as bool)),
       read: (json['read']  as Map<String, dynamic>).map((key, value) => MapEntry(int.parse(key), value as bool)),
     );
@@ -23,8 +19,6 @@ class MemorizationModel {
   // Method to convert an instance to a JSON map
   Map<String, dynamic> toJson() {
     return {
-      'year': year,
-      'lesson': lesson,
       'memorized': memorized,
       'read': read,
       'sora': sora

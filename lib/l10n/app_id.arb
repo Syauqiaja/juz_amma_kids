@@ -1,0 +1,28 @@
+{
+    "@@locale": "id",
+    
+    "code": "id",
+    "parent": "Orang Tua",
+    "boy_student": "Laki-laki",
+    "girl_student": "Perempuan",
+    "choose_identity": "Pilih identitas Anda",
+    "language": "Bahasa",
+    "aya": "Ayat",
+    "aya_index": "Ayat {index}",
+    "repeatSettings": "Pilih Perulangan",
+    "from": "Dari",
+    "to": "Ke",
+    "confirm": "Kirim",
+    "progress_save": "Simpan Kemajuan",
+    "number_of_verses": "Jumlah Ayat",
+    "@aya_index": {
+        "description": "Tetapkan indeks ayat",
+        "placeholders": {
+            "index": {
+                "type": "String",
+                "example": "1"
+            }
+        }
+    }
+  
+}

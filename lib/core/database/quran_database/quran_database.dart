@@ -1,9 +1,9 @@
 import 'package:drift/drift.dart';
 import 'package:flutter/foundation.dart';
-import 'package:juz_amma_kids/database/tables/table_surahs.dart';
+import 'package:juz_amma_kids/core/database/model/surah_local_dto.dart';
+import 'package:juz_amma_kids/core/database/tables/table_surahs.dart';
 
-import '../model/surah_local_dto.dart';
-import './platform/shared.dart' as s;
+import 'platform/shared.dart' as s;
 
 part 'quran_database.g.dart';
 

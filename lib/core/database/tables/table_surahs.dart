@@ -1,6 +1,6 @@
 
 import 'package:drift/drift.dart';
-import 'package:juz_amma_kids/database/model/surah_local_dto.dart';
+import 'package:juz_amma_kids/core/database/model/surah_local_dto.dart';
 
 @UseRowClass(SurahLocalDto)
 class TableSurahs extends Table{

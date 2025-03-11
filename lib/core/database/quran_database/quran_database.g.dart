@@ -128,10 +128,6 @@ class $TableSurahsTable extends TableSurahs
           .read(DriftSqlType.int, data['${effectivePrefix}aya'])!,
       line: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}line'])!,
-      year: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}year'])!,
-      lesson: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}lesson']),
       word: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}word'])!,
     );

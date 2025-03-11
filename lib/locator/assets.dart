@@ -1,3 +1,5 @@
+import 'package:juz_amma_kids/locator/audio_assets.dart';
+
 class Assets {
   static const String _pathImages = "assets/images";
   static const String _pathBoys = "assets/images/boys";
@@ -29,11 +31,12 @@ class Assets {
   static const String speakerOn = "$_pathImages/speaker_on.png";
   static const String starSelected = "$_pathImages/star_selected.png";
   static const String starUnselected = "$_pathImages/star_unselected.png";
+  static const String mountainView = "$_pathImages/mountain_view.png";
   static const String bgBanner = "$_pathBoys/bg_banner.png";
   static const String bgDialog = "$_pathBoys/bg_dialog.png";
   static const String bgMenu = "$_pathBoys/bg_menu.png";
   static const String bgStar = "$_pathBoys/bg_star.png";
-  static const String bg = "$_pathBoys/bg.png";
+  static const String bg = "$_pathBoys/bg.jpg";
   static const String bintang = "$_pathBoys/bintang.png";
   static const String btnClicked = "$_pathBoys/btn_clicked.png";
   static const String btnMenuBoy = "$_pathBoys/btn_menu_boy.png";
@@ -51,8 +54,19 @@ class Assets {
       "$_pathBoys/frame_with_prefix.png";
   static const String icDropdown = "$_pathBoys/ic_dropdown.png";
   static const String menuBoy = "$_pathBoys/menu_boy.png";
-  static const String menuList = "$_pathBoys/menu_list.png";
-  static const String menuNormal = "$_pathBoys/menu_normal.png";
+  static const String modeList = "$_pathBoys/mode_list.png";
+  static const String modeNormal = "$_pathBoys/mode_normal.png";
   static const String pause = "$_pathBoys/pause.png";
   static const String play = "$_pathBoys/play.png";
+  static const String btnGreen = "$_pathImages/btn_green.png";
+  static const String btnGreenClicked = "$_pathImages/btn_green_clicked.png";
+  static const String frame2 = "$_pathImages/frame2.png";
+  static const String borderTitle = "$_pathImages/borderTitle.png";
+  static const String buttonNoShadow = "$_pathImages/button-no-shadow.png";
+  static const String title = "$_pathImages/title.png";
+  static const String starSmall = "$_pathImages/star_small.png";
+  static const String bookSmall = "$_pathImages/book_small.png";
+  
+
+  static AudioAssets audioAssets = AudioAssets();
 }

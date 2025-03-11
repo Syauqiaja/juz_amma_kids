@@ -1,47 +1,36 @@
-import 'package:juz_amma_kids/core/model/surah.dart';
+import 'package:juz_amma_kids/core/model/surah_word.dart';
+import 'package:juz_amma_kids/core/services/sora_names_const.dart';
 
-import '../../database/model/surah_local_dto.dart';
+import '../database/model/surah_local_dto.dart';
 
-class Lesson {
+class Surah {
   final int startAya;
   final int endAya;
   final int soraIndex;
-  final int lesson;
-  final int year;
+  final int totalAya;
+  final String title;
+  final String imageAsset;
   final List<SurahWord> words;
 
-  Lesson({
+  Surah({
     required this.startAya,
     required this.endAya,
     required this.soraIndex,
-    required this.lesson,
-    required this.year,
     required this.words,
+    required this.totalAya,
+    required this.title,
+    required this.imageAsset,
   });
 
-  // Factory constructor to create Lesson from JSON
-  factory Lesson.fromJson(List<Map<String, dynamic>> json) {
-    List<SurahWord> wordsList = json
-        .map((wordJson) => SurahWord.fromJson(wordJson as Map<String, dynamic>))
-        .toList(); // Convert each word JSON to SurahWord
-
-    return Lesson(
-      startAya: json.first['aya'] as int,
-      endAya: json.last['aya'] as int,
-      soraIndex: json.first['sora'] as int,
-      lesson: json.first['lesson'] as int,
-      year: json.first['year'] as int,
-      words: wordsList, // Assign the parsed words list
-    );
-  }
-
-  factory Lesson.fromSurahDto(List<SurahLocalDto> surahDto){
-    return Lesson(
+  factory Surah.fromSurahDto(List<SurahLocalDto> surahDto){
+    final id = surahDto.first.sora;
+    return Surah(
       startAya: surahDto.first.aya,
       endAya: surahDto.last.aya,
-      soraIndex: surahDto.first.sora,
-      lesson: surahDto.first.lesson ?? 0,
-      year: surahDto.first.year,
+      soraIndex: id,
+      totalAya: surahDto.last.aya,
+      title: SoraNamesConstant.latinSoraNames[id - 1],
+      imageAsset: "assets/titles/$id.svg",
       words: surahDto.map((e) => e.toDomain()).toList(),
     );
   }

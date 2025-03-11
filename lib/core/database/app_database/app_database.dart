@@ -1,9 +1,9 @@
 import 'package:drift/drift.dart';
 import 'package:flutter/foundation.dart';
-import 'package:juz_amma_kids/database/tables/table_tracks.dart';
+import 'package:juz_amma_kids/core/database/tables/table_tracks.dart';
 
 import '../model/track_local_dto.dart';
-import './platform/shared.dart' as s;
+import 'platform/shared.dart' as s;
 
 part 'app_database.g.dart';
 

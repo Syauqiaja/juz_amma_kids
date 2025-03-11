@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
-import 'package:juz_amma_kids/core/model/surah.dart';
-import 'package:juz_amma_kids/database/quran_database/quran_database.dart';
+import 'package:juz_amma_kids/core/database/quran_database/quran_database.dart';
+import 'package:juz_amma_kids/core/model/surah_word.dart';
 
 class SurahLocalDto extends Insertable<SurahLocalDto> {
   final int id;
@@ -8,8 +8,6 @@ class SurahLocalDto extends Insertable<SurahLocalDto> {
   final int sora;
   final int aya;
   final int line;
-  final int year;
-  final int? lesson;
   final String word;
 
   SurahLocalDto(
@@ -18,8 +16,6 @@ class SurahLocalDto extends Insertable<SurahLocalDto> {
       required this.sora,
       required this.aya,
       required this.line,
-      required this.year,
-      required this.lesson,
       required this.word});
 
   SurahWord toDomain() {
@@ -30,8 +26,6 @@ class SurahLocalDto extends Insertable<SurahLocalDto> {
       aya: aya,
       line: line,
       word: word,
-      year: year,
-      lessonId: lesson,
     );
   }
 
@@ -43,7 +37,6 @@ class SurahLocalDto extends Insertable<SurahLocalDto> {
       sora: Value(sora),
       aya: Value(aya),
       line: Value(line),
-      lesson: Value(lesson),
       word: Value(word),
     ).toColumns(nullToAbsent);
   }
