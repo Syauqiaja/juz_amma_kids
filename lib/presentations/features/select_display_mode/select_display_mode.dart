@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:juz_amma_kids/locator/assets.dart';
-import 'package:juz_amma_kids/presentations/features/select_display_mode/hole_painter.dart';
+import 'package:juz_amma_kids/presentations/features/select_display_mode/widgets/hole_painter.dart';
 import 'package:juz_amma_kids/presentations/modals/button_scalable.dart';
 import 'package:juz_amma_kids/presentations/modals/frame_panel.dart';
 import 'package:juz_amma_kids/route/app_routes.dart';
@@ -91,12 +91,12 @@ class _SelectDisplayModeState extends State<SelectDisplayMode>
                               children: [
                       Image.asset(Assets.title, height: 72,),
                                 const SizedBox(height: 64),
-                                ButtonScalable(child: Text("Start", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),), onTap: (){
+                                ButtonScalable(child: Text(_localization.start, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),), onTap: (){
                                     Navigator.of(context)
                                         .pushNamed(AppRoutes.selectSurahList);
                                 }),
                                 const SizedBox(height: 16),
-                                ButtonScalable(child: Text("Settings", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),), onTap: (){
+                                ButtonScalable(child: Text(_localization.settings, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),), onTap: (){
                                     Navigator.of(context)
                                         .pushNamed(AppRoutes.selectSurahList);
                                 }),
@@ -127,67 +127,6 @@ class _SelectDisplayModeState extends State<SelectDisplayMode>
                   }),
             ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildMenuButton(
-      BuildContext context, String text, String asset, Function onTap, AlignmentGeometry alignmentGeometry) {
-    return Expanded(
-      child: Container(
-        margin: EdgeInsets.only(bottom: 8),
-        padding: EdgeInsets.only(top: 48, bottom: 16),
-        child: Align(
-          alignment: alignmentGeometry,
-          child: AspectRatio(
-            aspectRatio: 1,
-            child: FramePanel(
-              height: kIsWeb ? 300 : 120,
-              padding: EdgeInsets.all(4),
-              margin: EdgeInsets.all(0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                mainAxisSize: kIsWeb ? MainAxisSize.min : MainAxisSize.max,
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 6, left: 5, right: 6),
-                      child: Image.asset(
-                        height: kIsWeb ? 200 : null,
-                        width: kIsWeb ? 200 : null,
-                        asset,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: isLargeScreen ? 16 : 8,
-                  ),
-                  ButtonScalable(
-                    height: null,
-                    width: null,
-                    child: Padding(
-                      padding: isLargeScreen
-                          ? const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 8)
-                          : const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 4),
-                      child: Text(
-                        text,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18),
-                      ),
-                    ),
-                    onTap: () {
-                      onTap();
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
       ),
     );
   }

@@ -24,7 +24,6 @@ class SelectSoraCubit extends Cubit<SelectSoraState> {
 
   update(int soraId) async {
     if (state is SelectSoraWithData) {
-      print('Updating selectsorawithdata');
       final index = (state as SelectSoraWithData)
           .surahs
           .indexWhere((e) => e.soraIndex == soraId);
@@ -34,7 +33,6 @@ class SelectSoraCubit extends Cubit<SelectSoraState> {
       copiedList[index] = result;
 
       emit(SelectSoraWithData(surahs: copiedList));
-      print('emitting selectsorawithdata');
     }
   }
 
