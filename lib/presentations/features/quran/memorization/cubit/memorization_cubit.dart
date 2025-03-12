@@ -17,7 +17,8 @@ class MemorizationCubit extends Cubit<MemorizationState> {
 
   late int currentAya;
   late List<int> ayahs;
-  Map<int, List<bool>> recognizedWords = {}; // key is aya, value is words from remote
+  Map<int, List<bool>> recognizedWords =
+      {}; // key is aya, value is words from remote
   late Surah surah;
 
   init(Surah lesson) async {
@@ -26,11 +27,11 @@ class MemorizationCubit extends Cubit<MemorizationState> {
     currentAya = ayahs.first;
   }
 
-  void reset() {  
+  void reset() {
     currentAya = ayahs.first;
     recognizedWords.clear();
     emit(MemorizationInitial());
-  } 
+  }
 
   submit(File audioFile, int aya) async {
     emit(MemorizationLoading());
@@ -61,10 +62,14 @@ class MemorizationCubit extends Cubit<MemorizationState> {
       final body = jsonDecode(response.body);
       print(body);
 
-      List<Map<dynamic, dynamic>> words = (body['results'][0]['words'] as List<dynamic>).map((e) => e as Map<dynamic, dynamic>).toList();
-      List<bool> allWords = surah.words.where((e) => e.aya == aya).map((e) => false).toList();
+      List<Map<dynamic, dynamic>> words =
+          (body['results'][0]['words'] as List<dynamic>)
+              .map((e) => e as Map<dynamic, dynamic>)
+              .toList();
+      List<bool> allWords =
+          surah.words.where((e) => e.aya == aya).map((e) => false).toList();
       allWords.removeAt(0);
-      words.forEach((e){
+      words.forEach((e) {
         allWords[(e['index'] as int) - 1] = e["status"] == "correct";
         print(allWords[(e['index'] as int) - 1]);
       });
@@ -73,7 +78,8 @@ class MemorizationCubit extends Cubit<MemorizationState> {
       print(allWords);
 
       if (!recognizedWords[aya]!.contains(false)) {
-        _databaseService.insertMemorizedAya(surah: surah, ayaIndex: currentAya, value: true);
+        _databaseService.insertMemorizedAya(
+            surah: surah, ayaIndex: currentAya, value: true);
         if (currentAya == ayahs.last) {
           emit(MemorizationDone());
           return;
@@ -82,13 +88,14 @@ class MemorizationCubit extends Cubit<MemorizationState> {
           emit(MemorizationWithData());
         }
       } else {
-        _databaseService.insertMemorizedAya(surah: surah, ayaIndex: currentAya, value: false);
+        _databaseService.insertMemorizedAya(
+            surah: surah, ayaIndex: currentAya, value: false);
         emit(MemorizationWithData(message: "Incorrect"));
       }
     } catch (e, s) {
       print(e);
       debugPrintStack(stackTrace: s);
-      emit(MemorizationInitial(message: "Sorry, we don't hear anything"));
+      emit(MemorizationWithData(message: "Sorry, we don't hear anything"));
     }
   }
 
@@ -123,10 +130,14 @@ class MemorizationCubit extends Cubit<MemorizationState> {
       final body = jsonDecode(response.body);
       print(body);
 
-      List<Map<dynamic, dynamic>> words = (body['results'][0]['words'] as List<dynamic>).map((e) => e as Map<dynamic, dynamic>).toList();
-      List<bool> allWords = surah.words.where((e) => e.aya == aya).map((e) => false).toList();
+      List<Map<dynamic, dynamic>> words =
+          (body['results'][0]['words'] as List<dynamic>)
+              .map((e) => e as Map<dynamic, dynamic>)
+              .toList();
+      List<bool> allWords =
+          surah.words.where((e) => e.aya == aya).map((e) => false).toList();
       allWords.removeAt(0);
-      words.forEach((e){
+      words.forEach((e) {
         allWords[(e['index'] as int) - 1] = e["status"] == "correct";
         print(allWords[(e['index'] as int) - 1]);
       });
@@ -135,7 +146,8 @@ class MemorizationCubit extends Cubit<MemorizationState> {
       print(allWords);
 
       if (!recognizedWords[aya]!.contains(false)) {
-        _databaseService.insertMemorizedAya(surah: surah, ayaIndex: currentAya, value: true);
+        _databaseService.insertMemorizedAya(
+            surah: surah, ayaIndex: currentAya, value: true);
         if (currentAya == ayahs.last) {
           emit(MemorizationDone());
           return;
@@ -144,7 +156,8 @@ class MemorizationCubit extends Cubit<MemorizationState> {
           emit(MemorizationWithData());
         }
       } else {
-        _databaseService.insertMemorizedAya(surah: surah, ayaIndex: currentAya, value: false);
+        _databaseService.insertMemorizedAya(
+            surah: surah, ayaIndex: currentAya, value: false);
         emit(MemorizationWithData(message: "Incorrect"));
       }
     } catch (e, s) {

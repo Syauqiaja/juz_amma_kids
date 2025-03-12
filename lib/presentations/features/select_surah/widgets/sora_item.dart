@@ -1,19 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:juz_amma_kids/core/model/surah.dart';
 import 'package:juz_amma_kids/core/model/memorization_model.dart';
 import 'package:juz_amma_kids/locator/assets.dart';
+import 'package:juz_amma_kids/main.dart';
 import 'package:juz_amma_kids/presentations/modals/button_scalable.dart';
 import 'package:juz_amma_kids/route/app_routes.dart';
+import 'package:juz_amma_kids/utils/audio_player_ext.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shimmer/shimmer.dart';
 
 class SoraItem extends StatefulWidget {
   final Surah? surah;
   final bool? isSelected;
   final Function? onTap;
-  const SoraItem(
-      {super.key, required this.surah, this.isSelected, this.onTap});
+  const SoraItem({super.key, required this.surah, this.isSelected, this.onTap});
 
   @override
   State<SoraItem> createState() => _SoraItemState();
@@ -59,26 +62,40 @@ class _SoraItemState extends State<SoraItem> {
                           }),
                       const SizedBox(height: 8),
                       ButtonScalable(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(Assets.starSmall,
-                                  height: 24, width: 24),
-                              const SizedBox(width: 4),
-                              Text(
-                                "Practice",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold),
-                              )
-                            ],
-                          ),
-                          onTap: () {
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(Assets.starSmall,
+                                height: 24, width: 24),
+                            const SizedBox(width: 4),
+                            Text(
+                              "Practice",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ),
+                        onTap: () async {
+                          final micPermission =
+                              await Permission.microphone.request();
+                          if (!micPermission.isGranted) {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text(
+                                    "Please provide microphone permisson")));
+                            return;
+                          }
+
+                          audioPlayerEffect?.playOpenPanel();
+                          if(context.mounted){
                             Navigator.of(context).pushNamed(
-                                AppRoutes.memorization,
-                                arguments: widget.surah);
-                          }),
+                              AppRoutes.memorization,
+                              arguments: widget.surah,
+                            );
+                          }
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -147,7 +164,8 @@ class _SoraItemState extends State<SoraItem> {
                                 children: [
                                   Image.asset(Assets.starSmall),
                                   const SizedBox(width: 4),
-                                  Text('${((widget.surah?.memorizationModel?.memorizedPercentage() ?? 0) * 100).abs()}%')
+                                  Text(
+                                      '${((widget.surah?.memorizationModel?.memorizedPercentage() ?? 0) * 100).abs()}%')
                                 ],
                               ),
                               Row(
@@ -155,7 +173,8 @@ class _SoraItemState extends State<SoraItem> {
                                 children: [
                                   Image.asset(Assets.bookSmall),
                                   const SizedBox(width: 4),
-                                  Text('${((widget.surah?.memorizationModel?.readPercentage() ?? 0) * 100).abs()}%')
+                                  Text(
+                                      '${((widget.surah?.memorizationModel?.readPercentage() ?? 0) * 100).abs()}%')
                                 ],
                               ),
                             ],
