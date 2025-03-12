@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:juz_amma_kids/core/model/surah.dart';
 import 'package:juz_amma_kids/core/model/memorization_model.dart';
 import 'package:juz_amma_kids/locator/assets.dart';
 import 'package:juz_amma_kids/main.dart';
+import 'package:juz_amma_kids/presentations/features/select_surah/cubit/select_sora_cubit.dart';
 import 'package:juz_amma_kids/presentations/modals/button_scalable.dart';
 import 'package:juz_amma_kids/route/app_routes.dart';
 import 'package:juz_amma_kids/utils/audio_player_ext.dart';
@@ -23,6 +25,13 @@ class SoraItem extends StatefulWidget {
 }
 
 class _SoraItemState extends State<SoraItem> {
+  late SelectSoraCubit _selectSoraCubit;
+  @override
+  void initState() {
+    _selectSoraCubit = context.read<SelectSoraCubit>();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return widget.surah != null
@@ -57,8 +66,18 @@ class _SoraItemState extends State<SoraItem> {
                             ],
                           ),
                           onTap: () {
-                            Navigator.of(context).pushNamed(AppRoutes.quran,
-                                arguments: widget.surah);
+                            Navigator.of(context)
+                                .pushNamed(AppRoutes.quran,
+                                    arguments: widget.surah)
+                                .then((_) {
+                              if (context.mounted) {
+                                WidgetsBinding.instance
+                                    .addPostFrameCallback((_) {
+                                  _selectSoraCubit
+                                      .refresh();
+                                });
+                              }
+                            });
                           }),
                       const SizedBox(height: 8),
                       ButtonScalable(
@@ -88,11 +107,19 @@ class _SoraItemState extends State<SoraItem> {
                           }
 
                           audioPlayerEffect?.playOpenPanel();
-                          if(context.mounted){
-                            Navigator.of(context).pushNamed(
-                              AppRoutes.memorization,
-                              arguments: widget.surah,
-                            );
+                          if (context.mounted) {
+                            Navigator.of(context)
+                                .pushNamed(
+                                  AppRoutes.memorization,
+                                  arguments: widget.surah,
+                                )
+                                .then((_) {});
+                            if (context.mounted) {
+                              WidgetsBinding.instance.addPostFrameCallback((_) {
+                                _selectSoraCubit
+                                    .refresh();
+                              });
+                            }
                           }
                         },
                       ),
@@ -165,7 +192,7 @@ class _SoraItemState extends State<SoraItem> {
                                   Image.asset(Assets.starSmall),
                                   const SizedBox(width: 4),
                                   Text(
-                                      '${((widget.surah?.memorizationModel?.memorizedPercentage() ?? 0) * 100).abs()}%')
+                                      '${((widget.surah?.memorizationModel?.memorizedPercentage() ?? 0) * 100).floor()}%')
                                 ],
                               ),
                               Row(
@@ -174,7 +201,7 @@ class _SoraItemState extends State<SoraItem> {
                                   Image.asset(Assets.bookSmall),
                                   const SizedBox(width: 4),
                                   Text(
-                                      '${((widget.surah?.memorizationModel?.readPercentage() ?? 0) * 100).abs()}%')
+                                      '${((widget.surah?.memorizationModel?.readPercentage() ?? 0) * 100).floor()}%')
                                 ],
                               ),
                             ],

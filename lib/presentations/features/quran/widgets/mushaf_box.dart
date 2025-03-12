@@ -8,6 +8,7 @@ import 'package:juz_amma_kids/locator/assets.dart';
 import 'package:juz_amma_kids/presentations/features/quran/bloc/quran_bloc.dart';
 import 'package:juz_amma_kids/presentations/features/quran/recitation/cubit/read_quran_cubit.dart';
 import 'package:juz_amma_kids/presentations/features/quran/widgets/cubit/mushaf_cubit.dart';
+import 'package:juz_amma_kids/presentations/features/select_surah/cubit/select_sora_cubit.dart';
 import 'package:juz_amma_kids/theme/quranic_theme.dart';
 import 'package:juz_amma_kids/utils/context_ext.dart';
 import 'package:sizer/sizer.dart';
@@ -16,7 +17,11 @@ class MushafBox extends StatefulWidget {
   final ScrollController scrollController;
   final Surah surah;
   final List<SurahWord> disabledWords;
-  MushafBox({super.key, required this.scrollController, required this.surah, this.disabledWords = const []});
+  MushafBox(
+      {super.key,
+      required this.scrollController,
+      required this.surah,
+      this.disabledWords = const []});
 
   @override
   State<MushafBox> createState() => _MushafBoxState();
@@ -34,7 +39,8 @@ class _MushafBoxState extends State<MushafBox> {
     List<InlineSpan> _line = [];
 
     List<SurahWord> words = widget.surah.words;
-    if(widget.disabledWords.isNotEmpty && !words.contains(widget.disabledWords.first)){
+    if (widget.disabledWords.isNotEmpty &&
+        !words.contains(widget.disabledWords.first)) {
       words.insertAll(0, widget.disabledWords);
     }
 
@@ -51,13 +57,14 @@ class _MushafBoxState extends State<MushafBox> {
 
       final bool isSelected = word.aya == selectedAyahIndex;
       final bool isRead = _readQuranCubit.state is ReadQuranWithData &&
-              (_readQuranCubit.state as ReadQuranWithData).readCount > 0 &&
-              (_readQuranCubit.state as ReadQuranWithData).readCount >= word.aya;
-          
+          (_readQuranCubit.state as ReadQuranWithData).readCount > 0 &&
+          (_readQuranCubit.state as ReadQuranWithData).readCount >= word.aya;
+
       WidgetSpan widgetSpan = WidgetSpan(
         child: Container(
           decoration: BoxDecoration(
-            color: isSelected ? QuranicTheme.highlightColor : Colors.transparent,
+            color:
+                isSelected ? QuranicTheme.highlightColor : Colors.transparent,
             borderRadius: border,
           ),
           padding: EdgeInsets.symmetric(vertical: 5, horizontal: 2),
@@ -66,7 +73,9 @@ class _MushafBoxState extends State<MushafBox> {
             style: TextStyle(
               fontSize: context.isTablet() ? 36 : 18.5,
               fontFamily: 'QCF2${word.page.toString().padLeft(3, '0')}',
-              color: (word.sora == widget.surah.soraIndex) ? Colors.black : Colors.grey.shade400,
+              color: (word.sora == widget.surah.soraIndex)
+                  ? Colors.black
+                  : Colors.grey.shade400,
             ),
             locale: Locale('ar'),
           ),
@@ -94,12 +103,13 @@ class _MushafBoxState extends State<MushafBox> {
     return Container(
       // width: MediaQuery.of(context).size.width * (context.isTablet() ? 0.8 : isLargeScreen ? 0.6 : 0.7),
       // height: MediaQuery.of(context).size.height * (context.isTablet() ? 0.68 : 0.75),
-      padding: context.isTablet() 
-                ? const EdgeInsets.only(top: 50, right: 50, left: 50, bottom: 50) 
-                : const EdgeInsets.only(top: 30, right: 30, left: 30, bottom: 30),       
+      padding: context.isTablet()
+          ? const EdgeInsets.only(top: 50, right: 50, left: 50, bottom: 50)
+          : const EdgeInsets.only(top: 30, right: 30, left: 30, bottom: 30),
       color: Colors.transparent, // Ensure the background is transparent
       child: BlocBuilder<QuranBloc, QuranState>(
-        buildWhen: (previous, current) => previous is QuranInitial || previous is QuranLoading,
+        buildWhen: (previous, current) =>
+            previous is QuranInitial || previous is QuranLoading,
         builder: (context, state) {
           if (state is QuranIdle) {
             return SingleChildScrollView(
@@ -112,13 +122,16 @@ class _MushafBoxState extends State<MushafBox> {
                     Stack(
                       alignment: Alignment.center,
                       children: [
-                        Image.asset(Assets.borderTitle,
+                        Image.asset(
+                          Assets.borderTitle,
                           width: MediaQuery.of(context).size.width * 0.5,
                         ),
                         Positioned(
                           left: 0,
                           child: Padding(
-                            padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.06),
+                            padding: EdgeInsets.only(
+                                left:
+                                    MediaQuery.of(context).size.width * 0.06),
                             child: Center(
                               child: Container(),
                             ),
@@ -146,23 +159,26 @@ class _MushafBoxState extends State<MushafBox> {
                           builder: (context, state) {
                             return Column(
                               children: [
-                                if(_quranBloc.surah.soraIndex != 1)
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: (state.selectedAyahIndex <= 0) ? QuranicTheme.highlightColor : Colors.transparent,
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  padding: EdgeInsets.all(5),
-                                  child: Text(
-                                    ' ',
-                                    style: TextStyle(
-                                      fontSize: context.isTablet() ? 36 : 18.5,
-                                      fontFamily: 'testfont',
-                                      color: Colors.black,
+                                if (_quranBloc.surah.soraIndex != 1)
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: (state.selectedAyahIndex <= 0)
+                                          ? QuranicTheme.highlightColor
+                                          : Colors.transparent,
+                                      borderRadius: BorderRadius.circular(5),
                                     ),
-                                    textAlign: TextAlign.center,
+                                    padding: EdgeInsets.all(5),
+                                    child: Text(
+                                      ' ',
+                                      style: TextStyle(
+                                        fontSize:
+                                            context.isTablet() ? 36 : 18.5,
+                                        fontFamily: 'testfont',
+                                        color: Colors.black,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
                                   ),
-                                ),
                                 ..._buildAyahSpans(state.selectedAyahIndex),
                               ],
                             );

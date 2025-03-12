@@ -23,6 +23,9 @@
                 "example": "1"
             }
         }
-    }
-  
+    },
+    "start": "Mulai",
+    "settings": "Pengaturan",
+    "read": "Baca",
+    "practice": "Praktek"
 }

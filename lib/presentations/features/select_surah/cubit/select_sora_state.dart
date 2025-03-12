@@ -17,5 +17,9 @@ final class SelectSoraError extends SelectSoraState{
 final class SelectSoraWithData extends SelectSoraState{
   final List<Surah> surahs;
 
-  SelectSoraWithData({required this.surahs});
+  const SelectSoraWithData({required this.surahs});
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [DateTime.now().millisecondsSinceEpoch];
 }

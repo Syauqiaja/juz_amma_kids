@@ -38,7 +38,6 @@
     "something_wrong": "Something wrong",
     "not_logged_in": "Not logged in",
     "guest" : "Guest",
-    "settings": "Settings",
     "family_group": "Family Group",
     "boy_student": "Boy Student",
     "girl_student": "Girl Student",
@@ -153,5 +152,9 @@
     "no_progress_saved": "No progress saved",
     "do_a_littile_progress": "Do a little progress using girl or boy to see their progress",
     "loading_students": "Loading students",
-    "tracking_their_progress": "Tracking their progress"
+    "tracking_their_progress": "Tracking their progress",
+    "start": "Start",
+    "settings": "Settings",
+    "read": "Read",
+    "practice": "Practice"
 }

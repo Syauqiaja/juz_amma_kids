@@ -34,12 +34,12 @@ class _SoraListState extends State<SoraList> {
 
   @override
   void initState() {
-    _selectSoraCubit = BlocProvider.of(context);
+    _selectSoraCubit = context.read<SelectSoraCubit>();
     _selectSoraCubit.load();
     _pageController = PageController();
 
-    _scrollController.addListener((){
-      if(_selectedIndex != null){
+    _scrollController.addListener(() {
+      if (_selectedIndex != null) {
         setState(() {
           _selectedIndex = null;
         });
@@ -88,52 +88,68 @@ class _SoraListState extends State<SoraList> {
                     ),
                   ),
                   Expanded(
-                    child: BlocBuilder<SelectSoraCubit, SelectSoraState>(
-                      builder: (context, state) {
-                        print("CUrrent page : $_currentPage");
-                        if (state is SelectSoraWithData) {
-                          return ListView.builder(
-                            controller: _scrollController,
-                            scrollDirection: Axis.horizontal,
-                            itemCount: state.surahs.length,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: index == 0 ? EdgeInsets.only(left: 48) : index == state.surahs.length - 1 ? EdgeInsets.only(right: 48) : EdgeInsets.all(0),
-                                child: SoraItem(
-                                  surah: state.surahs[index],
-                                  isSelected: index == _selectedIndex,
-                                  onTap: () {
-                                    setState(() {
-                                      if(_selectedIndex == index){
-                                        _selectedIndex = null;
-                                      }else{
-                                        _selectedIndex = index;
-                                      }
-                                    });
-                                  },
-                                ),
-                              );
-                            },
-                          );
-                        } else if (state is SelectSoraError) {
-                          return Center(
-                            child: Text(state.message),
-                          );
-                        } else {
-                          return ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: 5,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: index == 0 ? EdgeInsets.only(left: 48) : index == 4 ? EdgeInsets.only(right: 48) : EdgeInsets.all(0),
-                                child: SoraItem(
-                                  surah: null,
-                                ),
-                              );
-                            },
-                          );
-                        }
+                    child: BlocListener<SelectSoraCubit, SelectSoraState>(
+                      listenWhen: (previous, current) {
+                        return (previous is SelectSoraLoading) && (current is SelectSoraWithData);
                       },
+                      listener: (context, state) {
+                        setState(() {});
+                      },
+                      child: BlocBuilder<SelectSoraCubit, SelectSoraState>(
+                        builder: (context, state) {
+                          if (state is SelectSoraWithData) {
+                            print("Updating selectsorawithdata builder");
+                            return ListView.builder(
+                              controller: _scrollController,
+                              scrollDirection: Axis.horizontal,
+                              itemCount: state.surahs.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: index == 0
+                                      ? EdgeInsets.only(left: 48)
+                                      : index == state.surahs.length - 1
+                                          ? EdgeInsets.only(right: 48)
+                                          : EdgeInsets.all(0),
+                                  child: SoraItem(
+                                    surah: state.surahs[index],
+                                    isSelected: index == _selectedIndex,
+                                    onTap: () {
+                                      setState(() {
+                                        if (_selectedIndex == index) {
+                                          _selectedIndex = null;
+                                        } else {
+                                          _selectedIndex = index;
+                                        }
+                                      });
+                                    },
+                                  ),
+                                );
+                              },
+                            );
+                          } else if (state is SelectSoraError) {
+                            return Center(
+                              child: Text(state.message),
+                            );
+                          } else {
+                            return ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: 5,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: index == 0
+                                      ? EdgeInsets.only(left: 48)
+                                      : index == 4
+                                          ? EdgeInsets.only(right: 48)
+                                          : EdgeInsets.all(0),
+                                  child: SoraItem(
+                                    surah: null,
+                                  ),
+                                );
+                              },
+                            );
+                          }
+                        },
+                      ),
                     ),
                   ),
                 ],

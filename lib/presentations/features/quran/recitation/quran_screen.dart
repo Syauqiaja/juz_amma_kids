@@ -14,6 +14,7 @@ import 'package:juz_amma_kids/main.dart';
 import 'package:juz_amma_kids/presentations/features/quran/recitation/cubit/read_quran_cubit.dart';
 import 'package:juz_amma_kids/presentations/features/quran/widgets/cubit/mushaf_cubit.dart';
 import 'package:juz_amma_kids/presentations/features/quran/widgets/mushaf_box.dart';
+import 'package:juz_amma_kids/presentations/features/select_surah/cubit/select_sora_cubit.dart';
 import 'package:juz_amma_kids/presentations/modals/normal_button.dart';
 import 'package:juz_amma_kids/presentations/modals/repeat_settings_modal.dart';
 import 'package:juz_amma_kids/presentations/modals/verse_input_modal.dart';
@@ -57,8 +58,7 @@ class _QuranScreenState extends State<QuranScreen> {
     _mushafCubit = BlocProvider.of<MushafCubit>(context);
     _readQuranCubit = BlocProvider.of(context);
 
-    disabledWords = DatabaseService()
-        .getDisabledWords(widget.surah.soraIndex);
+    disabledWords = DatabaseService().getDisabledWords(widget.surah.soraIndex);
     initAudio();
 
     _readQuranCubit.init();
@@ -70,8 +70,7 @@ class _QuranScreenState extends State<QuranScreen> {
       DeviceOrientation.landscapeLeft,
     ]);
 
-    _quranBloc.add(LoadQuran(
-        surahIndex: widget.surah.soraIndex));
+    _quranBloc.add(LoadQuran(surahIndex: widget.surah.soraIndex));
   }
 
   @override
@@ -194,6 +193,12 @@ class _QuranScreenState extends State<QuranScreen> {
     final double gap = context.isTablet() ? 24 : 16;
     return MultiBlocListener(
       listeners: [
+        BlocListener<ReadQuranCubit, ReadQuranState>(
+            listener: (context, state) {
+          if (state is ReadQuranWithData) {
+            context.read<SelectSoraCubit>().update(widget.surah.soraIndex);
+          }
+        }),
         BlocListener<QuranBloc, QuranState>(
           listener: (context, state) async {
             if (state is QuranPlaying) {
@@ -272,7 +277,8 @@ class _QuranScreenState extends State<QuranScreen> {
                                 if (state is ReadQuranWithData) {
                                   return CircularPercentIndicator(
                                     radius: 32,
-                                    percent: min(state.readCount / state.maxRead, 1),
+                                    percent:
+                                        min(state.readCount / state.maxRead, 1),
                                     progressColor: QuranicTheme.primaryColor,
                                     backgroundColor:
                                         Colors.white.withOpacity(0.1),

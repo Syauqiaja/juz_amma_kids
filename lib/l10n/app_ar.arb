@@ -37,7 +37,6 @@
   "something_wrong": "شئ مخطئ",
   "not_logged_in": "لم يدخل الحساب",
   "guest": "الضيوف",
-  "settings": "لغة الواجهة",
   "family_group": "المجموعة العائلية",
   "boy_student": "متعلم",
   "girl_student": "متعلمة",
@@ -152,5 +151,9 @@
   "no_progress_saved": "لم يتم حفظ أي تقدم",
   "do_a_littile_progress": "قم بإحراز تقدم بسيط باستخدام الفتاة أو الصبي لرؤية تقدمهم",
   "loading_students": "تحميل الطلاب",
-  "tracking_their_progress": "تتبع تقدمهم"
+  "tracking_their_progress": "تتبع تقدمهم",
+  "start": "ابدأ",
+  "settings": "لغة الواجهة",
+  "read": "قراءة القرآن",
+  "practice":  "مراجعة الحفظ"
 }
