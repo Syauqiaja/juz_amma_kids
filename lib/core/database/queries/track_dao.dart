@@ -6,7 +6,7 @@ import 'package:juz_amma_kids/core/database/model/track_local_dto.dart';
 import 'package:juz_amma_kids/core/database/queries/surah_dao.dart';
 import 'package:juz_amma_kids/core/database/quran_database/quran_database.dart';
 import 'package:juz_amma_kids/core/database/tables/table_tracks.dart';
-import 'package:juz_amma_kids/core/model/lesson.dart';
+import 'package:juz_amma_kids/core/model/surah.dart';
 
 import '../../model/memorization_model.dart';
 
@@ -17,7 +17,6 @@ class TrackDao extends DatabaseAccessor<AppDatabase> with _$TrackDaoMixin {
   TrackDao(this.db) : super(db);
 
   final AppDatabase db;
-  final SurahDao _surahDao = SurahDao(QuranDatabase.instance);
 
   Future<Map<int, bool>> getTrackAya({
     required Surah surah,
@@ -36,6 +35,23 @@ class TrackDao extends DatabaseAccessor<AppDatabase> with _$TrackDaoMixin {
         jsonDecode(result.first.read(columnType)!);
     return trackedAyahs
         .map((key, value) => MapEntry(int.parse(key), value as bool));
+  }
+
+  Future<MemorizationModel> getTrackSurah({
+    required int surahIndex,
+    required int totalAya,
+  })async{
+    final query = select(tableTracks)
+      ..where((e)=>e.sora.equals(surahIndex));
+    TrackLocalDto? result = await query.getSingleOrNull();
+
+    if(result == null){
+      final insertedId = await into(tableTracks).insert(TrackLocalDto(sora: surahIndex, memorized: jsonEncode(constructDefaultValue(totalAya)), read: jsonEncode(constructDefaultValue(totalAya))));
+      final insertedQuery = select(tableTracks)..where((e)=>e.id.equals(insertedId));
+      result = await insertedQuery.getSingleOrNull();
+    }
+    
+    return result!.toDomain();
   }
 
   Future<Map<int, bool>> insertTrackAya({
@@ -63,8 +79,7 @@ class TrackDao extends DatabaseAccessor<AppDatabase> with _$TrackDaoMixin {
             result.first.copyWith(memorized: jsonEncode(currentValue)));
       }
     } else {
-      final totalAya =
-          await _surahDao.getTotalAyaOfSurah(surah.soraIndex);
+      final totalAya = surah.totalAya;
       final Map<String, bool> currentValue = {
         for (var element in List.generate(totalAya, (i) => i + 1)) element.toString(): false
       };
@@ -74,13 +89,20 @@ class TrackDao extends DatabaseAccessor<AppDatabase> with _$TrackDaoMixin {
         sora: surah.soraIndex,
         memorized: trackType == TrackType.memorization
             ? jsonEncode(currentValue)
-            : '{}',
-        read: trackType == TrackType.read ? jsonEncode(currentValue) : '{}',
+            : jsonEncode(constructDefaultValue(surah.totalAya)),
+        read: trackType == TrackType.read ? jsonEncode(currentValue) : jsonEncode(constructDefaultValue(surah.totalAya)),
       ));
     }
 
     return getTrackAya(
         surah: surah, trackType: trackType);
+  }
+
+  Map<String, bool> constructDefaultValue(int totalAya){
+    final result = {
+      for(int i in List.generate(totalAya, (e) => e)) i.toString() : false
+    };
+    return result;
   }
 }
 

@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:juz_amma_kids/core/model/lesson.dart';
+import 'package:juz_amma_kids/core/model/surah.dart';
 import 'package:juz_amma_kids/core/model/surah_word.dart';
 import 'package:juz_amma_kids/core/services/database_service.dart';
 

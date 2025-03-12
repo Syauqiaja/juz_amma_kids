@@ -20,8 +20,9 @@ class TrackLocalDto implements Insertable<TrackLocalDto> {
 
   MemorizationModel toDomain() {
     return MemorizationModel(
-      memorized: jsonDecode(memorized),
-      read: jsonDecode(read),
+      id: id!,
+      memorized: (jsonDecode(memorized) as Map<String, dynamic>).map((key, value) => MapEntry(int.parse(key), value)),
+      read: (jsonDecode(read)  as Map<String, dynamic>).map((key, value) => MapEntry(int.parse(key), value)),
       sora: sora,
     );
   }
@@ -38,8 +39,6 @@ class TrackLocalDto implements Insertable<TrackLocalDto> {
 
   TrackLocalDto copyWith({
     int? id,
-    int? lesson,
-    int? year,
     int? sora,
     String? memorized,
     String? read,

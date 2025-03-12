@@ -69,14 +69,13 @@ class _SelectDisplayModeState extends State<SelectDisplayMode>
                     left: 0,
                     right: 0,
                     child: Image.asset(
-                      Assets.mountainView,
+                      Assets.bgMountain,
                       fit: BoxFit.fitWidth,
                     ),
                   ),
                   Column(
                     children: [
                       const SizedBox(height: 32),
-                      Image.asset(Assets.title, height: 72,),
                       Expanded(
                         child: Padding(
                           padding: context.isTablet() ? EdgeInsets.only(top: 40, bottom: 24, left: 72, right: 72) : isLargeScreen
@@ -85,32 +84,24 @@ class _SelectDisplayModeState extends State<SelectDisplayMode>
                                   bottom: 24,
                                 )
                               : EdgeInsets.all(0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            textDirection: TextDirection.ltr,
-                            children: [
-                              _buildMenuButton(
-                                context,
-                                _localization.mode_normal,
-                                Assets.modeNormal,
-                                () {
-                                  Navigator.of(context)
-                                      .pushNamed(AppRoutes.selectSurahList);
-                                },
-                                Alignment.centerRight
-                              ),
-                              const SizedBox(width: 64),
-                              _buildMenuButton(
-                                context,
-                                _localization.memorization,
-                                Assets.modeList,
-                                () {
-                                  Navigator.of(context).pushNamed(
-                                      AppRoutes.selectSurahListMemorization);
-                                },
-                                Alignment.centerLeft
-                              ),
-                            ],
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              textDirection: TextDirection.ltr,
+                              children: [
+                      Image.asset(Assets.title, height: 72,),
+                                const SizedBox(height: 64),
+                                ButtonScalable(child: Text("Start", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),), onTap: (){
+                                    Navigator.of(context)
+                                        .pushNamed(AppRoutes.selectSurahList);
+                                }),
+                                const SizedBox(height: 16),
+                                ButtonScalable(child: Text("Settings", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),), onTap: (){
+                                    Navigator.of(context)
+                                        .pushNamed(AppRoutes.selectSurahList);
+                                }),
+                              ],
+                            ),
                           ),
                         ),
                       ),

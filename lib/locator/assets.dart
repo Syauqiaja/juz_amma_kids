@@ -66,6 +66,7 @@ class Assets {
   static const String title = "$_pathImages/title.png";
   static const String starSmall = "$_pathImages/star_small.png";
   static const String bookSmall = "$_pathImages/book_small.png";
+  static const String bgMountain = "$_pathImages/bg_mountain.png";
   
 
   static AudioAssets audioAssets = AudioAssets();

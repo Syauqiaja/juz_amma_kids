@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import 'package:juz_amma_kids/core/model/lesson.dart';
+import 'package:juz_amma_kids/core/model/surah.dart';
 import 'package:juz_amma_kids/core/services/database_service.dart';
 
 part 'memorization_state.dart';

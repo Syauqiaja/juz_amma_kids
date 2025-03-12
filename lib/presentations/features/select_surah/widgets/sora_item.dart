@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:juz_amma_kids/core/model/lesson.dart';
+import 'package:juz_amma_kids/core/model/surah.dart';
+import 'package:juz_amma_kids/core/model/memorization_model.dart';
 import 'package:juz_amma_kids/locator/assets.dart';
 import 'package:juz_amma_kids/presentations/modals/button_scalable.dart';
 import 'package:juz_amma_kids/route/app_routes.dart';
@@ -146,7 +147,7 @@ class _SoraItemState extends State<SoraItem> {
                                 children: [
                                   Image.asset(Assets.starSmall),
                                   const SizedBox(width: 4),
-                                  Text('50%')
+                                  Text('${((widget.surah?.memorizationModel?.memorizedPercentage() ?? 0) * 100).abs()}%')
                                 ],
                               ),
                               Row(
@@ -154,7 +155,7 @@ class _SoraItemState extends State<SoraItem> {
                                 children: [
                                   Image.asset(Assets.bookSmall),
                                   const SizedBox(width: 4),
-                                  Text('25%')
+                                  Text('${((widget.surah?.memorizationModel?.readPercentage() ?? 0) * 100).abs()}%')
                                 ],
                               ),
                             ],

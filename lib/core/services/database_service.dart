@@ -1,4 +1,4 @@
-import 'package:juz_amma_kids/core/model/lesson.dart';
+import 'package:juz_amma_kids/core/model/surah.dart';
 import 'package:juz_amma_kids/core/model/memorization_model.dart';
 import 'package:juz_amma_kids/core/model/surah_word.dart';
 import 'package:juz_amma_kids/core/database/app_database/app_database.dart';

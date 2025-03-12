@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:juz_amma_kids/core/database/model/track_local_dto.dart';
 import 'package:juz_amma_kids/core/database/quran_database/quran_database.dart';
 import 'package:juz_amma_kids/core/model/surah_word.dart';
 

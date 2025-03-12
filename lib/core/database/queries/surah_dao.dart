@@ -1,7 +1,8 @@
 import 'package:drift/drift.dart';
 import 'package:http/http.dart';
 import 'package:juz_amma_kids/core/database/app_database/app_database.dart';
-import 'package:juz_amma_kids/core/model/lesson.dart';
+import 'package:juz_amma_kids/core/database/queries/track_dao.dart';
+import 'package:juz_amma_kids/core/model/surah.dart';
 import 'package:juz_amma_kids/core/model/surah_word.dart';
 import 'package:juz_amma_kids/core/database/model/surah_local_dto.dart';
 import 'package:juz_amma_kids/core/database/quran_database/quran_database.dart';
@@ -13,6 +14,7 @@ class SurahDao extends DatabaseAccessor<QuranDatabase> with _$SurahDaoMixin {
   SurahDao(this.db) : super(db);
 
   final QuranDatabase db;
+  final TrackDao _trackDao = TrackDao(AppDatabase.instance);
 
   Future<List<SurahLocalDto>> getAllSurahs() async {
     return select(tableSurahs).get();
@@ -53,8 +55,9 @@ class SurahDao extends DatabaseAccessor<QuranDatabase> with _$SurahDaoMixin {
     final query = select(tableSurahs)
       ..where((e) => e.sora.equals(soraIndex));
     final results = await query.get();
+    final memQuery = await _trackDao.getTrackSurah(surahIndex: soraIndex, totalAya: results.last.aya);
 
-    return Surah.fromSurahDto(results);
+    return Surah.fromSurahDto(results, memQuery);
   }
 
   Future<List<SurahWord>> getDisabledWords(int surah) async {

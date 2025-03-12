@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:juz_amma_kids/core/model/lesson.dart';
+import 'package:juz_amma_kids/core/model/surah.dart';
 import 'package:juz_amma_kids/core/model/surah_word.dart';
 import 'package:juz_amma_kids/core/services/database_service.dart';
 import 'package:juz_amma_kids/core/services/resource_loader.dart';

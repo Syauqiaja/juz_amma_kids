@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:juz_amma_kids/core/model/lesson.dart';
+import 'package:juz_amma_kids/core/model/surah.dart';
 import 'package:juz_amma_kids/core/services/sora_names_const.dart';
 import 'package:juz_amma_kids/presentations/modals/surah_button.dart';
 import 'package:juz_amma_kids/route/app_routes.dart';

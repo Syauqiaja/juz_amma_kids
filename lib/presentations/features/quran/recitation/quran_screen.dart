@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sound/flutter_sound.dart';
-import 'package:juz_amma_kids/core/model/lesson.dart';
+import 'package:juz_amma_kids/core/model/surah.dart';
 import 'package:juz_amma_kids/core/model/surah_word.dart';
 import 'package:juz_amma_kids/core/services/database_service.dart';
 import 'package:juz_amma_kids/core/services/resource_loader.dart';
@@ -272,7 +272,7 @@ class _QuranScreenState extends State<QuranScreen> {
                                 if (state is ReadQuranWithData) {
                                   return CircularPercentIndicator(
                                     radius: 32,
-                                    percent: state.readCount / state.maxRead,
+                                    percent: min(state.readCount / state.maxRead, 1),
                                     progressColor: QuranicTheme.primaryColor,
                                     backgroundColor:
                                         Colors.white.withOpacity(0.1),
@@ -655,7 +655,7 @@ class _QuranScreenState extends State<QuranScreen> {
                         if (state is ReadQuranWithData) {
                           return CircularPercentIndicator(
                             radius: 32,
-                            percent: state.readCount / state.maxRead,
+                            percent: min(state.readCount / state.maxRead, 1),
                             progressColor: QuranicTheme.primaryColor,
                             backgroundColor: Colors.white.withOpacity(0.1),
                           );
