@@ -78,7 +78,7 @@ class MyApp extends StatelessWidget {
         return Sizer(
           builder: (context, orientation, screenType) {
             return MaterialApp(
-              title: 'Qurany',
+              title: 'Juz Amma for Kids',
               theme: ThemeData(
                 colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
                 useMaterial3: true,
