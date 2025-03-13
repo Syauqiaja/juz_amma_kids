@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:juz_amma_kids/locator/assets.dart';
 import 'package:juz_amma_kids/presentations/features/select_display_mode/widgets/hole_painter.dart';
+import 'package:juz_amma_kids/presentations/features/select_display_mode/widgets/settings_dialog.dart';
 import 'package:juz_amma_kids/presentations/modals/button_scalable.dart';
 import 'package:juz_amma_kids/presentations/modals/frame_panel.dart';
 import 'package:juz_amma_kids/route/app_routes.dart';
@@ -26,10 +27,10 @@ class _SelectDisplayModeState extends State<SelectDisplayMode>
   late AnimationController _animationController;
   late Animation<double> _splashAnimation =
       Tween<double>(begin: 0, end: 10).animate(_animationController);
+  bool isPlayAnimation = false;
 
   late AppLocalizations _localization;
   bool isLargeScreen = false;
-  bool isPlayAnimation = false;
 
   @override
   void initState() {
@@ -97,8 +98,9 @@ class _SelectDisplayModeState extends State<SelectDisplayMode>
                                 }),
                                 const SizedBox(height: 16),
                                 ButtonScalable(child: Text(_localization.settings, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),), onTap: (){
-                                    Navigator.of(context)
-                                        .pushNamed(AppRoutes.selectSurahList);
+                                    showDialog(context: context, builder: (ctx){
+                                      return SettingsDialog();
+                                    });
                                 }),
                               ],
                             ),
@@ -112,20 +114,6 @@ class _SelectDisplayModeState extends State<SelectDisplayMode>
               ),
             ),
           ),
-          if (isPlayAnimation)
-            Container(
-              height: double.infinity,
-              width: double.infinity,
-              child: AnimatedBuilder(
-                  animation: _animationController,
-                  builder: (context, child) {
-                    return CustomPaint(
-                      painter: HolePainter(
-                          color: Colors.black,
-                          holeSize: _splashAnimation.value * _size.width),
-                    );
-                  }),
-            ),
         ],
       ),
     );

@@ -11,14 +11,18 @@ import 'package:juz_amma_kids/presentations/features/select_surah/cubit/select_s
 import 'package:juz_amma_kids/presentations/modals/button_scalable.dart';
 import 'package:juz_amma_kids/route/app_routes.dart';
 import 'package:juz_amma_kids/utils/audio_player_ext.dart';
+import 'package:juz_amma_kids/utils/utilities.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SoraItem extends StatefulWidget {
   final Surah? surah;
   final bool? isSelected;
   final Function? onTap;
-  const SoraItem({super.key, required this.surah, this.isSelected, this.onTap});
+  final Function(Surah surah)? onTapRead;
+  final Function(Surah surah)? onTapPractice;
+  const SoraItem({super.key, required this.surah, this.isSelected, this.onTap, this.onTapRead, this.onTapPractice});
 
   @override
   State<SoraItem> createState() => _SoraItemState();
@@ -26,6 +30,7 @@ class SoraItem extends StatefulWidget {
 
 class _SoraItemState extends State<SoraItem> {
   late SelectSoraCubit _selectSoraCubit;
+  late AppLocalizations _localization;
   @override
   void initState() {
     _selectSoraCubit = context.read<SelectSoraCubit>();
@@ -34,6 +39,7 @@ class _SoraItemState extends State<SoraItem> {
 
   @override
   Widget build(BuildContext context) {
+    _localization = AppLocalizations.of(context)!;
     return widget.surah != null
         ? Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -57,7 +63,7 @@ class _SoraItemState extends State<SoraItem> {
                                   height: 24, width: 24),
                               const SizedBox(width: 4),
                               Text(
-                                "Read",
+                                _localization.read,
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
@@ -66,18 +72,7 @@ class _SoraItemState extends State<SoraItem> {
                             ],
                           ),
                           onTap: () {
-                            Navigator.of(context)
-                                .pushNamed(AppRoutes.quran,
-                                    arguments: widget.surah)
-                                .then((_) {
-                              if (context.mounted) {
-                                WidgetsBinding.instance
-                                    .addPostFrameCallback((_) {
-                                  _selectSoraCubit
-                                      .refresh();
-                                });
-                              }
-                            });
+                            widget.onTapRead?.call(widget.surah!);
                           }),
                       const SizedBox(height: 8),
                       ButtonScalable(
@@ -88,7 +83,7 @@ class _SoraItemState extends State<SoraItem> {
                                 height: 24, width: 24),
                             const SizedBox(width: 4),
                             Text(
-                              "Practice",
+                              _localization.practice,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
@@ -97,30 +92,7 @@ class _SoraItemState extends State<SoraItem> {
                           ],
                         ),
                         onTap: () async {
-                          final micPermission =
-                              await Permission.microphone.request();
-                          if (!micPermission.isGranted) {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                content: Text(
-                                    "Please provide microphone permisson")));
-                            return;
-                          }
-
-                          audioPlayerEffect?.playOpenPanel();
-                          if (context.mounted) {
-                            Navigator.of(context)
-                                .pushNamed(
-                                  AppRoutes.memorization,
-                                  arguments: widget.surah,
-                                )
-                                .then((_) {});
-                            if (context.mounted) {
-                              WidgetsBinding.instance.addPostFrameCallback((_) {
-                                _selectSoraCubit
-                                    .refresh();
-                              });
-                            }
-                          }
+                          widget.onTapPractice?.call(widget.surah!);
                         },
                       ),
                     ],
@@ -165,13 +137,13 @@ class _SoraItemState extends State<SoraItem> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          widget.surah!.title,
+                          _localization.code == 'ar' ? widget.surah!.titleArabic : widget.surah!.title,
                           style:
                               TextStyle(fontSize: 14, color: Color(0xFF77759A)),
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          "${widget.surah!.totalAya} Ayah",
+                          _localization.aya_index(convertToArabicNumbers(widget.surah?.totalAya ?? 0, locale: _localization.code)),
                           style:
                               TextStyle(fontSize: 14, color: Color(0xFF77759A)),
                         ),

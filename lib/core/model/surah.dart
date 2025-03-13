@@ -14,6 +14,7 @@ class Surah {
   final int soraIndex;
   final int totalAya;
   final String title;
+  final String titleArabic;
   final String imageAsset;
   final List<SurahWord> words;
   final MemorizationModel? memorizationModel;
@@ -25,6 +26,7 @@ class Surah {
     required this.words,
     required this.totalAya,
     required this.title,
+    required this.titleArabic,
     required this.imageAsset,
     this.memorizationModel,
   });
@@ -37,6 +39,7 @@ class Surah {
       soraIndex: id,
       totalAya: surahDto.last.aya,
       title: SoraNamesConstant.latinSoraNames[id - 1],
+      titleArabic: SoraNamesConstant.cSoraNames[id - 1],
       imageAsset: "assets/titles/$id.svg",
       words: surahDto.map((e) => e.toDomain()).toList(),
       memorizationModel: memorization
@@ -57,6 +60,7 @@ class Surah {
       words: surah.words,
       totalAya: surah.totalAya,
       title: surah.title,
+      titleArabic: surah.title,
       imageAsset: surah.imageAsset,
       memorizationModel: memorizationModel,
     );

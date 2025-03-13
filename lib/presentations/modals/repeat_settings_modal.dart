@@ -7,6 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:juz_amma_kids/locator/assets.dart';
 import 'package:juz_amma_kids/main.dart';
 import 'package:juz_amma_kids/presentations/modals/frame_button.dart';
+import 'package:juz_amma_kids/presentations/modals/frame_title.dart';
 import 'package:juz_amma_kids/presentations/modals/normal_button.dart';
 import 'package:juz_amma_kids/theme/quranic_theme.dart';
 import 'package:juz_amma_kids/utils/audio_player_ext.dart';
@@ -66,7 +67,7 @@ class _RepeatSettingsModalState extends State<RepeatSettingsModal> {
       content: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 20),
+            padding: const EdgeInsets.only(top: 28),
             child: Stack(
               children: [
                 Positioned.fill(
@@ -262,30 +263,21 @@ class _RepeatSettingsModalState extends State<RepeatSettingsModal> {
             top: 0,
             left: 20,
             right: 20,
-            child: Stack(
-              children: [
-                Positioned.fill(
-                  child: Image.asset(
-                    Assets.bgBanner,
-                    fit: BoxFit.contain,
-                    height: 40,
-                  ),
-                ),
-                Center(
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
-                    child: Text(
-                      localization.repeatSettings,
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+            child: Center(
+              child: FrameTitle(
+                height: null,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8),
+                  child: Text(
+                    localization.repeatSettings,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
                 ),
-              ],
+              ),
             ),
           ),
           Positioned(
