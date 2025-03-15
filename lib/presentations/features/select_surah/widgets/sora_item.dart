@@ -11,6 +11,7 @@ import 'package:juz_amma_kids/presentations/features/select_surah/cubit/select_s
 import 'package:juz_amma_kids/presentations/modals/button_scalable.dart';
 import 'package:juz_amma_kids/route/app_routes.dart';
 import 'package:juz_amma_kids/utils/audio_player_ext.dart';
+import 'package:juz_amma_kids/utils/context_ext.dart';
 import 'package:juz_amma_kids/utils/utilities.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shimmer/shimmer.dart';
@@ -22,7 +23,13 @@ class SoraItem extends StatefulWidget {
   final Function? onTap;
   final Function(Surah surah)? onTapRead;
   final Function(Surah surah)? onTapPractice;
-  const SoraItem({super.key, required this.surah, this.isSelected, this.onTap, this.onTapRead, this.onTapPractice});
+  const SoraItem(
+      {super.key,
+      required this.surah,
+      this.isSelected,
+      this.onTap,
+      this.onTapRead,
+      this.onTapPractice});
 
   @override
   State<SoraItem> createState() => _SoraItemState();
@@ -40,13 +47,14 @@ class _SoraItemState extends State<SoraItem> {
   @override
   Widget build(BuildContext context) {
     _localization = AppLocalizations.of(context)!;
+    final double itemWidth = context.isTablet() ? 210: 190;
     return widget.surah != null
         ? Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               AnimatedSlide(
                 offset:
-                    widget.isSelected == true ? Offset(0, 1.9) : Offset(0, 1),
+                    widget.isSelected == true ? Offset(0, context.isTablet() ? 1.9 : 1.75) : Offset(0, 1),
                 duration: Duration(milliseconds: 250),
                 curve: Curves.easeOutBack,
                 child: AnimatedOpacity(
@@ -56,6 +64,7 @@ class _SoraItemState extends State<SoraItem> {
                     children: [
                       const SizedBox(height: 8),
                       ButtonScalable(
+                          width: itemWidth,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -76,6 +85,7 @@ class _SoraItemState extends State<SoraItem> {
                           }),
                       const SizedBox(height: 8),
                       ButtonScalable(
+                        width: itemWidth,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -101,7 +111,7 @@ class _SoraItemState extends State<SoraItem> {
               ),
               AnimatedSlide(
                 offset: widget.isSelected == true
-                    ? Offset(0, -0.5)
+                    ? Offset(0, context.isTablet() ? -0.52 : -0.58)
                     : Offset(0, -0.2),
                 duration: Duration(milliseconds: 250),
                 curve: Curves.easeOutBack,
@@ -110,7 +120,7 @@ class _SoraItemState extends State<SoraItem> {
                     widget.onTap?.call();
                   },
                   child: Container(
-                    width: 200,
+                    width: itemWidth,
                     margin: EdgeInsets.symmetric(horizontal: 8),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
@@ -137,17 +147,21 @@ class _SoraItemState extends State<SoraItem> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          _localization.code == 'ar' ? widget.surah!.titleArabic : widget.surah!.title,
+                          _localization.code == 'ar'
+                              ? widget.surah!.titleArabic
+                              : widget.surah!.title,
                           style:
-                              TextStyle(fontSize: 14, color: Color(0xFF77759A)),
+                              TextStyle(fontSize: 14, color: Color(0xFF77759A), fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          _localization.aya_index(convertToArabicNumbers(widget.surah?.totalAya ?? 0, locale: _localization.code)),
+                          _localization.aya_index(convertToArabicNumbers(
+                              widget.surah?.totalAya ?? 0,
+                              locale: _localization.code)),
                           style:
                               TextStyle(fontSize: 14, color: Color(0xFF77759A)),
                         ),
-                        const SizedBox(height: 16),
+                        SizedBox(height: context.isTablet() ? 16 : 4),
                         Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(4),
@@ -186,10 +200,10 @@ class _SoraItemState extends State<SoraItem> {
               ),
             ],
           )
-        : _buildLoadingLayout();
+        : _buildLoadingLayout(itemWidth);
   }
 
-  Widget _buildLoadingLayout() {
+  Widget _buildLoadingLayout(double itemWidth) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -204,6 +218,7 @@ class _SoraItemState extends State<SoraItem> {
               children: [
                 const SizedBox(height: 8),
                 ButtonScalable(
+                  width: itemWidth,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -221,6 +236,7 @@ class _SoraItemState extends State<SoraItem> {
                     onTap: () {}),
                 const SizedBox(height: 8),
                 ButtonScalable(
+                  width: itemWidth,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -247,7 +263,7 @@ class _SoraItemState extends State<SoraItem> {
           child: GestureDetector(
             onTap: null,
             child: Container(
-              width: 200,
+              width: itemWidth,
               margin: EdgeInsets.symmetric(horizontal: 8),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),

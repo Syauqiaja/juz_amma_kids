@@ -9,7 +9,7 @@
     "language" : "Language",
     "aya" : "Aya",
     "aya_index" : "{index} Ayah",
-    "aya_index_reversed" : "{index} Ayah",
+    "aya_index_reversed" : "Aya {index}",
     "repeatSettings": "Repeatation",
     "from": "From",
     "to": "To",
@@ -26,7 +26,7 @@
         }
     },
     "@aya_index_reversed" : {
-        "description": "Set aya index",
+        "description": "Set aya index reversed",
         "placeholders": {
             "index" : {
                 "type" : "String",

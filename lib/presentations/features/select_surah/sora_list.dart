@@ -89,96 +89,78 @@ class _SoraListState extends State<SoraList>
                       fit: BoxFit.fitWidth,
                     ),
                   ),
-                  SafeArea(
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 24),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              NormalButton(
-                                  // Button home
-                                  height: context.isTablet() ? 64 : 48,
-                                  width: context.isTablet() ? 64 : 48,
-                                  onTap: () async {
-                                    await audioPlayerEffect?.playClosePanel();
-                                    Navigator.of(context).pop();
-                                  },
-                                  imageAsset: Assets.icHome),
-                            ],
-                          ),
+                  Column(
+                    children: [
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(top: 24, left: 24, right: 24),
+                        child: Row(
+                          textDirection: TextDirection.ltr,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            NormalButton(
+                                // Button home
+                                height: context.isTablet() ? 64 : 48,
+                                width: context.isTablet() ? 64 : 48,
+                                onTap: () async {
+                                  await audioPlayerEffect?.playClosePanel();
+                                  Navigator.of(context).pop();
+                                },
+                                imageAsset: Assets.icHome),
+                          ],
                         ),
-                        Expanded(
-                          child: BlocListener<SelectSoraCubit, SelectSoraState>(
-                            listenWhen: (previous, current) {
-                              return (previous is SelectSoraLoading) &&
-                                  (current is SelectSoraWithData);
-                            },
-                            listener: (context, state) {
-                              setState(() {});
-                            },
-                            child:
-                                BlocBuilder<SelectSoraCubit, SelectSoraState>(
-                              builder: (context, state) {
-                                if (state is SelectSoraWithData) {
-                                  print("Updating selectsorawithdata builder");
-                                  return ListView.builder(
+                      ),
+                      Expanded(
+                        child: BlocListener<SelectSoraCubit, SelectSoraState>(
+                          listenWhen: (previous, current) {
+                            return (previous is SelectSoraLoading) &&
+                                (current is SelectSoraWithData);
+                          },
+                          listener: (context, state) {
+                            setState(() {});
+                          },
+                          child: BlocBuilder<SelectSoraCubit, SelectSoraState>(
+                            builder: (context, state) {
+                              if (state is SelectSoraWithData) {
+                                print("Updating selectsorawithdata builder");
+                                return Padding(
+                                  padding: context.isTablet()
+                                      ? const EdgeInsets.symmetric(vertical: 28)
+                                      : const EdgeInsets.all(0),
+                                  child: GridView.builder(
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount:
+                                          context.isTablet() ? 2 : 1,
+                                      childAspectRatio:
+                                          context.isTablet() ? 4 / 3 : 3 / 2,
+                                    ),
+                                    padding: EdgeInsets.symmetric(horizontal: 24),
                                     controller: _scrollController,
                                     scrollDirection: Axis.horizontal,
                                     itemCount: state.surahs.length,
                                     itemBuilder: (context, index) {
-                                      return Padding(
-                                        padding: index == 0
-                                            ? EdgeInsets.only(left: 48)
-                                            : index == state.surahs.length - 1
-                                                ? EdgeInsets.only(right: 48)
-                                                : EdgeInsets.all(0),
-                                        child: SoraItem(
-                                          surah: state.surahs[index],
-                                          isSelected: index == _selectedIndex,
-                                          onTap: () {
-                                            setState(() {
-                                              if (_selectedIndex == index) {
-                                                _selectedIndex = null;
-                                              } else {
-                                                _selectedIndex = index;
-                                              }
-                                            });
-                                          },
-                                          onTapRead: (surah) async {
-                                            Navigator.of(context)
-                                                .pushNamed(AppRoutes.quran,
-                                                    arguments: surah)
-                                                .then((_) {
-                                              if (context.mounted) {
-                                                WidgetsBinding.instance
-                                                    .addPostFrameCallback((_) {
-                                                  _selectSoraCubit.refresh();
-                                                });
-                                              }
-                                            });
-                                          },
-                                          onTapPractice: (surah) async {
-                                            final micPermission =
-                                                await Permission.microphone
-                                                    .request();
-                                            if (!micPermission.isGranted) {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(SnackBar(
-                                                      content: Text(
-                                                          "Please provide microphone permisson")));
-                                              return;
-                                            }
-
-                                            audioPlayerEffect?.playOpenPanel();
-
-                                            if (context.mounted) {
+                                      return Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          SoraItem(
+                                            surah: state.surahs[index],
+                                            isSelected: index == _selectedIndex,
+                                            onTap: () {
+                                              setState(() {
+                                                if (_selectedIndex == index) {
+                                                  _selectedIndex = null;
+                                                } else {
+                                                  _selectedIndex = index;
+                                                }
+                                              });
+                                            },
+                                            onTapRead: (surah) async {
                                               Navigator.of(context)
-                                                  .pushNamed(
-                                                AppRoutes.memorization,
-                                                arguments: surah,
-                                              )
+                                                  .pushNamed(AppRoutes.quran,
+                                                      arguments: surah)
                                                   .then((_) {
                                                 if (context.mounted) {
                                                   WidgetsBinding.instance
@@ -188,40 +170,89 @@ class _SoraListState extends State<SoraList>
                                                   });
                                                 }
                                               });
-                                            }
-                                          },
-                                        ),
+                                            },
+                                            onTapPractice: (surah) async {
+                                              final micPermission =
+                                                  await Permission.microphone
+                                                      .request();
+                                              if (!micPermission.isGranted) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(SnackBar(
+                                                        content: Text(
+                                                            "Please provide microphone permisson")));
+                                                return;
+                                              }
+
+                                              audioPlayerEffect
+                                                  ?.playOpenPanel();
+
+                                              if (context.mounted) {
+                                                Navigator.of(context)
+                                                    .pushNamed(
+                                                  AppRoutes.memorization,
+                                                  arguments: surah,
+                                                )
+                                                    .then((_) {
+                                                  if (context.mounted) {
+                                                    WidgetsBinding.instance
+                                                        .addPostFrameCallback(
+                                                            (_) {
+                                                      _selectSoraCubit
+                                                          .refresh();
+                                                    });
+                                                  }
+                                                });
+                                              }
+                                            },
+                                          ),
+                                        ],
                                       );
                                     },
-                                  );
-                                } else if (state is SelectSoraError) {
-                                  return Center(
-                                    child: Text(state.message),
-                                  );
-                                } else {
-                                  return ListView.builder(
+                                  ),
+                                );
+                              } else if (state is SelectSoraError) {
+                                return Center(
+                                  child: Text(state.message),
+                                );
+                              } else {
+                                return Padding(
+                                  padding: context.isTablet()
+                                      ? const EdgeInsets.symmetric(vertical: 28)
+                                      : const EdgeInsets.all(0),
+                                  child: GridView.builder(
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount:
+                                          context.isTablet() ? 2 : 1,
+                                      childAspectRatio:
+                                          context.isTablet() ? 4 / 3 : 3 / 2,
+                                    ),
+                                    padding: EdgeInsets.symmetric(horizontal: 24),
+                                    controller: _scrollController,
                                     scrollDirection: Axis.horizontal,
-                                    itemCount: 5,
+                                    itemCount: 12,
                                     itemBuilder: (context, index) {
-                                      return Padding(
-                                        padding: index == 0
-                                            ? EdgeInsets.only(left: 48)
-                                            : index == 4
-                                                ? EdgeInsets.only(right: 48)
-                                                : EdgeInsets.all(0),
-                                        child: SoraItem(
-                                          surah: null,
-                                        ),
+                                      return Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          SoraItem(
+                                            surah: null,
+                                            isSelected: false,
+                                          ),
+                                        ],
                                       );
                                     },
-                                  );
-                                }
-                              },
-                            ),
+                                  ),
+                                );
+                              }
+                            },
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(height: 16)
+                    ],
                   ),
                 ],
               ),

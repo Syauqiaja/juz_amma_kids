@@ -468,7 +468,6 @@ class _QuranScreenState extends State<QuranScreen> with SingleTickerProviderStat
                                                 displayText,
                                                 style: const TextStyle(
                                                     color: Colors.white),
-                                                textDirection: TextDirection.ltr,
                                               ),
                                             );
                                           }).toList(),
