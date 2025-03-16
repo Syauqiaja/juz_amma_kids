@@ -36,8 +36,8 @@ class SurahDao extends DatabaseAccessor<QuranDatabase> with _$SurahDaoMixin {
 
   Future<List<Surah>> getSurahs() async {
     final query = selectOnly(tableSurahs)
-      ..where(tableSurahs.sora.isBiggerThanValue(77))
-      ..orderBy([OrderingTerm.desc(tableSurahs.sora)])
+      ..where(Expression.or([tableSurahs.sora.isBiggerThanValue(77), tableSurahs.sora.isValue(1)]))
+      ..orderBy([OrderingTerm.asc(tableSurahs.sora)])
       ..addColumns([tableSurahs.sora]);
     query.groupBy([tableSurahs.sora]);
     final ids = await query.get();

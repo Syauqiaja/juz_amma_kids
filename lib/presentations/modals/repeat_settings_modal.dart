@@ -46,6 +46,7 @@ class _RepeatSettingsModalState extends State<RepeatSettingsModal> {
   @override
   void initState() {
     initAudio();
+    endAyah = widget.maxAya;
     super.initState();
   }
 
