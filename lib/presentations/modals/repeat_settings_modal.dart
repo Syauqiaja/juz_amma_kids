@@ -290,7 +290,7 @@ class _RepeatSettingsModalState extends State<RepeatSettingsModal> {
               widget.onSave(selectedRepeatCount, startAyah,
                   endAyah); // Kirim hasil ke fungsi onSave
               HapticFeedback.selectionClick();
-              Navigator.pop(context);
+              Navigator.pop(context, true);
             },
             child: Text(localization.confirm,
                 style: TextStyle(fontSize: 20, color: Colors.white)),

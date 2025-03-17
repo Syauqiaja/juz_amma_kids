@@ -745,7 +745,11 @@ class _QuranScreenState extends State<QuranScreen>
                                                 ),
                                               );
                                             },
-                                          );
+                                          ).then((val){
+                                            if(val != true){
+                                          _quranBloc.add(ResumeQuran());
+                                            }
+                                          });
                                         } else {
                                           _quranBloc.add(StopRepeating());
                                         }
