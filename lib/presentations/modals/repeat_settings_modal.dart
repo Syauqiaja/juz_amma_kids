@@ -89,157 +89,145 @@ class _RepeatSettingsModalState extends State<RepeatSettingsModal> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Stack(
-                            children: [
-                              Image.asset(
-                                Assets.btnDropdownLong,
-                                width: 190,
-                                height: 40,
-                                fit: BoxFit.fill,
+                          Container(
+                            width: 190,
+                            height: 48,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image:
+                                    AssetImage(Assets.frameDropdownRepeatModal),
+                                centerSlice: Rect.fromLTRB(
+                                  20,
+                                  4,
+                                  135,
+                                  34,
+                                ),
                               ),
-                              Positioned.fill(
-                                top: -3,
-                                right: 0,
-                                child: Padding(
-                                  padding: EdgeInsets.only(right: 15, left: 15),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        localization.from,
-                                        style: TextStyle(
-                                            fontSize: 18, color: Colors.white),
-                                      ),
-                                      Flexible(
-                                        child: DropdownButtonFormField<int>(
-                                          padding: EdgeInsets.all(0),
-                                          alignment: Alignment.centerRight,
-                                          menuMaxHeight: 200,
-                                          dropdownColor:
-                                              QuranicTheme.primaryColor,
-                                          decoration: InputDecoration(
-                                            contentPadding: EdgeInsets.all(10),
-                                            isDense: true,
-                                            border: InputBorder.none,
-                                            prefixIcon: Padding(
-                                              padding: const EdgeInsets.all(12),
-                                              child: Image.asset(
-                                                Assets.icDropdown,
-                                                width: 24,
-                                                height: 24,
-                                              ),
-                                            ),
+                            ),
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: Row(
+                              children: [
+                                Text(
+                                  localization.from,
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.white),
+                                ),
+                                Flexible(
+                                  child: DropdownButtonFormField<int>(
+                                    padding: EdgeInsets.all(0),
+                                    alignment: Alignment.centerRight,
+                                    menuMaxHeight: 200,
+                                    dropdownColor: Color(0xFF6895E9),
+                                    decoration: InputDecoration(
+                                        contentPadding: EdgeInsets.all(10),
+                                        isDense: true,
+                                        border: InputBorder.none,
+                                        prefixIcon: Icon(
+                                          Icons.arrow_drop_down_circle,
+                                          color: Colors.white,
+                                        )),
+                                    isDense: true,
+                                    isExpanded: true,
+                                    icon: Container(),
+                                    value: startAyah,
+                                    items: List.generate(
+                                      widget.maxAya +
+                                          1, // Sesuaikan jumlah ayat dengan Surah An-Naas
+                                      (index) => DropdownMenuItem(
+                                        value: index,
+                                        child: Center(
+                                          child: Text(
+                                            convertToArabicNumbers(index,
+                                                locale: localization.code),
+                                            style:
+                                                TextStyle(color: Colors.white),
                                           ),
-                                          icon: Container(),
-                                          value: startAyah,
-                                          items: List.generate(
-                                            widget.maxAya +
-                                                1, // Sesuaikan jumlah ayat dengan Surah An-Naas
-                                            (index) => DropdownMenuItem(
-                                              value: index,
-                                              child: Center(
-                                                child: Text(
-                                                  convertToArabicNumbers(index,
-                                                      locale:
-                                                          localization.code),
-                                                  style: TextStyle(
-                                                      color: Colors.white),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          onChanged: (int? newValue) {
-                                            setState(() {
-                                              startAyah = newValue!;
-                                              if (startAyah > endAyah) {
-                                                // Ensure start ayah is never greater than end ayah
-                                                endAyah = startAyah;
-                                              }
-                                            });
-                                          },
                                         ),
                                       ),
-                                    ],
+                                    ),
+                                    onChanged: (int? newValue) {
+                                      setState(() {
+                                        startAyah = newValue!;
+                                        if (startAyah > endAyah) {
+                                          // Ensure start ayah is never greater than end ayah
+                                          endAyah = startAyah;
+                                        }
+                                      });
+                                    },
                                   ),
                                 ),
-                              )
-                            ],
+                              ],
+                            ),
                           ),
-                          Stack(
-                            children: [
-                              Image.asset(
-                                Assets.btnDropdown,
-                                width: 130,
-                                height: 40,
-                                fit: BoxFit.fill,
+                          Container(
+                            width: 190,
+                            height: 48,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image:
+                                    AssetImage(Assets.frameDropdownRepeatModal),
+                                centerSlice: Rect.fromLTRB(
+                                  20,
+                                  4,
+                                  135,
+                                  34,
+                                ),
                               ),
-                              Positioned.fill(
-                                top: -3,
-                                right: 0,
-                                child: Padding(
-                                  padding: EdgeInsets.only(right: 15, left: 15),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        localization.to,
-                                        style: TextStyle(
-                                            fontSize: 18, color: Colors.white),
+                            ),
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: Row(
+                              children: [
+                                Text(
+                                  localization.to,
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.white),
+                                ),
+                                Flexible(
+                                  child: DropdownButtonFormField<int>(
+                                    padding: EdgeInsets.all(0),
+                                    alignment: Alignment.centerRight,
+                                    menuMaxHeight: 200,
+                                    dropdownColor: Color(0xFF6895E9),
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.all(10),
+                                      isDense: true,
+                                      border: InputBorder.none,
+                                      prefixIcon: Icon(
+                                        Icons.arrow_drop_down_circle,
+                                        color: Colors.white,
                                       ),
-                                      Flexible(
-                                        child: DropdownButtonFormField<int>(
-                                          padding: EdgeInsets.all(0),
-                                          alignment: Alignment.centerRight,
-                                          menuMaxHeight: 200,
-                                          dropdownColor:
-                                              QuranicTheme.primaryColor,
-                                          decoration: InputDecoration(
-                                            contentPadding: EdgeInsets.all(10),
-                                            isDense: true,
-                                            border: InputBorder.none,
-                                            prefixIcon: Padding(
-                                              padding: const EdgeInsets.all(12),
-                                              child: Image.asset(
-                                                Assets.icDropdown,
-                                                width: 24,
-                                                height: 24,
+                                    ),
+                                    icon: Container(),
+                                    value: endAyah,
+                                    items: startAyah
+                                        .to(widget.maxAya)
+                                        .map(
+                                          (index) => DropdownMenuItem(
+                                            value: index,
+                                            child: Center(
+                                              child: Text(
+                                                convertToArabicNumbers(index,
+                                                    locale: localization.code),
+                                                style: TextStyle(
+                                                    color: Colors.white),
                                               ),
                                             ),
                                           ),
-                                          icon: Container(),
-                                          value: endAyah,
-                                          items: startAyah
-                                              .to(widget.maxAya)
-                                              .map(
-                                                (index) => DropdownMenuItem(
-                                                  value: index,
-                                                  child: Center(
-                                                    child: Text(
-                                                      convertToArabicNumbers(
-                                                          index,
-                                                          locale: localization
-                                                              .code),
-                                                      style: TextStyle(
-                                                          color: Colors.white),
-                                                    ),
-                                                  ),
-                                                ),
-                                              )
-                                              .toList(),
-                                          onChanged: (int? newValue) {
-                                            setState(() {
-                                              endAyah = newValue!;
-                                              if (endAyah < startAyah) {
-                                                // Ensure end ayah is never less than start ayah
-                                                startAyah = endAyah;
-                                              }
-                                            });
-                                          },
-                                        ),
-                                      ),
-                                    ],
+                                        )
+                                        .toList(),
+                                    onChanged: (int? newValue) {
+                                      setState(() {
+                                        endAyah = newValue!;
+                                        if (endAyah < startAyah) {
+                                          // Ensure end ayah is never less than start ayah
+                                          startAyah = endAyah;
+                                        }
+                                      });
+                                    },
                                   ),
                                 ),
-                              )
-                            ],
+                              ],
+                            ),
                           ),
                         ],
                       ),

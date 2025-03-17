@@ -16,6 +16,7 @@ import 'package:juz_amma_kids/presentations/features/quran/widgets/cubit/mushaf_
 import 'package:juz_amma_kids/presentations/features/quran/widgets/mushaf_box.dart';
 import 'package:juz_amma_kids/presentations/features/select_display_mode/widgets/hole_painter.dart';
 import 'package:juz_amma_kids/presentations/features/select_surah/cubit/select_sora_cubit.dart';
+import 'package:juz_amma_kids/presentations/modals/frame_panel.dart';
 import 'package:juz_amma_kids/presentations/modals/normal_button.dart';
 import 'package:juz_amma_kids/presentations/modals/repeat_settings_modal.dart';
 import 'package:juz_amma_kids/presentations/modals/verse_input_modal.dart';
@@ -35,7 +36,8 @@ class QuranScreen extends StatefulWidget {
   State<QuranScreen> createState() => _QuranScreenState();
 }
 
-class _QuranScreenState extends State<QuranScreen> with SingleTickerProviderStateMixin{
+class _QuranScreenState extends State<QuranScreen>
+    with SingleTickerProviderStateMixin {
   late QuranBloc _quranBloc;
   late ReadQuranCubit _readQuranCubit;
   late MushafCubit _mushafCubit;
@@ -53,7 +55,6 @@ class _QuranScreenState extends State<QuranScreen> with SingleTickerProviderStat
   bool dropdownClicked = false;
   GlobalKey dropdownKey = GlobalKey(debugLabel: "dropdown_select_ayah");
 
-
   late AnimationController _animationController;
   late Animation<double> _splashAnimation =
       Tween<double>(begin: 0, end: 10).animate(_animationController);
@@ -65,8 +66,6 @@ class _QuranScreenState extends State<QuranScreen> with SingleTickerProviderStat
     _quranBloc = BlocProvider.of<QuranBloc>(context);
     _mushafCubit = BlocProvider.of<MushafCubit>(context);
     _readQuranCubit = BlocProvider.of(context);
-
-    
 
     disabledWords = DatabaseService().getDisabledWords(widget.surah.soraIndex);
     initAudio();
@@ -81,7 +80,6 @@ class _QuranScreenState extends State<QuranScreen> with SingleTickerProviderStat
     ]);
 
     _quranBloc.add(LoadQuran(surahIndex: widget.surah.soraIndex));
-
 
     _animationController =
         AnimationController(vsync: this, duration: Duration(seconds: 1));
@@ -215,7 +213,9 @@ class _QuranScreenState extends State<QuranScreen> with SingleTickerProviderStat
               BlocListener<ReadQuranCubit, ReadQuranState>(
                   listener: (context, state) {
                 if (state is ReadQuranWithData) {
-                  context.read<SelectSoraCubit>().update(widget.surah.soraIndex);
+                  context
+                      .read<SelectSoraCubit>()
+                      .update(widget.surah.soraIndex);
                 }
               }),
               BlocListener<QuranBloc, QuranState>(
@@ -227,14 +227,16 @@ class _QuranScreenState extends State<QuranScreen> with SingleTickerProviderStat
                             state.startAya!, state.endAya!, state.repeatCount!);
                       } else {
                         _mushafCubit.select(state.startAya!);
-          
-                        if (widget.surah.soraIndex == 1 && state.startAya == 0) {
+
+                        if (widget.surah.soraIndex == 1 &&
+                            state.startAya == 0) {
                           await _handleAyahCompletion();
                         } else {
                           await _audioPlayer?.stopPlayer();
                           await _audioPlayer?.startPlayer(
-                              fromDataBuffer: await ResourceLoader.getRecitation(
-                                  widget.surah.soraIndex, state.startAya!),
+                              fromDataBuffer:
+                                  await ResourceLoader.getRecitation(
+                                      widget.surah.soraIndex, state.startAya!),
                               whenFinished: () async {
                                 await _handleAyahCompletion();
                               });
@@ -269,7 +271,8 @@ class _QuranScreenState extends State<QuranScreen> with SingleTickerProviderStat
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage(Assets.bg), // Background image
-                    fit: BoxFit.cover, // Ensure the image covers the whole screen
+                    fit: BoxFit
+                        .cover, // Ensure the image covers the whole screen
                   ),
                 ),
                 child: Column(
@@ -296,9 +299,11 @@ class _QuranScreenState extends State<QuranScreen> with SingleTickerProviderStat
                                       if (state is ReadQuranWithData) {
                                         return CircularPercentIndicator(
                                           radius: 32,
-                                          percent:
-                                              min(state.readCount / state.maxRead, 1),
-                                          progressColor: QuranicTheme.primaryColor,
+                                          percent: min(
+                                              state.readCount / state.maxRead,
+                                              1),
+                                          progressColor:
+                                              QuranicTheme.primaryColor,
                                           backgroundColor:
                                               Colors.white.withOpacity(0.1),
                                         );
@@ -329,13 +334,15 @@ class _QuranScreenState extends State<QuranScreen> with SingleTickerProviderStat
                                           children: [
                                             Positioned.fill(
                                               child: Image.asset(
-                                                Assets.frame2, // File gambar frame
+                                                Assets
+                                                    .frame2, // File gambar frame
                                                 fit: BoxFit
                                                     .fill, // Memastikan frame menyesuaikan seluruh area
                                               ),
                                             ),
                                             CustomPaint(
-                                              child: FutureBuilder<List<SurahWord>>(
+                                              child: FutureBuilder<
+                                                      List<SurahWord>>(
                                                   future: disabledWords,
                                                   builder: (context, snapshot) {
                                                     if (snapshot.hasData) {
@@ -343,7 +350,8 @@ class _QuranScreenState extends State<QuranScreen> with SingleTickerProviderStat
                                                         surah: widget.surah,
                                                         scrollController:
                                                             _scrollController,
-                                                        disabledWords: snapshot.data!,
+                                                        disabledWords:
+                                                            snapshot.data!,
                                                       );
                                                     } else {
                                                       return MushafBox(
@@ -387,54 +395,33 @@ class _QuranScreenState extends State<QuranScreen> with SingleTickerProviderStat
                     Row(
                       textDirection: TextDirection.ltr,
                       children: [
-                        Row(
-                          //Dropdown select aya
-                          children: [
-                            Stack(
-                              children: [
-                                GestureDetector(
-                                  onTapDown: (details) {
-                                    setState(() {
-                                      dropdownClicked = true;
-                                    });
-                                  },
-                                  onTapCancel: () {
-                                    setState(() {
-                                      dropdownClicked = false;
-                                    });
-                                  },
-                                  onTapUp: (details) {
-                                    setState(() {
-                                      dropdownClicked = false;
-                                    });
-                                    dropdownKey.currentContext
-                                        ?.visitChildElements((element) {
-                                      if (element.widget is Semantics) {
-                                        element.visitChildElements((element) {
-                                          if (element.widget is Actions) {
-                                            element.visitChildElements((element) {
-                                              Actions.invoke(
-                                                  element, ActivateIntent());
-                                            });
-                                          }
-                                        });
-                                      }
-                                    });
-                                  },
-                                  child: Image.asset(
-                                    dropdownClicked
-                                        ? Assets.frameWithPrefixClicked
-                                        : Assets.frameWithPrefix,
-                                    width: context.isTablet() ? 192 : 150,
-                                    height: context.isTablet() ? 64 : 50,
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                                Positioned.fill(
-                                  child: Padding(
-                                    padding: context.isTablet()
-                                        ? const EdgeInsets.only(left: 70, right: 24)
-                                        : const EdgeInsets.only(left: 55, right: 16),
+                        Expanded(
+                          child: Stack(
+                            alignment: Alignment.centerLeft,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: 4),
+                                child: Container(
+                                  width: context.isTablet() ? 194 : 172,
+                                  height: context.isTablet() ? 58 : 46,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                            Assets.frameDropdownAyaSelect),
+                                        centerSlice: Rect.fromLTRB(
+                                          54,
+                                          4, // X and Y offset of the resizable area
+                                          130,
+                                          34, // Width and height of the resizable area
+                                        ),
+                                        fit: BoxFit.fill,
+                                      ),
+                                      // color: Colors.red,
+                                      ),
+                                  padding: EdgeInsets.only(
+                                      left: 58, top: 8, right: 24, bottom: 8),
+                                  margin: EdgeInsets.symmetric(horizontal: 8),
+                                  child: Center(
                                     child: BlocBuilder<QuranBloc, QuranState>(
                                       buildWhen: (previous, current) =>
                                           current is QuranPlaying ||
@@ -445,12 +432,17 @@ class _QuranScreenState extends State<QuranScreen> with SingleTickerProviderStat
                                           key: dropdownKey,
                                           icon: Container(),
                                           alignment: Alignment.centerRight,
-                                          dropdownColor: QuranicTheme.primaryColor,
+                                          isDense: true,
+                                          isExpanded: true,
+                                          dropdownColor:
+                                              Color(0xFF6895E9),
                                           hint: Text(
                                             _localization.aya,
-                                            style: TextStyle(color: Colors.white),
+                                            style:
+                                                TextStyle(color: Colors.white),
                                             textAlign: TextAlign.start,
                                           ),
+                                          focusColor: Colors.red,
                                           value: max(
                                               _quranBloc.ayahs.isNotEmpty
                                                   ? _quranBloc.ayahs.first
@@ -459,9 +451,13 @@ class _QuranScreenState extends State<QuranScreen> with SingleTickerProviderStat
                                           items: _quranBloc.ayahs.map((index) {
                                             String displayText = (index == 0)
                                                 ? _localization.basmalah
-                                                : _localization.aya_index_reversed(
-                                                    convertToArabicNumbers(index,
-                                                        locale: _localization.code));
+                                                : _localization
+                                                    .aya_index_reversed(
+                                                        convertToArabicNumbers(
+                                                            index,
+                                                            locale:
+                                                                _localization
+                                                                    .code));
                                             return DropdownMenuItem(
                                               value: index,
                                               child: Text(
@@ -472,7 +468,8 @@ class _QuranScreenState extends State<QuranScreen> with SingleTickerProviderStat
                                             );
                                           }).toList(),
                                           onTap: () async {
-                                            await audioPlayerEffect?.playOpenPanel();
+                                            await audioPlayerEffect
+                                                ?.playOpenPanel();
                                           },
                                           onChanged: (int? newValue) {
                                             if (newValue != null) {
@@ -484,9 +481,121 @@ class _QuranScreenState extends State<QuranScreen> with SingleTickerProviderStat
                                     ),
                                   ),
                                 ),
-                              ],
-                            ),
-                          ],
+                              ),
+                              NormalButton(
+                                  height: context.isTablet() ? 64 : 48,
+                                  width: context.isTablet() ? 64 : 48,
+                                  onTap: () {
+                                    dropdownKey.currentContext
+                                        ?.visitChildElements((element) {
+                                      if (element.widget is Semantics) {
+                                        element.visitChildElements((element) {
+                                          if (element.widget is Actions) {
+                                            element
+                                                .visitChildElements((element) {
+                                              Actions.invoke(
+                                                  element, ActivateIntent());
+                                            });
+                                          }
+                                        });
+                                      }
+                                    });
+                                  },
+                                  imageAsset: Assets.icTripledots),
+                              // GestureDetector(
+                              //   onTapDown: (details) {
+                              //     setState(() {
+                              //       dropdownClicked = true;
+                              //     });
+                              //   },
+                              //   onTapCancel: () {
+                              //     setState(() {
+                              //       dropdownClicked = false;
+                              //     });
+                              //   },
+                              //   onTapUp: (details) {
+                              //     setState(() {
+                              //       dropdownClicked = false;
+                              //     });
+                              //     dropdownKey.currentContext
+                              //         ?.visitChildElements((element) {
+                              //       if (element.widget is Semantics) {
+                              //         element.visitChildElements((element) {
+                              //           if (element.widget is Actions) {
+                              //             element.visitChildElements((element) {
+                              //               Actions.invoke(
+                              //                   element, ActivateIntent());
+                              //             });
+                              //           }
+                              //         });
+                              //       }
+                              //     });
+                              //   },
+                              //   child: Image.asset(
+                              //     dropdownClicked
+                              //         ? Assets.frameWithPrefixClicked
+                              //         : Assets.frameWithPrefix,
+                              //     width: context.isTablet() ? 192 : 150,
+                              //     height: context.isTablet() ? 64 : 50,
+                              //     fit: BoxFit.fill,
+                              //   ),
+                              // ),
+                              // Positioned.fill(
+                              //   child: Padding(
+                              //     padding: context.isTablet()
+                              //         ? const EdgeInsets.only(left: 70, right: 24)
+                              //         : const EdgeInsets.only(left: 55, right: 16),
+                              //     child: BlocBuilder<QuranBloc, QuranState>(
+                              //       buildWhen: (previous, current) =>
+                              //           current is QuranPlaying ||
+                              //           current is QuranIdle ||
+                              //           current is QuranLoading,
+                              //       builder: (context, state) {
+                              //         return DropdownButton(
+                              //           key: dropdownKey,
+                              //           icon: Container(),
+                              //           alignment: Alignment.centerRight,
+                              //           dropdownColor: QuranicTheme.primaryColor,
+                              //           hint: Text(
+                              //             _localization.aya,
+                              //             style: TextStyle(color: Colors.white),
+                              //             textAlign: TextAlign.start,
+                              //           ),
+                              //           value: max(
+                              //               _quranBloc.ayahs.isNotEmpty
+                              //                   ? _quranBloc.ayahs.first
+                              //                   : 0,
+                              //               _quranBloc.selectedAyahIndex),
+                              //           items: _quranBloc.ayahs.map((index) {
+                              //             String displayText = (index == 0)
+                              //                 ? _localization.basmalah
+                              //                 : _localization.aya_index_reversed(
+                              //                     convertToArabicNumbers(index,
+                              //                         locale: _localization.code));
+                              //             return DropdownMenuItem(
+                              //               value: index,
+                              //               child: Text(
+                              //                 displayText,
+                              //                 style: const TextStyle(
+                              //                     color: Colors.white),
+                              //               ),
+                              //             );
+                              //           }).toList(),
+                              //           onTap: () async {
+                              //             await audioPlayerEffect?.playOpenPanel();
+                              //           },
+                              //           onChanged: (int? newValue) {
+                              //             if (newValue != null) {
+                              //               _handleAyahSelection(newValue);
+                              //             }
+                              //           },
+                              //         );
+                              //       },
+                              //     ),
+                              //   ),
+                              // ),
+                            ],
+                          ),
                         ),
                         Expanded(
                           //Play, prev, next buttons
@@ -526,7 +635,8 @@ class _QuranScreenState extends State<QuranScreen> with SingleTickerProviderStat
                                           _quranBloc.add(PlaySequential(
                                               startAya: state.currentAya));
                                         } else {
-                                          _quranBloc.add(PlaySequential(startAya: 0));
+                                          _quranBloc
+                                              .add(PlaySequential(startAya: 0));
                                         }
                                       },
                                       child: Image.asset(Assets.play,
@@ -549,98 +659,112 @@ class _QuranScreenState extends State<QuranScreen> with SingleTickerProviderStat
                             ],
                           ),
                         ),
-                        BlocBuilder<QuranBloc, QuranState>(
-                          // Repeat buttons
-                          buildWhen: (previous, current) {
-                            return current is QuranPlaying || current is QuranStopped;
-                          },
-                          builder: (context, state) {
-                            return SizedBox(
-                              width: context.isTablet() ? 192 : 150,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                textDirection: TextDirection.ltr,
-                                children: [
-                                  NormalButton(
-                                    height: context.isTablet() ? 64 : 48,
-                                    width: context.isTablet() ? 64 : 48,
-                                    onTap: () async {
-                                      audioPlayerEffect?.playButton();
-                                      if (!_quranBloc.isRepeating) {
-                                        _quranBloc.add(PauseQuran());
-                                        await audioPlayerEffect?.playOpenPanel();
-                                        showGeneralDialog(
-                                          context: context,
-                                          pageBuilder: (context, animation,
-                                              secondaryAnimation) {
-                                            return Container();
-                                          },
-                                          transitionBuilder: (context, animation,
-                                              secondaryAnimation, child) {
-                                            // Slide from bottom to center (y-axis starts from 1 and ends at 0)
-                                            final slideTransition = Tween<Offset>(
-                                              begin:
-                                                  Offset(0, 1), // Starts from bottom
-                                              end: Offset(0, 0), // Moves to center
-                                            ).animate(CurvedAnimation(
-                                              parent: animation,
-                                              curve: Curves
-                                                  .easeInOut, // Eases the animation in and out
-                                            ));
-          
-                                            // Optional: Add fade effect during transition
-                                            final fadeTransition = Tween<double>(
-                                              begin: 0.0, // Start invisible
-                                              end: 1.0, // Fully visible
-                                            ).animate(CurvedAnimation(
-                                              parent: animation,
-                                              curve: Curves.easeInOut,
-                                            ));
-          
-                                            return SlideTransition(
-                                              position: slideTransition,
-                                              child: FadeTransition(
-                                                opacity: fadeTransition,
-                                                child: ScaleTransition(
-                                                  scale: Tween(begin: 0.8, end: 1.0)
-                                                      .animate(CurvedAnimation(
-                                                    parent: animation,
-                                                    curve: Curves.easeInOut,
-                                                  )),
-                                                  child: RepeatSettingsModal(
-                                                    maxAya: _quranBloc.maxAya,
-                                                    onSave: (repeatingCount, startAya,
-                                                        endAya) {
-                                                      _quranBloc.add(PlayRepeating(
-                                                          startAya: startAya,
-                                                          endAya: endAya,
-                                                          repeatingCount:
-                                                              repeatingCount));
-                                                    },
+                        Expanded(
+                          child: BlocBuilder<QuranBloc, QuranState>(
+                            // Repeat buttons
+                            buildWhen: (previous, current) {
+                              return current is QuranPlaying ||
+                                  current is QuranStopped;
+                            },
+                            builder: (context, state) {
+                              return SizedBox(
+                                width: context.isTablet() ? 192 : 150,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  textDirection: TextDirection.ltr,
+                                  children: [
+                                    NormalButton(
+                                      height: context.isTablet() ? 64 : 48,
+                                      width: context.isTablet() ? 64 : 48,
+                                      onTap: () async {
+                                        audioPlayerEffect?.playButton();
+                                        if (!_quranBloc.isRepeating) {
+                                          _quranBloc.add(PauseQuran());
+                                          await audioPlayerEffect
+                                              ?.playOpenPanel();
+                                          showGeneralDialog(
+                                            context: context,
+                                            pageBuilder: (context, animation,
+                                                secondaryAnimation) {
+                                              return Container();
+                                            },
+                                            transitionBuilder: (context,
+                                                animation,
+                                                secondaryAnimation,
+                                                child) {
+                                              // Slide from bottom to center (y-axis starts from 1 and ends at 0)
+                                              final slideTransition =
+                                                  Tween<Offset>(
+                                                begin: Offset(
+                                                    0, 1), // Starts from bottom
+                                                end: Offset(
+                                                    0, 0), // Moves to center
+                                              ).animate(CurvedAnimation(
+                                                parent: animation,
+                                                curve: Curves
+                                                    .easeInOut, // Eases the animation in and out
+                                              ));
+
+                                              // Optional: Add fade effect during transition
+                                              final fadeTransition =
+                                                  Tween<double>(
+                                                begin: 0.0, // Start invisible
+                                                end: 1.0, // Fully visible
+                                              ).animate(CurvedAnimation(
+                                                parent: animation,
+                                                curve: Curves.easeInOut,
+                                              ));
+
+                                              return SlideTransition(
+                                                position: slideTransition,
+                                                child: FadeTransition(
+                                                  opacity: fadeTransition,
+                                                  child: ScaleTransition(
+                                                    scale: Tween(
+                                                            begin: 0.8,
+                                                            end: 1.0)
+                                                        .animate(
+                                                            CurvedAnimation(
+                                                      parent: animation,
+                                                      curve: Curves.easeInOut,
+                                                    )),
+                                                    child: RepeatSettingsModal(
+                                                      maxAya: _quranBloc.maxAya,
+                                                      onSave: (repeatingCount,
+                                                          startAya, endAya) {
+                                                        _quranBloc.add(
+                                                            PlayRepeating(
+                                                                startAya:
+                                                                    startAya,
+                                                                endAya: endAya,
+                                                                repeatingCount:
+                                                                    repeatingCount));
+                                                      },
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      } else {
-                                        _quranBloc.add(StopRepeating());
-                                      }
-                                    },
-                                    imageAsset: !_quranBloc.isRepeating
-                                        ? Assets.icSetting
-                                        : Assets.icStop,
-                                    frameAsset: !_quranBloc.isRepeating
-                                        ? Assets.btnNormal
-                                        : Assets.btnGreen,
-                                    frameClickedAsset: !_quranBloc.isRepeating
-                                        ? Assets.btnClicked
-                                        : Assets.btnGreenClicked,
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
+                                              );
+                                            },
+                                          );
+                                        } else {
+                                          _quranBloc.add(StopRepeating());
+                                        }
+                                      },
+                                      imageAsset: !_quranBloc.isRepeating
+                                          ? Assets.icSetting
+                                          : Assets.icStop,
+                                      frameAsset: !_quranBloc.isRepeating
+                                          ? Assets.btnNormal
+                                          : Assets.btnGreen,
+                                      frameClickedAsset: !_quranBloc.isRepeating
+                                          ? Assets.btnClicked
+                                          : Assets.btnGreenClicked,
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ],
                     )
@@ -651,19 +775,19 @@ class _QuranScreenState extends State<QuranScreen> with SingleTickerProviderStat
           ),
         ),
         if (isPlayAnimation)
-            Container(
-              height: double.infinity,
-              width: double.infinity,
-              child: AnimatedBuilder(
-                  animation: _animationController,
-                  builder: (context, child) {
-                    return CustomPaint(
-                      painter: HolePainter(
-                          color: Colors.black,
-                          holeSize: _splashAnimation.value * _size.width),
-                    );
-                  }),
-            ),
+          Container(
+            height: double.infinity,
+            width: double.infinity,
+            child: AnimatedBuilder(
+                animation: _animationController,
+                builder: (context, child) {
+                  return CustomPaint(
+                    painter: HolePainter(
+                        color: Colors.black,
+                        holeSize: _splashAnimation.value * _size.width),
+                  );
+                }),
+          ),
       ],
     );
   }
