@@ -33,15 +33,16 @@ class MemorizationCubit extends Cubit<MemorizationState> {
     emit(MemorizationInitial());
   }
 
-  emitLoading(){
+  emitLoading() {
     emit(MemorizationLoading());
   }
 
-  ready(){
+  ready() {
     emit(MemorizationInitial());
   }
 
   submit(File audioFile, int aya) async {
+    emit(MemorizationLoading());
 
     print("Audio file : ${audioFile.path}");
 
@@ -66,13 +67,14 @@ class MemorizationCubit extends Cubit<MemorizationState> {
       final streamedResponse = await multipartRequest.send();
       final response = await http.Response.fromStream(streamedResponse);
 
-      final body = jsonDecode(response.body) as Map<String,dynamic>;
+      final body = jsonDecode(response.body) as Map<String, dynamic>;
       print(body);
 
-      List<Map<dynamic, dynamic>> words = body.containsKey('results') ?
-          (body['results'][0]['words'] as List<dynamic>)
+      List<Map<dynamic, dynamic>> words = body.containsKey('results')
+          ? (body['results'][0]['words'] as List<dynamic>)
               .map((e) => e as Map<dynamic, dynamic>)
-              .toList() : [];
+              .toList()
+          : [];
       List<bool> allWords =
           surah.words.where((e) => e.aya == aya).map((e) => false).toList();
       allWords.removeAt(0);
