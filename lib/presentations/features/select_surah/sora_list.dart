@@ -172,14 +172,20 @@ class _SoraListState extends State<SoraList>
                                               });
                                             },
                                             onTapPractice: (surah) async {
-                                              final micPermission =
-                                                  await Permission.microphone
-                                                      .request();
-                                              if (!micPermission.isGranted) {
+                                              final status = await Permission.microphone.request();
+                                              PermissionStatus? micPermission;
+                                              if(status == PermissionStatus.denied){
+                                                    micPermission =await Permission.microphone
+                                                        .request();
+                                              }else if(status == PermissionStatus.permanentlyDenied){
+                                                await openAppSettings();
+                                                micPermission = await Permission.microphone.status;
+                                              }
+                                              if (micPermission?.isGranted != true && !status.isGranted) {
                                                 ScaffoldMessenger.of(context)
                                                     .showSnackBar(SnackBar(
                                                         content: Text(
-                                                            "Please provide microphone permisson")));
+                                                            "Please provide microphone permisson : ${micPermission?.name}")));
                                                 return;
                                               }
 

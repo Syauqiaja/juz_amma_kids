@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 import 'package:audio_session/audio_session.dart';
@@ -44,7 +45,8 @@ class _QuranScreenState extends State<MemorizationScreen>
   late MemorizationCubit _memorizationCubit;
   FlutterSoundPlayer? _audioPlayer =
       FlutterSoundPlayer(logLevel: Level.off); // Initialize FlutterSoundPlayer
-  FlutterSoundPlayer? _audioPlayerEffect = FlutterSoundPlayer(logLevel: Level.off);
+  FlutterSoundPlayer? _audioPlayerEffect =
+      FlutterSoundPlayer(logLevel: Level.off);
   int repeatCountdown = 0;
   ScrollController _scrollController = ScrollController();
   bool dropdownClicked = false;
@@ -61,21 +63,24 @@ class _QuranScreenState extends State<MemorizationScreen>
   bool _canPlayEffect = true;
   final String sfxSettingKey = "is_memorization_sfx_on";
 
+  double silenceThreshold = 10;
+  final int silenceLimit = 3000; // 5 seconds in milliseconds
+
+  StreamSubscription<RecordingDisposition>? _recordStream;
+
   @override
   void initState() {
     super.initState();
     _quranBloc = BlocProvider.of<QuranBloc>(context);
     _memorizationCubit = BlocProvider.of(context);
-    disabledWords = DatabaseService()
-        .getDisabledWords(widget.lesson.soraIndex);
+    disabledWords = DatabaseService().getDisabledWords(widget.lesson.soraIndex);
     initAudio();
 
     _memorizationCubit.init(widget.lesson);
 
     _borderImagesFuture = Globals.loadBorderImages();
 
-    _quranBloc.add(LoadQuran(
-        surahIndex: widget.lesson.soraIndex));
+    _quranBloc.add(LoadQuran(surahIndex: widget.lesson.soraIndex));
 
     initAnimation();
 
@@ -85,13 +90,11 @@ class _QuranScreenState extends State<MemorizationScreen>
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
-    precacheImage(
-        new AssetImage(Assets.btnFrameOrangeClicked), context);
+    precacheImage(new AssetImage(Assets.btnFrameOrangeClicked), context);
     precacheImage(new AssetImage(Assets.btnClicked), context);
     precacheImage(new AssetImage(Assets.icPause), context);
     precacheImage(new AssetImage(Assets.icStop), context);
-    precacheImage(
-        new AssetImage(Assets.frameWithPrefixClicked), context);
+    precacheImage(new AssetImage(Assets.frameWithPrefixClicked), context);
     super.didChangeDependencies();
   }
 
@@ -152,9 +155,11 @@ class _QuranScreenState extends State<MemorizationScreen>
     session.setActive(true);
 
     _audioPlayer = await FlutterSoundPlayer(logLevel: Level.off).openPlayer();
-    _audioPlayerEffect = await FlutterSoundPlayer(logLevel: Level.off).openPlayer();
+    _audioPlayerEffect =
+        await FlutterSoundPlayer(logLevel: Level.off).openPlayer();
 
     await _recorder!.openRecorder();
+    await calibrateSilenceThreshold();
 
     print("Audio finished loading");
   }
@@ -200,9 +205,9 @@ class _QuranScreenState extends State<MemorizationScreen>
 
   Future<void> _startRecording() async {
     try {
-      if(kIsWeb){
+      if (kIsWeb) {
         _recordingPath = 'cache/${_generateRandomId()}';
-      }else{
+      } else {
         _recordingPath = await getApplicationDocumentsDirectory()
             .then((value) => '${value.path}/${_generateRandomId()}.aac');
       }
@@ -210,17 +215,95 @@ class _QuranScreenState extends State<MemorizationScreen>
       // Start recording without assigning it to a variable
       await _recorder!.startRecorder(
         toFile: _recordingPath,
-        codec: kIsWeb? Codec.defaultCodec : Codec.aacADTS,
+        codec: kIsWeb ? Codec.defaultCodec : Codec.aacADTS,
       );
 
+      // await _recorder?.setSubscriptionDuration(Duration(milliseconds: 300));
+
+      int silentDuration = 0;
+
+      _recordStream?.cancel();
+      _recordStream = _recorder?.onProgress?.listen((data) {
+        final double? decibelVolume = data.decibels;
+        if (decibelVolume != null && decibelVolume <= silenceThreshold + 5) {
+          // Increase silence duration count (500ms per check)
+          silentDuration += 300;
+        } else {
+          silentDuration = 0; // Reset silence duration if sound is detected
+        }
+
+        if (silentDuration >= silenceLimit) {
+          _stopRecording();
+        }
+
+        print(
+            "On record decibles: $decibelVolume Silent duration: $silentDuration");
+      });
       setState(() {
         _isRecording = true;
       });
-
       print("Recording started...");
     } catch (e) {
       print("Error starting recording: $e");
     }
+  }
+
+  /// Remove outliers using Interquartile Range (IQR) method
+  List<double> _removeOutliers(List<double> values) {
+    if (values.length < 4) return values; // Not enough data to detect outliers
+
+    List<double> sortedValues = List.from(values)..sort();
+    int q1Index = (sortedValues.length * 0.25).floor();
+    int q3Index = (sortedValues.length * 0.75).floor();
+
+    double q1 = sortedValues[q1Index];
+    double q3 = sortedValues[q3Index];
+    double iqr = q3 - q1;
+
+    double lowerBound = q1 - 1.5 * iqr;
+    double upperBound = q3 + 1.5 * iqr;
+
+    return sortedValues
+        .where((value) => value >= lowerBound && value <= upperBound)
+        .toList();
+  }
+
+  Future calibrateSilenceThreshold() async {
+    final List<double> initialVolumes = [];
+    _memorizationCubit.emitLoading();
+    StreamSubscription<RecordingDisposition>? streamSubscription;
+
+    if (kIsWeb) {
+      _recordingPath = 'cache/${_generateRandomId()}';
+    } else {
+      _recordingPath = await getApplicationDocumentsDirectory()
+          .then((value) => '${value.path}/${_generateRandomId()}.aac');
+    }
+
+    await _recorder?.startRecorder(
+      toFile: _recordingPath,
+      codec: kIsWeb ? Codec.defaultCodec : Codec.aacADTS,
+    );
+    await _recorder?.setSubscriptionDuration(Duration(milliseconds: 300));
+
+    streamSubscription = _recorder?.onProgress?.listen((data) {
+      if (initialVolumes.length < 8 && data.decibels != null) {
+        initialVolumes.add(data.decibels!);
+        print("Calibrating ${data.decibels}");
+      } else {
+        final correctedVolumes = _removeOutliers(initialVolumes);
+        silenceThreshold = correctedVolumes.reduce((a,b) => max(a, b));
+
+        _recorder?.stopRecorder().then((_) async {
+          await streamSubscription?.cancel();
+          streamSubscription = null;
+          _memorizationCubit.ready();
+          print("Calibrate finished $silenceThreshold");
+        });
+
+        return;
+      }
+    });
   }
 
   Future<File?> moveFileToDownloads(String sourcePath) async {
@@ -252,12 +335,14 @@ class _QuranScreenState extends State<MemorizationScreen>
 
   Future<void> _stopRecording() async {
     try {
+      _recordStream?.cancel();
+      _recordStream = null;
       String? path = await _recorder!.stopRecorder();
       print("Started to stop recording for : $path");
 
       if (path != null) {
         if (kDebugMode && !kIsWeb) {
-          if(Platform.isAndroid){
+          if (Platform.isAndroid) {
             final newFile = await moveFileToDownloads(path);
             path = newFile?.path;
           }
@@ -287,9 +372,10 @@ class _QuranScreenState extends State<MemorizationScreen>
     try {
       // Check if the file exists
       final file = File(filePath);
-      if(kIsWeb){
-        _memorizationCubit.submitForWeb(XFile(filePath), _memorizationCubit.currentAya);
-      }else{
+      if (kIsWeb) {
+        _memorizationCubit.submitForWeb(
+            XFile(filePath), _memorizationCubit.currentAya);
+      } else {
         _memorizationCubit.submit(file, _memorizationCubit.currentAya);
       }
       if (await file.exists()) {
@@ -399,7 +485,8 @@ class _QuranScreenState extends State<MemorizationScreen>
                                       builder: (context, snapshot) {
                                         if (snapshot.hasError) {
                                           return const Center(
-                                              child: Text('Error loading borders'));
+                                              child: Text(
+                                                  'Error loading borders'));
                                         } else if (snapshot.hasData) {
                                           // Wrap the Center widget with CustomPaint to paint the borders
                                           return Center(
@@ -407,18 +494,22 @@ class _QuranScreenState extends State<MemorizationScreen>
                                               children: [
                                                 Positioned.fill(
                                                   child: Image.asset(
-                                                    Assets.frame2, // File gambar frame
+                                                    Assets
+                                                        .frame2, // File gambar frame
                                                     fit: BoxFit
                                                         .fill, // Memastikan frame menyesuaikan seluruh area
                                                   ),
                                                 ),
                                                 CustomPaint(
-                                                  child: FutureBuilder<List<SurahWord>>(
+                                                  child: FutureBuilder<
+                                                          List<SurahWord>>(
                                                       future: disabledWords,
-                                                      builder: (context, snapshot) {
+                                                      builder:
+                                                          (context, snapshot) {
                                                         if (snapshot.hasData) {
                                                           return MemorizationMushafBox(
-                                                            surah: widget.lesson,
+                                                            surah:
+                                                                widget.lesson,
                                                             scrollController:
                                                                 _scrollController,
                                                             disabledWords:
@@ -426,7 +517,8 @@ class _QuranScreenState extends State<MemorizationScreen>
                                                           );
                                                         } else {
                                                           return MemorizationMushafBox(
-                                                            surah: widget.lesson,
+                                                            surah:
+                                                                widget.lesson,
                                                             scrollController:
                                                                 _scrollController,
                                                           );
@@ -448,7 +540,7 @@ class _QuranScreenState extends State<MemorizationScreen>
                           ),
                         ),
                       ),
-                SizedBox(height: gap),
+                      SizedBox(height: gap),
                       Row(
                         textDirection: TextDirection.ltr,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -460,10 +552,10 @@ class _QuranScreenState extends State<MemorizationScreen>
                               return InkWell(
                                 onTap: () async {
                                   audioPlayerEffect?.playButton();
-                              
+
                                   if (_memorizationCubit.state
                                       is MemorizationLoading) return;
-                              
+
                                   if (_isRecording) {
                                     await _stopRecording();
                                     print(
@@ -472,10 +564,6 @@ class _QuranScreenState extends State<MemorizationScreen>
                                     await _startRecording();
                                     print("Recording started...");
                                   }
-                              
-                                  // setState(() {
-                                  //   _isRecording = !_isRecording;
-                                  // });
                                 },
                                 child: BlocBuilder<MemorizationCubit,
                                     MemorizationState>(
@@ -497,8 +585,9 @@ class _QuranScreenState extends State<MemorizationScreen>
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.bold,
-                                                fontSize:
-                                                    context.isTablet() ? 18 : 16),
+                                                fontSize: context.isTablet()
+                                                    ? 18
+                                                    : 16),
                                           ),
                                           onTap: () {
                                             Navigator.of(context).pop();
@@ -605,9 +694,7 @@ class _QuranScreenState extends State<MemorizationScreen>
               child: NormalButton(
             height: context.isTablet() ? 64 : 48,
             width: context.isTablet() ? 64 : 48,
-            imageAsset: _canPlayEffect
-                ? Assets.speakerOn
-                : Assets.speakerOff,
+            imageAsset: _canPlayEffect ? Assets.speakerOn : Assets.speakerOff,
             onTap: () {
               setState(() {
                 _canPlayEffect = !_canPlayEffect;

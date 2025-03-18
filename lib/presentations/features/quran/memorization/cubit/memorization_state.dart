@@ -12,7 +12,7 @@ final class MemorizationInitial extends MemorizationState {
   MemorizationInitial({this.message});
   @override
   // TODO: implement props
-  List<Object> get props => [message ?? ""];
+  List<Object> get props => [DateTime.now().millisecondsSinceEpoch];
 }
 final class MemorizationLoading extends MemorizationState {}
 final class MemorizationWithData extends MemorizationState {
@@ -22,6 +22,6 @@ final class MemorizationWithData extends MemorizationState {
 
   @override
   // TODO: implement props
-  List<Object> get props => [{this.message ?? ""}];
+  List<Object> get props => [DateTime.now().millisecondsSinceEpoch];
 }
 final class MemorizationDone extends MemorizationState {}
