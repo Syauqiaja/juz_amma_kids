@@ -66,7 +66,7 @@ dependencies:
   permission_handler: ^11.3.1
   http: ^1.2.2
   ffmpeg_kit_flutter: ^6.0.3
-  flutter_launcher_icons: ^0.14.1
+  flutter_launcher_icons: ^0.14.3
   flutter_sound: ^9.17.4
   image_picker: ^1.1.2
   cached_network_image: ^3.4.1
@@ -81,6 +81,7 @@ dependencies:
   sizer: ^3.0.4
   shimmer: ^3.0.0
   google_mobile_ads: ^5.3.1
+  flutter_native_splash: ^2.4.4
   # ffi: ^2.1.3
   # js: ^0.7.1
 
@@ -115,7 +116,6 @@ flutter:
   assets:
     - assets/voice/
     - assets/titles/
-    - assets/border/
     - assets/images/
     - assets/images/boys/
     - assets/
@@ -177,126 +177,6 @@ flutter:
     - family: titleFont
       fonts:
         - asset: assets/Al Majeed Quranic Font_shiped.ttf
-    - family: QCF2542
-      fonts:
-        - asset: assets/fonts/QCF2542.ttf
-    - family: QCF2543
-      fonts:
-        - asset: assets/fonts/QCF2543.ttf
-    - family: QCF2544
-      fonts:
-        - asset: assets/fonts/QCF2544.ttf
-    - family: QCF2545
-      fonts:
-        - asset: assets/fonts/QCF2545.ttf
-    - family: QCF2546
-      fonts:
-        - asset: assets/fonts/QCF2546.ttf
-    - family: QCF2547
-      fonts:
-        - asset: assets/fonts/QCF2547.ttf
-    - family: QCF2548
-      fonts:
-        - asset: assets/fonts/QCF2548.ttf
-    - family: QCF2549
-      fonts:
-        - asset: assets/fonts/QCF2549.ttf
-    - family: QCF2550
-      fonts:
-        - asset: assets/fonts/QCF2550.ttf
-    - family: QCF2551
-      fonts:
-        - asset: assets/fonts/QCF2551.ttf
-    - family: QCF2552
-      fonts:
-        - asset: assets/fonts/QCF2552.ttf
-    - family: QCF2553
-      fonts:
-        - asset: assets/fonts/QCF2553.ttf
-    - family: QCF2554
-      fonts:
-        - asset: assets/fonts/QCF2554.ttf
-    - family: QCF2555
-      fonts:
-        - asset: assets/fonts/QCF2555.ttf
-    - family: QCF2556
-      fonts:
-        - asset: assets/fonts/QCF2556.ttf
-    - family: QCF2557
-      fonts:
-        - asset: assets/fonts/QCF2557.ttf
-    - family: QCF2558
-      fonts:
-        - asset: assets/fonts/QCF2558.ttf
-    - family: QCF2559
-      fonts:
-        - asset: assets/fonts/QCF2559.ttf
-    - family: QCF2560
-      fonts:
-        - asset: assets/fonts/QCF2560.ttf
-    - family: QCF2561
-      fonts:
-        - asset: assets/fonts/QCF2561.ttf
-    - family: QCF2562
-      fonts:
-        - asset: assets/fonts/QCF2562.ttf
-    - family: QCF2563
-      fonts:
-        - asset: assets/fonts/QCF2563.ttf
-    - family: QCF2564
-      fonts:
-        - asset: assets/fonts/QCF2564.ttf
-    - family: QCF2565
-      fonts:
-        - asset: assets/fonts/QCF2565.ttf
-    - family: QCF2566
-      fonts:
-        - asset: assets/fonts/QCF2566.ttf
-    - family: QCF2567
-      fonts:
-        - asset: assets/fonts/QCF2567.ttf
-    - family: QCF2568
-      fonts:
-        - asset: assets/fonts/QCF2568.ttf
-    - family: QCF2569
-      fonts:
-        - asset: assets/fonts/QCF2569.ttf
-    - family: QCF2570
-      fonts:
-        - asset: assets/fonts/QCF2570.ttf
-    - family: QCF2571
-      fonts:
-        - asset: assets/fonts/QCF2571.ttf
-    - family: QCF2572
-      fonts:
-        - asset: assets/fonts/QCF2572.ttf
-    - family: QCF2573
-      fonts:
-        - asset: assets/fonts/QCF2573.ttf
-    - family: QCF2574
-      fonts:
-        - asset: assets/fonts/QCF2574.ttf
-    - family: QCF2575
-      fonts:
-        - asset: assets/fonts/QCF2575.ttf
-    - family: QCF2576
-      fonts:
-        - asset: assets/fonts/QCF2576.ttf
-    - family: QCF2577
-      fonts:
-        - asset: assets/fonts/QCF2577.ttf
-    - family: QCF2578
-      fonts:
-        - asset: assets/fonts/QCF2578.ttf
-    - family: QCF2579
-      fonts:
-        - asset: assets/fonts/QCF2579.ttf
-    - family: QCF2580
-      fonts:
-        - asset: assets/fonts/QCF2580.ttf
-    - family: QCF2581
-      fonts:
-        - asset: assets/fonts/QCF2581.ttf
     - family: QCF2582
       fonts:
         - asset: assets/fonts/QCF2582.ttf
