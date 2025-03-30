@@ -405,19 +405,19 @@ class _QuranScreenState extends State<QuranScreen>
                                   width: context.isTablet() ? 194 : 172,
                                   height: context.isTablet() ? 58 : 46,
                                   decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: AssetImage(
-                                            Assets.frameDropdownAyaSelect),
-                                        centerSlice: Rect.fromLTRB(
-                                          54,
-                                          4, // X and Y offset of the resizable area
-                                          130,
-                                          34, // Width and height of the resizable area
-                                        ),
-                                        fit: BoxFit.fill,
+                                    image: DecorationImage(
+                                      image: AssetImage(
+                                          Assets.frameDropdownAyaSelect),
+                                      centerSlice: Rect.fromLTRB(
+                                        54,
+                                        4, // X and Y offset of the resizable area
+                                        130,
+                                        34, // Width and height of the resizable area
                                       ),
-                                      // color: Colors.red,
-                                      ),
+                                      fit: BoxFit.fill,
+                                    ),
+                                    // color: Colors.red,
+                                  ),
                                   padding: EdgeInsets.only(
                                       left: 58, top: 8, right: 24, bottom: 8),
                                   margin: EdgeInsets.symmetric(horizontal: 8),
@@ -434,8 +434,8 @@ class _QuranScreenState extends State<QuranScreen>
                                           alignment: Alignment.centerRight,
                                           isDense: true,
                                           isExpanded: true,
-                                          dropdownColor:
-                                              Color(0xFF6895E9),
+                                          dropdownColor: Color(0xFF6895E9),
+                                          underline: SizedBox(),
                                           hint: Text(
                                             _localization.aya,
                                             style:
@@ -483,25 +483,25 @@ class _QuranScreenState extends State<QuranScreen>
                                 ),
                               ),
                               NormalButton(
-                                  height: context.isTablet() ? 64 : 48,
-                                  width: context.isTablet() ? 64 : 48,
-                                  onTap: () {
-                                    dropdownKey.currentContext
-                                        ?.visitChildElements((element) {
-                                      if (element.widget is Semantics) {
-                                        element.visitChildElements((element) {
-                                          if (element.widget is Actions) {
-                                            element
-                                                .visitChildElements((element) {
-                                              Actions.invoke(
-                                                  element, ActivateIntent());
-                                            });
-                                          }
-                                        });
-                                      }
-                                    });
-                                  },
-                                  imageAsset: Assets.icTripledots),
+                                height: context.isTablet() ? 64 : 48,
+                                width: context.isTablet() ? 64 : 48,
+                                onTap: () {
+                                  dropdownKey.currentContext
+                                      ?.visitChildElements((element) {
+                                    if (element.widget is Semantics) {
+                                      element.visitChildElements((element) {
+                                        if (element.widget is Actions) {
+                                          element.visitChildElements((element) {
+                                            Actions.invoke(
+                                                element, ActivateIntent());
+                                          });
+                                        }
+                                      });
+                                    }
+                                  });
+                                },
+                                imageAsset: Assets.icTripledots,
+                              ),
                               // GestureDetector(
                               //   onTapDown: (details) {
                               //     setState(() {
@@ -745,9 +745,9 @@ class _QuranScreenState extends State<QuranScreen>
                                                 ),
                                               );
                                             },
-                                          ).then((val){
-                                            if(val != true){
-                                          _quranBloc.add(ResumeQuran());
+                                          ).then((val) {
+                                            if (val != true) {
+                                              _quranBloc.add(ResumeQuran());
                                             }
                                           });
                                         } else {

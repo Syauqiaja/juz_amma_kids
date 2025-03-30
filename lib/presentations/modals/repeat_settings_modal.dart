@@ -119,15 +119,14 @@ class _RepeatSettingsModalState extends State<RepeatSettingsModal> {
                                     menuMaxHeight: 200,
                                     dropdownColor: Color(0xFF6895E9),
                                     decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.all(10),
-                                        isDense: true,
-                                        border: InputBorder.none,
-                                        prefixIcon: Icon(
-                                          Icons.arrow_drop_down_circle,
-                                          color: Colors.white,
-                                        )),
-                                    isDense: true,
-                                    isExpanded: true,
+                                      contentPadding: EdgeInsets.symmetric(vertical:12),
+                                      isDense: true,
+                                      border: InputBorder.none,
+                                      prefixIcon: Icon(
+                                        Icons.arrow_drop_down_circle,
+                                        color: Colors.white,
+                                      ),
+                                    ),
                                     icon: Container(),
                                     value: startAyah,
                                     items: List.generate(
@@ -189,7 +188,7 @@ class _RepeatSettingsModalState extends State<RepeatSettingsModal> {
                                     menuMaxHeight: 200,
                                     dropdownColor: Color(0xFF6895E9),
                                     decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.all(10),
+                                      contentPadding: EdgeInsets.symmetric(vertical:12),
                                       isDense: true,
                                       border: InputBorder.none,
                                       prefixIcon: Icon(

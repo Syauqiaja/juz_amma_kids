@@ -104,8 +104,8 @@ class _MushafBoxState extends State<MushafBox> {
       // width: MediaQuery.of(context).size.width * (context.isTablet() ? 0.8 : isLargeScreen ? 0.6 : 0.7),
       // height: MediaQuery.of(context).size.height * (context.isTablet() ? 0.68 : 0.75),
       padding: context.isTablet()
-          ? const EdgeInsets.only(top: 50, right: 50, left: 50, bottom: 50)
-          : const EdgeInsets.only(top: 30, right: 30, left: 30, bottom: 30),
+          ? const EdgeInsets.all(32)
+          : const EdgeInsets.all(16),
       color: Colors.transparent, // Ensure the background is transparent
       child: BlocBuilder<QuranBloc, QuranState>(
         buildWhen: (previous, current) =>
@@ -116,77 +116,82 @@ class _MushafBoxState extends State<MushafBox> {
               controller: widget.scrollController,
               physics: ClampingScrollPhysics(),
               child: Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Image.asset(
-                          Assets.borderTitle,
-                          width: MediaQuery.of(context).size.width * 0.5,
-                        ),
-                        Positioned(
-                          left: 0,
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                                left:
-                                    MediaQuery.of(context).size.width * 0.06),
-                            child: Center(
-                              child: Container(),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const SizedBox(height: 16),
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Image.asset(
+                            Assets.borderTitle,
+                            width: MediaQuery.of(context).size.width * 0.5,
+                          ),
+                          Positioned(
+                            left: 0,
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.06),
+                              child: Center(
+                                child: Container(),
+                              ),
                             ),
                           ),
-                        ),
-                        Positioned.fill(
-                          child: Padding(
-                            padding: EdgeInsets.all(2.h),
-                            child: SvgPicture.asset(
-                              'assets/titles/${widget.surah.soraIndex}.svg',
-                              alignment: Alignment.center,
+                          Positioned.fill(
+                            child: Padding(
+                              padding: EdgeInsets.all(2.h),
+                              child: SvgPicture.asset(
+                                'assets/titles/${widget.surah.soraIndex}.svg',
+                                alignment: Alignment.center,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 24, right: 24),
-                      child: FittedBox(
-                        fit: BoxFit.contain,
-                        child: BlocBuilder<MushafCubit, MushafState>(
-                          builder: (context, state) {
-                            return Column(
-                              children: [
-                                if (_quranBloc.surah.soraIndex != 1)
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: (state.selectedAyahIndex <= 0)
-                                          ? QuranicTheme.highlightColor
-                                          : Colors.transparent,
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    padding: EdgeInsets.all(5),
-                                    child: Text(
-                                      ' ',
-                                      style: TextStyle(
-                                        fontSize:
-                                            context.isTablet() ? 36 : 18.5,
-                                        fontFamily: 'testfont',
-                                        color: Colors.black,
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 24, right: 24),
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: BlocBuilder<MushafCubit, MushafState>(
+                            builder: (context, state) {
+                              return Column(
+                                children: [
+                                  if (_quranBloc.surah.soraIndex != 1)
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: (state.selectedAyahIndex <= 0)
+                                            ? QuranicTheme.highlightColor
+                                            : Colors.transparent,
+                                        borderRadius: BorderRadius.circular(5),
                                       ),
-                                      textAlign: TextAlign.center,
+                                      padding: EdgeInsets.all(5),
+                                      child: Text(
+                                        ' ',
+                                        style: TextStyle(
+                                          fontSize:
+                                              context.isTablet() ? 36 : 18.5,
+                                          fontFamily: 'testfont',
+                                          color: Colors.black,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
-                                  ),
-                                ..._buildAyahSpans(state.selectedAyahIndex),
-                              ],
-                            );
-                          },
+                                  ..._buildAyahSpans(state.selectedAyahIndex),
+                                ],
+                              );
+                            },
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 16),
+                    ],
+                  ),
                 ),
               ),
             );
