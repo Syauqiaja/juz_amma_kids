@@ -97,11 +97,11 @@ class _SelectDisplayModeState extends State<SelectDisplayMode>
                                         .pushNamed(AppRoutes.selectSurahList);
                                 }),
                                 const SizedBox(height: 16),
-                                ButtonScalable(child: Text(_localization.settings, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),), onTap: (){
-                                    showDialog(context: context, builder: (ctx){
-                                      return SettingsDialog();
-                                    });
-                                }),
+                                // ButtonScalable(child: Text(_localization.settings, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),), onTap: (){
+                                //     showDialog(context: context, builder: (ctx){
+                                //       return SettingsDialog();
+                                //     });
+                                // }),
                               ],
                             ),
                           ),

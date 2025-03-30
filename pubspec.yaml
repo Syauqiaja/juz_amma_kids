@@ -80,6 +80,7 @@ dependencies:
   logger: ^2.5.0
   sizer: ^3.0.4
   shimmer: ^3.0.0
+  google_mobile_ads: ^5.3.1
   # ffi: ^2.1.3
   # js: ^0.7.1
 
@@ -119,26 +120,6 @@ flutter:
     - assets/images/boys/
     - assets/
     - assets/voice/recitation/001/
-    - assets/voice/recitation/058/
-    - assets/voice/recitation/059/
-    - assets/voice/recitation/060/
-    - assets/voice/recitation/061/
-    - assets/voice/recitation/062/
-    - assets/voice/recitation/063/
-    - assets/voice/recitation/064/
-    - assets/voice/recitation/065/
-    - assets/voice/recitation/066/
-    - assets/voice/recitation/067/
-    - assets/voice/recitation/068/
-    - assets/voice/recitation/069/
-    - assets/voice/recitation/070/
-    - assets/voice/recitation/071/
-    - assets/voice/recitation/072/
-    - assets/voice/recitation/073/
-    - assets/voice/recitation/074/
-    - assets/voice/recitation/075/
-    - assets/voice/recitation/076/
-    - assets/voice/recitation/077/
     - assets/voice/recitation/078/
     - assets/voice/recitation/079/
     - assets/voice/recitation/080/

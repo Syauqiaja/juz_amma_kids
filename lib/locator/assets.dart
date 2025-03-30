@@ -69,6 +69,7 @@ class Assets {
   static const String bgMountain = "$_pathImages/bg_mountain.png";
   static const String frameDropdownAyaSelect = "$_pathImages/frame_dropdown_aya_select.png";  
   static const String frameDropdownRepeatModal = "$_pathImages/frame_dropdown_repeat_modal.png";  
+  static const String newMushafFrame = "$_pathImages/new_mushaf_frame.png";  
   
 
   static AudioAssets audioAssets = AudioAssets();

@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:audio_session/audio_session.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_sound/public/flutter_sound_player.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:juz_amma_kids/core/model/language_entity.dart';
 import 'package:juz_amma_kids/presentations/features/menu/bloc/localization_bloc.dart';
 import 'package:juz_amma_kids/presentations/features/quran/recitation/cubit/star_cubit.dart';
@@ -21,6 +24,8 @@ late AppLocalizations localization;
 FlutterSoundPlayer? audioPlayerEffect = FlutterSoundPlayer(logLevel: Level.off)..openPlayer();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  unawaited(MobileAds.instance.initialize());
 
   await UserPrefs.instance.init();
   SystemChrome.setPreferredOrientations([

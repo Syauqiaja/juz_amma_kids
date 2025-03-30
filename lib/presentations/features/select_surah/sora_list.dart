@@ -145,6 +145,7 @@ class _SoraListState extends State<SoraList>
                                                 });
                                               },
                                               onTapRead: (surah) async {
+                                                _selectSoraCubit.incrementOpenSoraAttempts();
                                                 Navigator.of(context)
                                                     .pushNamed(AppRoutes.quran,
                                                         arguments: surah)
@@ -155,6 +156,7 @@ class _SoraListState extends State<SoraList>
                                                             (_) {
                                                       _selectSoraCubit
                                                           .refresh();
+                                                      _selectSoraCubit.tryShowInterstitial((){});
                                                     });
                                                   }
                                                 });
@@ -192,6 +194,7 @@ class _SoraListState extends State<SoraList>
                                                     ?.playOpenPanel();
 
                                                 if (context.mounted) {
+                                                  _selectSoraCubit.incrementOpenSoraAttempts();
                                                   Navigator.of(context)
                                                       .pushNamed(
                                                     AppRoutes.memorization,
@@ -204,6 +207,7 @@ class _SoraListState extends State<SoraList>
                                                               (_) {
                                                         _selectSoraCubit
                                                             .refresh();
+                                                        _selectSoraCubit.tryShowInterstitial((){});
                                                       });
                                                     }
                                                   });
