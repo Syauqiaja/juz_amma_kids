@@ -92,7 +92,6 @@ class MyApp extends StatelessWidget {
             return "Juz Amma For Kids";
           },
               onGenerateRoute: RouteGenerator.generateRoute,
-              initialRoute: AppRoutes.home,
               home: SelectDisplayMode(),
               debugShowCheckedModeBanner: false,
               localizationsDelegates: const [
