@@ -321,54 +321,38 @@ class _QuranScreenState extends State<QuranScreen>
                             child: Center(
                               child: AspectRatio(
                                 aspectRatio: 1.7,
-                                child: FutureBuilder<BorderImages>(
-                                  future: _borderImagesFuture,
-                                  builder: (context, snapshot) {
-                                    if (snapshot.hasError) {
-                                      return const Center(
-                                          child: Text('Error loading borders'));
-                                    } else if (snapshot.hasData) {
-                                      // Wrap the Center widget with CustomPaint to paint the borders
-                                      return Center(
-                                        child: Stack(
-                                          children: [
-                                            Positioned.fill(
-                                              child: Image.asset(
-                                                Assets
-                                                    .frame2, // File gambar frame
-                                                fit: BoxFit
-                                                    .fill, // Memastikan frame menyesuaikan seluruh area
-                                              ),
-                                            ),
-                                            CustomPaint(
-                                              child: FutureBuilder<
-                                                      List<SurahWord>>(
-                                                  future: disabledWords,
-                                                  builder: (context, snapshot) {
-                                                    if (snapshot.hasData) {
-                                                      return MushafBox(
-                                                        surah: widget.surah,
-                                                        scrollController:
-                                                            _scrollController,
-                                                        disabledWords:
-                                                            snapshot.data!,
-                                                      );
-                                                    } else {
-                                                      return MushafBox(
-                                                        surah: widget.surah,
-                                                        scrollController:
-                                                            _scrollController,
-                                                      );
-                                                    }
-                                                  }),
-                                            ),
-                                          ],
+                                child: Center(
+                                  child: Stack(
+                                    children: [
+                                      Positioned.fill(
+                                        child: Image.asset(
+                                          Assets.frame2, // File gambar frame
+                                          fit: BoxFit
+                                              .fill, // Memastikan frame menyesuaikan seluruh area
                                         ),
-                                      );
-                                    } else {
-                                      return const SizedBox.shrink();
-                                    }
-                                  },
+                                      ),
+                                      CustomPaint(
+                                        child: FutureBuilder<List<SurahWord>>(
+                                            future: disabledWords,
+                                            builder: (context, snapshot) {
+                                              if (snapshot.hasData) {
+                                                return MushafBox(
+                                                  surah: widget.surah,
+                                                  scrollController:
+                                                      _scrollController,
+                                                  disabledWords: snapshot.data!,
+                                                );
+                                              } else {
+                                                return MushafBox(
+                                                  surah: widget.surah,
+                                                  scrollController:
+                                                      _scrollController,
+                                                );
+                                              }
+                                            }),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

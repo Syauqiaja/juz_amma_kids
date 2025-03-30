@@ -22,7 +22,7 @@ flutter_native_splash:
 
   # The image parameter allows you to specify an image used in the splash screen.  It must be a
   # png file and should be sized for 4x pixel density.
-  # image: assets/images/app_icon_transparent.png
+  image: assets/images/app_icon_transparent.png
 
   # The branding property allows you to specify an image used as branding in the splash screen.
   # It must be a png file. It is supported for Android, iOS and the Web.  For Android 12,
@@ -122,13 +122,13 @@ flutter_native_splash:
   # fill_vertical, left, right, start, or top. android_gravity can be combined using the | operator to achieve multiple effects. 
   # For example:
   # `android_gravity: fill|clip_vertical` - This will fill the width while maintaining the image's vertical aspect ratio
-  #android_gravity: center
+  android_gravity: center
   #
   # ios_content_mode can be one of the following iOS UIView.ContentMode (see
   # https://developer.apple.com/documentation/uikit/uiview/contentmode): scaleToFill,
   # scaleAspectFit, scaleAspectFill, center, top, bottom, left, right, topLeft, topRight,
   # bottomLeft, or bottomRight.
-  #ios_content_mode: center
+  ios_content_mode: center
   #
   # web_image_mode can be one of the following modes: center, contain, stretch, and cover.
   #web_image_mode: center
@@ -136,7 +136,7 @@ flutter_native_splash:
   # The screen orientation can be set in Android with the android_screen_orientation parameter.
   # Valid parameters can be found here:
   # https://developer.android.com/guide/topics/manifest/activity-element#screen
-  #android_screen_orientation: sensorLandscape
+  android_screen_orientation: sensorLandscape
 
   # To hide the notification bar, use the fullscreen parameter.  Has no effect in web since web
   # has no notification bar.  Defaults to false.

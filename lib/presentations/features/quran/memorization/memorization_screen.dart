@@ -292,7 +292,7 @@ class _QuranScreenState extends State<MemorizationScreen>
         print("Calibrating ${data.decibels}");
       } else {
         final correctedVolumes = _removeOutliers(initialVolumes);
-        silenceThreshold = correctedVolumes.reduce((a,b) => max(a, b));
+        silenceThreshold = correctedVolumes.reduce((a, b) => max(a, b));
 
         _recorder?.stopRecorder().then((_) async {
           await streamSubscription?.cancel();
@@ -711,48 +711,36 @@ class _QuranScreenState extends State<MemorizationScreen>
               offset: _positionAnimation.value,
               child: Transform.scale(
                 scale: _scaleAnimation.value,
-                child: FutureBuilder<BorderImages>(
-                  future: _borderImagesFuture,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError) {
-                      return const Center(child: Text('Error loading borders'));
-                    } else if (snapshot.hasData) {
-                      // Wrap the Center widget with CustomPaint to paint the borders
-                      return Center(
-                        child: Stack(
-                          children: [
-                            Positioned.fill(
-                              child: Image.asset(
-                                Assets.frame2, // File gambar frame
-                                fit: BoxFit
-                                    .fill, // Memastikan frame menyesuaikan seluruh area
-                              ),
-                            ),
-                            CustomPaint(
-                              child: FutureBuilder<List<SurahWord>>(
-                                  future: disabledWords,
-                                  builder: (context, snapshot) {
-                                    if (snapshot.hasData) {
-                                      return MemorizationMushafBox(
-                                        surah: widget.lesson,
-                                        scrollController: _scrollController,
-                                        disabledWords: snapshot.data!,
-                                      );
-                                    } else {
-                                      return MemorizationMushafBox(
-                                        surah: widget.lesson,
-                                        scrollController: _scrollController,
-                                      );
-                                    }
-                                  }),
-                            ),
-                          ],
+                child: Center(
+                  child: Stack(
+                    children: [
+                      Positioned.fill(
+                        child: Image.asset(
+                          Assets.frame2, // File gambar frame
+                          fit: BoxFit
+                              .fill, // Memastikan frame menyesuaikan seluruh area
                         ),
-                      );
-                    } else {
-                      return const SizedBox.shrink();
-                    }
-                  },
+                      ),
+                      CustomPaint(
+                        child: FutureBuilder<List<SurahWord>>(
+                            future: disabledWords,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return MemorizationMushafBox(
+                                  surah: widget.lesson,
+                                  scrollController: _scrollController,
+                                  disabledWords: snapshot.data!,
+                                );
+                              } else {
+                                return MemorizationMushafBox(
+                                  surah: widget.lesson,
+                                  scrollController: _scrollController,
+                                );
+                              }
+                            }),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );
