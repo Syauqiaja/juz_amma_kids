@@ -4,6 +4,7 @@ import 'package:juz_amma_kids/locator/assets.dart';
 import 'package:juz_amma_kids/main.dart';
 import 'package:juz_amma_kids/theme/quranic_theme.dart';
 import 'package:juz_amma_kids/utils/audio_player_ext.dart';
+import 'package:juz_amma_kids/utils/context_ext.dart';
 
 class ButtonScalable extends StatefulWidget {
   final double? height;
@@ -12,7 +13,14 @@ class ButtonScalable extends StatefulWidget {
   final Color? borderColor;
   final Widget child;
   final VoidCallback onTap;
-  const ButtonScalable({super.key, this.height = 45, this.width = 200, required this.child, required this.onTap, this.asset, this.borderColor});
+  const ButtonScalable(
+      {super.key,
+      this.height = 45,
+      this.width = 200,
+      required this.child,
+      required this.onTap,
+      this.asset,
+      this.borderColor});
 
   @override
   State<ButtonScalable> createState() => _ButtonScalableState();
@@ -61,7 +69,9 @@ class _ButtonScalableState extends State<ButtonScalable> {
 
                   fit: BoxFit.fill,
                 ),
-                border: Border.all(color: widget.borderColor ?? QuranicTheme.buttonBorderColor, width: 2),
+                border: Border.all(
+                    color: widget.borderColor ?? QuranicTheme.buttonBorderColor,
+                    width: 2),
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
@@ -72,7 +82,13 @@ class _ButtonScalableState extends State<ButtonScalable> {
                   ),
                 ],
               ),
-              child: widget.child,
+              child: DefaultTextStyle(
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: context.isTablet() ? 18 : 16),
+                child: widget.child,
+              ),
             ),
           );
         },

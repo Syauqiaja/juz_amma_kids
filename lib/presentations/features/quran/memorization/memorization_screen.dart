@@ -204,6 +204,9 @@ class _QuranScreenState extends State<MemorizationScreen>
   }
 
   Future<void> _startRecording() async {
+    setState(() {
+      _isRecording = true;
+    });
     try {
       if (kIsWeb) {
         _recordingPath = 'cache/${_generateRandomId()}';
@@ -239,11 +242,11 @@ class _QuranScreenState extends State<MemorizationScreen>
         print(
             "On record decibles: $decibelVolume Silent duration: $silentDuration");
       });
-      setState(() {
-        _isRecording = true;
-      });
       print("Recording started...");
     } catch (e) {
+      setState(() {
+        _isRecording = false;
+      });
       print("Error starting recording: $e");
     }
   }
@@ -334,6 +337,9 @@ class _QuranScreenState extends State<MemorizationScreen>
   }
 
   Future<void> _stopRecording() async {
+    setState(() {
+      _isRecording = false;
+    });
     try {
       _recordStream?.cancel();
       _recordStream = null;
@@ -354,7 +360,6 @@ class _QuranScreenState extends State<MemorizationScreen>
         }
 
         setState(() {
-          _isRecording = false;
           _recordingPath = path!;
         });
         print("Recording stopped and saved at $path");
@@ -547,63 +552,70 @@ class _QuranScreenState extends State<MemorizationScreen>
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           const SizedBox(width: 16),
-                          BlocBuilder<QuranBloc, QuranState>(
+                          BlocBuilder<MemorizationCubit,
+                              MemorizationState>(
                             builder: (context, state) {
-                              return InkWell(
-                                onTap: () async {
-                                  audioPlayerEffect?.playButton();
-
-                                  if (_memorizationCubit.state
-                                      is MemorizationLoading) return;
-
-                                  if (_isRecording) {
-                                    await _stopRecording();
-                                    print(
-                                        "Recording stopped and saved at $_recordingPath");
-                                  } else {
-                                    await _startRecording();
-                                    print("Recording started...");
-                                  }
-                                },
-                                child: BlocBuilder<MemorizationCubit,
-                                    MemorizationState>(
-                                  builder: (context, state) {
-                                    if (state is MemorizationLoading) {
-                                      return NormalButton(
-                                        onTap: () {},
-                                        imageAsset: null,
-                                        height: context.isTablet() ? 80 : 64,
-                                        width: context.isTablet() ? 80 : 64,
-                                        child: CircularProgressIndicator(),
-                                      );
-                                    } else if (state is MemorizationDone) {
-                                      return ButtonScalable(
-                                          height: context.isTablet() ? 64 : 45,
-                                          width: context.isTablet() ? 341 : 240,
-                                          child: Text(
-                                            _localization.back_to_home,
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: context.isTablet()
-                                                    ? 18
-                                                    : 16),
-                                          ),
-                                          onTap: () {
-                                            Navigator.of(context).pop();
-                                          });
+                              if (state is MemorizationLoading) {
+                                return NormalButton(
+                                  onTap: () {},
+                                  imageAsset: null,
+                                  height: context.isTablet() ? 80 : 64,
+                                  width: context.isTablet() ? 80 : 64,
+                                  child: Center(
+                                    child: SizedBox(height: 32, width: 32, child: CircularProgressIndicator(),),
+                                  ),
+                                );
+                              } else if (state is MemorizationDone) {
+                                return ButtonScalable(
+                                    height: context.isTablet() ? 64 : 45,
+                                    width: context.isTablet() ? 341 : 240,
+                                    child: Text(
+                                      _localization.back_to_home,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: context.isTablet()
+                                              ? 18
+                                              : 16),
+                                    ),
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                    });
+                              } else {
+                                return NormalButton(
+                                  onTap: () async {
+                                    audioPlayerEffect?.playButton();
+                          
+                                    if (_memorizationCubit.state
+                                        is MemorizationLoading) return;
+                          
+                                    if (_isRecording) {
+                                      await _stopRecording();
+                                      print(
+                                          "Recording stopped and saved at $_recordingPath");
                                     } else {
-                                      return Image.asset(
-                                        _isRecording
-                                            ? Assets.btnRecordClicked
-                                            : Assets.btnRecord,
-                                        width: context.isTablet() ? 80 : 64,
-                                        height: context.isTablet() ? 80 : 64,
-                                      );
+                                      await _startRecording();
+                                      print("Recording started...");
                                     }
                                   },
-                                ),
-                              );
+                                  isEnabled: !_isRecording,
+                                  imageAsset: null,
+                                  height: context.isTablet() ? 80 : 64,
+                                  width: context.isTablet() ? 80 : 64,
+                                  child: Icon(
+                                    Icons.mic,
+                                    color: Colors.white,
+                                    size: 32,
+                                  ),
+                                );
+                                return Image.asset(
+                                  _isRecording
+                                      ? Assets.btnRecordClicked
+                                      : Assets.btnRecord,
+                                  width: context.isTablet() ? 80 : 64,
+                                  height: context.isTablet() ? 80 : 64,
+                                );
+                              }
                             },
                           ),
                         ],

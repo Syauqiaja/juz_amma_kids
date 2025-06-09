@@ -11,6 +11,7 @@ class NormalButton extends StatefulWidget {
   final EdgeInsets padding;
   final String frameAsset;
   final String frameClickedAsset;
+  final bool isEnabled;
 
   const NormalButton({
     super.key,
@@ -22,6 +23,7 @@ class NormalButton extends StatefulWidget {
     required this.imageAsset,
     this.padding = const EdgeInsets.all(13),
     this.child,
+    this.isEnabled = true,
   });
 
   @override
@@ -44,7 +46,9 @@ class _NormalButtonState extends State<NormalButton> {
         setState(() {
           _isClicked = false;
         });
-        widget.onTap();
+        if(widget.isEnabled){
+          widget.onTap();
+        }
       },
       onTapCancel: () {
         setState(() {
@@ -54,7 +58,7 @@ class _NormalButtonState extends State<NormalButton> {
       child: Stack(
         children: [
           Image.asset(
-            _isClicked
+            _isClicked || !widget.isEnabled
                 ? (widget.frameClickedAsset == ""
                     ? Assets.btnClicked
                     : widget.frameClickedAsset)

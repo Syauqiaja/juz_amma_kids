@@ -90,8 +90,8 @@ class _SelectDisplayModeState extends State<SelectDisplayMode>
                               mainAxisAlignment: MainAxisAlignment.center,
                               textDirection: TextDirection.ltr,
                               children: [
-                                Image.asset(Assets.title, height: 72,),
-                                const SizedBox(height: 64),
+                                Image.asset(Assets.title, height: 150,),
+                                const SizedBox(height: 48),
                                 ButtonScalable(child: Text(_localization.start, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),), onTap: (){
                                     Navigator.of(context)
                                         .pushNamed(AppRoutes.selectSurahList);
