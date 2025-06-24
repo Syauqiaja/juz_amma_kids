@@ -8,7 +8,7 @@ class SurahWord extends Equatable{
   final int line;
   final String word;
 
-  SurahWord({required this.id, required this.page, required this.sora, required this.aya, required this.line, required this.word});
+  const SurahWord({required this.id, required this.page, required this.sora, required this.aya, required this.line, required this.word});
 
   // Factory constructor to create Surah from JSON
   factory SurahWord.fromJson(Map<String, dynamic> json) {

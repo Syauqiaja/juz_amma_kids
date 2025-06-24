@@ -9,7 +9,7 @@ sealed class MushafState extends Equatable {
 }
 
 final class MushafStarted extends MushafState{
-  MushafStarted(super.selectedAyahIndex);
+  const MushafStarted(super.selectedAyahIndex);
 
   @override
   List<Object> get props => [selectedAyahIndex];

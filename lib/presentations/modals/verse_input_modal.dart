@@ -10,7 +10,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class VerseInputModal extends StatefulWidget {
   final int surahIndex;
-  VerseInputModal(this.surahIndex);
+  const VerseInputModal(this.surahIndex, {super.key});
 
   @override
   _VerseInputModalState createState() => _VerseInputModalState();
@@ -136,7 +136,7 @@ class _VerseInputModalState extends State<VerseInputModal> with SingleTickerProv
       ),
       content: SizedBox(
         height: 500,
-        child: Container(
+        child: SizedBox(
           width: 500,
           child: Column(
             mainAxisSize: MainAxisSize.min,

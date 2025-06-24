@@ -9,10 +9,10 @@ sealed class LocalizationState extends Equatable {
 }
 
 final class LocalizationInitial extends LocalizationState {
-  LocalizationInitial(super.locale);
+  const LocalizationInitial(super.locale);
 }
 final class LocalizationLoaded extends LocalizationState{
-  LocalizationLoaded(super.locale);
+  const LocalizationLoaded(super.locale);
   
   @override
   List<Object> get props => [super.locale];

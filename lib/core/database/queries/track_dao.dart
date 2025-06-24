@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:drift/drift.dart';
 import 'package:juz_amma_kids/core/database/app_database/app_database.dart';
 import 'package:juz_amma_kids/core/database/model/track_local_dto.dart';
-import 'package:juz_amma_kids/core/database/queries/surah_dao.dart';
-import 'package:juz_amma_kids/core/database/quran_database/quran_database.dart';
 import 'package:juz_amma_kids/core/database/tables/table_tracks.dart';
 import 'package:juz_amma_kids/core/model/surah.dart';
 

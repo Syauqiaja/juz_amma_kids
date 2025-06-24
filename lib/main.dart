@@ -12,7 +12,6 @@ import 'package:juz_amma_kids/presentations/features/menu/bloc/localization_bloc
 import 'package:juz_amma_kids/presentations/features/quran/recitation/cubit/star_cubit.dart';
 import 'package:juz_amma_kids/presentations/features/select_display_mode/select_display_mode.dart';
 import 'package:juz_amma_kids/presentations/features/select_surah/cubit/select_sora_cubit.dart';
-import 'package:juz_amma_kids/route/app_routes.dart';
 import 'package:juz_amma_kids/route/route_generator.dart';
 import 'package:juz_amma_kids/utils/user_prefs.dart';
 import 'package:logger/logger.dart';

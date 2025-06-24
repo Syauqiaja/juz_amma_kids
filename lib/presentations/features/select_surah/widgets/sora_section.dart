@@ -33,10 +33,11 @@ class _SoraSectionState extends State<SoraSection> {
 
   void refreshPageAfterDelay() {
     Future.delayed(Duration(milliseconds: 200), () {
-      if (widgetWidth != 0)
+      if (widgetWidth != 0) {
         setState(() {
           // Rebuild the widget tree
         });
+      }
     });
   }
 
@@ -96,6 +97,8 @@ class _SoraSectionState extends State<SoraSection> {
                       child: Stack(
                     children: SoraNamesConstant.buttonCoordinates[widget.section]!
                         .mapIndexed((index, e) => Positioned(
+                              left: gridSize * (e['x']! - 1) - 2 + gridPadding,
+                              bottom: gridPadding + widget.bottomPadding + gridSize * (e["y"]! - 1),
                               child: SurahButton(
                                 size: buttonSize * 0.95,
                                 buttonState: SurahButtonState.star0,
@@ -117,15 +120,13 @@ class _SoraSectionState extends State<SoraSection> {
                                 type: e["type"]!,
                                 textColor: Color(e['color']!),
                               ),
-                              left: gridSize * (e['x']! - 1) - 2 + gridPadding,
-                              bottom: gridPadding + widget.bottomPadding + gridSize * (e["y"]! - 1),
                             ))
                         .toList(),
                   ));
                 },
               )
             : Center(
-                child: Container(
+                child: SizedBox(
                   width: 32,
                   height: 32,
                   child: CircularProgressIndicator(),

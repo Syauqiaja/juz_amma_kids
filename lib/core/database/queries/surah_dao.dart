@@ -1,5 +1,4 @@
 import 'package:drift/drift.dart';
-import 'package:http/http.dart';
 import 'package:juz_amma_kids/core/database/app_database/app_database.dart';
 import 'package:juz_amma_kids/core/database/queries/track_dao.dart';
 import 'package:juz_amma_kids/core/model/surah.dart';

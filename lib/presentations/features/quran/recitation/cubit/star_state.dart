@@ -9,30 +9,26 @@ sealed class StarState extends Equatable {
 }
 
 final class StarInitial extends StarState {
-  StarInitial(super.star);
+  const StarInitial(super.star);
 
-  @override
-  List<Object> get props => super.props;
 }
 
 final class StarChanged extends StarState{
-  StarChanged(super.star);
+  const StarChanged(super.star);
 
-  @override
-  List<Object> get props => super.props;
 }
 
 final class StarSaved extends StarState{
   final int maxStar;
 
-  StarSaved(super.star, {required this.maxStar});
+  const StarSaved(super.star, {required this.maxStar});
   
   @override
-  List<Object> get props => [super.star, this.maxStar];
+  List<Object> get props => [super.star, maxStar];
 }
 
 final class StarLoaded extends StarState{
-  StarLoaded(super.star);
+  const StarLoaded(super.star);
 
   @override
   List<Object> get props => [super.star];

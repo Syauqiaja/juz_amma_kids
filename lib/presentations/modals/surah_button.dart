@@ -53,7 +53,7 @@ class _SurahButtonState extends State<SurahButton> {
           });
         },
         curve: Curves.easeInBack,
-        child: Container(
+        child: SizedBox(
           width: widget.size,
           height: widget.size,
           child: Stack(

@@ -13,7 +13,7 @@ part 'memorization_state.dart';
 class MemorizationCubit extends Cubit<MemorizationState> {
   MemorizationCubit() : super(MemorizationInitial());
 
-  DatabaseService _databaseService = DatabaseService();
+  final DatabaseService _databaseService = DatabaseService();
 
   late int currentAya;
   late List<int> ayahs;
@@ -22,7 +22,7 @@ class MemorizationCubit extends Cubit<MemorizationState> {
   late Surah surah;
 
   init(Surah lesson) async {
-    this.surah = lesson;
+    surah = lesson;
     ayahs = lesson.words.map((e) => e.aya).toSet().toList();
     currentAya = ayahs.first;
   }
@@ -146,10 +146,10 @@ class MemorizationCubit extends Cubit<MemorizationState> {
       List<bool> allWords =
           surah.words.where((e) => e.aya == aya).map((e) => false).toList();
       allWords.removeAt(0);
-      words.forEach((e) {
+      for (var e in words) {
         allWords[(e['index'] as int) - 1] = e["status"] == "correct";
         print(allWords[(e['index'] as int) - 1]);
-      });
+      }
 
       recognizedWords[aya] = allWords;
       print(allWords);

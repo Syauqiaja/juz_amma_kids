@@ -12,7 +12,7 @@ final class ReadQuranWithData extends ReadQuranState{
   final int readCount;
   final int maxRead;
 
-  ReadQuranWithData({required this.readCount, required this.maxRead}); 
+  const ReadQuranWithData({required this.readCount, required this.maxRead}); 
 
   @override
   List<Object> get props => [readCount, maxRead]; 
@@ -20,5 +20,5 @@ final class ReadQuranWithData extends ReadQuranState{
 final class ReadQuranError extends ReadQuranState {
   final String message;
 
-  ReadQuranError({required this.message});
+  const ReadQuranError({required this.message});
 }

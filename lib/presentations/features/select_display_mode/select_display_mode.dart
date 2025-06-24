@@ -1,15 +1,7 @@
-import 'package:flutter/animation.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:juz_amma_kids/locator/assets.dart';
-import 'package:juz_amma_kids/presentations/features/select_display_mode/widgets/hole_painter.dart';
-import 'package:juz_amma_kids/presentations/features/select_display_mode/widgets/settings_dialog.dart';
 import 'package:juz_amma_kids/presentations/modals/button_scalable.dart';
-import 'package:juz_amma_kids/presentations/modals/frame_panel.dart';
 import 'package:juz_amma_kids/route/app_routes.dart';
 import 'package:juz_amma_kids/theme/quranic_theme.dart';
 import 'package:juz_amma_kids/utils/context_ext.dart';
@@ -23,10 +15,7 @@ class SelectDisplayMode extends StatefulWidget {
 
 class _SelectDisplayModeState extends State<SelectDisplayMode>
     with SingleTickerProviderStateMixin {
-  Size _size = Size.zero;
   late AnimationController _animationController;
-  late Animation<double> _splashAnimation =
-      Tween<double>(begin: 0, end: 10).animate(_animationController);
   bool isPlayAnimation = false;
 
   late AppLocalizations _localization;
@@ -47,7 +36,6 @@ class _SelectDisplayModeState extends State<SelectDisplayMode>
 
   @override
   void didChangeDependencies() {
-    _size = MediaQuery.of(context).size;
     super.didChangeDependencies();
   }
 
@@ -55,7 +43,6 @@ class _SelectDisplayModeState extends State<SelectDisplayMode>
   Widget build(BuildContext context) {
     _localization = AppLocalizations.of(context)!;
     isLargeScreen = MediaQuery.of(context).size.height > 650;
-    print("Is larege screen : $isLargeScreen");
     return Scaffold(
       body: Stack(
         children: [

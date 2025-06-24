@@ -8,18 +8,14 @@ import 'package:juz_amma_kids/core/model/surah.dart';
 import 'package:juz_amma_kids/core/model/surah_word.dart';
 import 'package:juz_amma_kids/core/services/database_service.dart';
 import 'package:juz_amma_kids/core/services/resource_loader.dart';
-import 'package:juz_amma_kids/global/z-global.dart';
 import 'package:juz_amma_kids/locator/assets.dart';
 import 'package:juz_amma_kids/main.dart';
 import 'package:juz_amma_kids/presentations/features/quran/recitation/cubit/read_quran_cubit.dart';
 import 'package:juz_amma_kids/presentations/features/quran/widgets/cubit/mushaf_cubit.dart';
 import 'package:juz_amma_kids/presentations/features/quran/widgets/mushaf_box.dart';
-import 'package:juz_amma_kids/presentations/features/select_display_mode/widgets/hole_painter.dart';
 import 'package:juz_amma_kids/presentations/features/select_surah/cubit/select_sora_cubit.dart';
-import 'package:juz_amma_kids/presentations/modals/frame_panel.dart';
 import 'package:juz_amma_kids/presentations/modals/normal_button.dart';
 import 'package:juz_amma_kids/presentations/modals/repeat_settings_modal.dart';
-import 'package:juz_amma_kids/presentations/modals/verse_input_modal.dart';
 import 'package:juz_amma_kids/theme/quranic_theme.dart';
 import 'package:juz_amma_kids/utils/audio_player_ext.dart';
 import 'package:juz_amma_kids/utils/context_ext.dart';
@@ -44,21 +40,17 @@ class _QuranScreenState extends State<QuranScreen>
   late AppLocalizations _localization;
   Size _size = Size.zero;
 
-  late Future<BorderImages> _borderImagesFuture;
   FlutterSoundPlayer? _audioPlayer =
       FlutterSoundPlayer(); // Initialize FlutterSoundPlayer
   FlutterSoundPlayer? _audioPlayerEffect = FlutterSoundPlayer();
   int repeatCountdown = 0;
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   late Future<List<SurahWord>> disabledWords;
 
   bool dropdownClicked = false;
   GlobalKey dropdownKey = GlobalKey(debugLabel: "dropdown_select_ayah");
 
   late AnimationController _animationController;
-  late Animation<double> _splashAnimation =
-      Tween<double>(begin: 0, end: 10).animate(_animationController);
-  bool isPlayAnimation = false;
 
   @override
   void initState() {
@@ -71,8 +63,6 @@ class _QuranScreenState extends State<QuranScreen>
     initAudio();
 
     _readQuranCubit.init();
-
-    _borderImagesFuture = Globals.loadBorderImages(); // Load the borders
 
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
@@ -119,14 +109,6 @@ class _QuranScreenState extends State<QuranScreen>
     _audioPlayerEffect?.closePlayer();
   }
 
-  /// Convert Capcut style timelapse, into universal millis
-  int _getMillisFromTimelapse(String timelapse) {
-    List<String> time = timelapse.split(":");
-    int second = int.parse(time[0]);
-    int millis = int.parse(time[1]);
-
-    return ((second * 1000) + (millis * 33));
-  }
 
   Future<void> _handleAyahCompletion() async {
     if (!_quranBloc.isRepeating) {
@@ -188,14 +170,6 @@ class _QuranScreenState extends State<QuranScreen>
         duration: Duration(milliseconds: 200), curve: Curves.easeInOut);
   }
 
-  void _showVerseInputDialog(BuildContext builderContext) {
-    showDialog(
-      context: builderContext,
-      builder: (context) {
-        return VerseInputModal(widget.surah.soraIndex);
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -486,98 +460,6 @@ class _QuranScreenState extends State<QuranScreen>
                                 },
                                 imageAsset: Assets.icTripledots,
                               ),
-                              // GestureDetector(
-                              //   onTapDown: (details) {
-                              //     setState(() {
-                              //       dropdownClicked = true;
-                              //     });
-                              //   },
-                              //   onTapCancel: () {
-                              //     setState(() {
-                              //       dropdownClicked = false;
-                              //     });
-                              //   },
-                              //   onTapUp: (details) {
-                              //     setState(() {
-                              //       dropdownClicked = false;
-                              //     });
-                              //     dropdownKey.currentContext
-                              //         ?.visitChildElements((element) {
-                              //       if (element.widget is Semantics) {
-                              //         element.visitChildElements((element) {
-                              //           if (element.widget is Actions) {
-                              //             element.visitChildElements((element) {
-                              //               Actions.invoke(
-                              //                   element, ActivateIntent());
-                              //             });
-                              //           }
-                              //         });
-                              //       }
-                              //     });
-                              //   },
-                              //   child: Image.asset(
-                              //     dropdownClicked
-                              //         ? Assets.frameWithPrefixClicked
-                              //         : Assets.frameWithPrefix,
-                              //     width: context.isTablet() ? 192 : 150,
-                              //     height: context.isTablet() ? 64 : 50,
-                              //     fit: BoxFit.fill,
-                              //   ),
-                              // ),
-                              // Positioned.fill(
-                              //   child: Padding(
-                              //     padding: context.isTablet()
-                              //         ? const EdgeInsets.only(left: 70, right: 24)
-                              //         : const EdgeInsets.only(left: 55, right: 16),
-                              //     child: BlocBuilder<QuranBloc, QuranState>(
-                              //       buildWhen: (previous, current) =>
-                              //           current is QuranPlaying ||
-                              //           current is QuranIdle ||
-                              //           current is QuranLoading,
-                              //       builder: (context, state) {
-                              //         return DropdownButton(
-                              //           key: dropdownKey,
-                              //           icon: Container(),
-                              //           alignment: Alignment.centerRight,
-                              //           dropdownColor: QuranicTheme.primaryColor,
-                              //           hint: Text(
-                              //             _localization.aya,
-                              //             style: TextStyle(color: Colors.white),
-                              //             textAlign: TextAlign.start,
-                              //           ),
-                              //           value: max(
-                              //               _quranBloc.ayahs.isNotEmpty
-                              //                   ? _quranBloc.ayahs.first
-                              //                   : 0,
-                              //               _quranBloc.selectedAyahIndex),
-                              //           items: _quranBloc.ayahs.map((index) {
-                              //             String displayText = (index == 0)
-                              //                 ? _localization.basmalah
-                              //                 : _localization.aya_index_reversed(
-                              //                     convertToArabicNumbers(index,
-                              //                         locale: _localization.code));
-                              //             return DropdownMenuItem(
-                              //               value: index,
-                              //               child: Text(
-                              //                 displayText,
-                              //                 style: const TextStyle(
-                              //                     color: Colors.white),
-                              //               ),
-                              //             );
-                              //           }).toList(),
-                              //           onTap: () async {
-                              //             await audioPlayerEffect?.playOpenPanel();
-                              //           },
-                              //           onChanged: (int? newValue) {
-                              //             if (newValue != null) {
-                              //               _handleAyahSelection(newValue);
-                              //             }
-                              //           },
-                              //         );
-                              //       },
-                              //     ),
-                              //   ),
-                              // ),
                             ],
                           ),
                         ),
@@ -762,20 +644,6 @@ class _QuranScreenState extends State<QuranScreen>
             ),
           ),
         ),
-        if (isPlayAnimation)
-          Container(
-            height: double.infinity,
-            width: double.infinity,
-            child: AnimatedBuilder(
-                animation: _animationController,
-                builder: (context, child) {
-                  return CustomPaint(
-                    painter: HolePainter(
-                        color: Colors.black,
-                        holeSize: _splashAnimation.value * _size.width),
-                  );
-                }),
-          ),
       ],
     );
   }
@@ -831,14 +699,7 @@ class _QuranScreenState extends State<QuranScreen>
                   },
                   imageAsset: Assets.icHome),
             ),
-            FutureBuilder<BorderImages>(
-              future: _borderImagesFuture,
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return const Center(child: Text('Error loading borders'));
-                } else if (snapshot.hasData) {
-                  // Wrap the Center widget with CustomPaint to paint the borders
-                  return Center(
+            Center(
                     child: Stack(
                       children: [
                         Positioned.fill(
@@ -868,12 +729,7 @@ class _QuranScreenState extends State<QuranScreen>
                         ),
                       ],
                     ),
-                  );
-                } else {
-                  return const SizedBox.shrink();
-                }
-              },
-            ),
+                  ),
             Positioned(
               bottom: context.isTablet() ? 24 : 0,
               left: 0,
@@ -1125,89 +981,6 @@ class _QuranScreenState extends State<QuranScreen>
                 },
               ),
             ),
-            // Positioned(
-            //   bottom: -20,
-            //   right: 80,
-            //   child: BlocBuilder<AuthBoyCubit, AuthBoyState>(
-            //     builder: (context, state) {
-            //       return GestureDetector(
-            //         onTap: () async {
-            //           await audioPlayerEffect?.playOpenPanel();
-            //           if (state is AuthBoyWithSession) {
-            //             Navigator.of(context).pushNamed(
-            //                 AppRoutes.memorization,
-            //                 arguments: widget.lesson);
-            //           } else {
-            //             SystemChrome.setPreferredOrientations([
-            //               DeviceOrientation.portraitDown,
-            //               DeviceOrientation.portraitUp,
-            //             ]);
-            //             Navigator.of(context)
-            //                 .pushNamed(AppRoutes.loginStudents)
-            //                 .then((_) {
-            //               SystemChrome.setPreferredOrientations([
-            //                 DeviceOrientation.landscapeRight,
-            //                 DeviceOrientation.landscapeLeft,
-            //               ]);
-            //             });
-            //           }
-            //         },
-            //         child: Stack(
-            //           alignment: Alignment.center,
-            //           children: [
-            //             // Star image
-            //             Container(
-            //               width: 100,
-            //               height: 100,
-            //               decoration: BoxDecoration(
-            //                 image: DecorationImage(
-            //                   image: AssetImage(themeCubit.theme.bintang),
-            //                   fit: BoxFit.contain,
-            //                 ),
-            //               ),
-            //             ),
-            //             // Progress bar positioned below the star image
-            //             Positioned(
-            //               bottom: 42.5,
-            //               right: 12.5,
-            //               child: Container(
-            //                 width: 60,
-            //                 height: 15,
-            //                 child: BlocBuilder<StarCubit, StarState>(
-            //                   buildWhen: (_, current) =>
-            //                       current is StarSaved ||
-            //                       current is StarLoaded,
-            //                   builder: (context, state) {
-            //                     double memorizationProgress = 0;
-            //                     if (state is StarSaved) {
-            //                       memorizationProgress =
-            //                           state.star.toDouble() /
-            //                               state.maxStar.toDouble();
-            //                     }
-            //                     return FractionallySizedBox(
-            //                       widthFactor: memorizationProgress.clamp(0.0,
-            //                           1.0), // Use the memorization progress as the width factor
-            //                       alignment: Alignment
-            //                           .centerLeft, // Fill from left to right
-            //                       child: Container(
-            //                         decoration: BoxDecoration(
-            //                           color: Colors
-            //                               .yellow, // Color of the progress
-            //                           borderRadius: BorderRadius.circular(
-            //                               4), // Match the corner radius
-            //                         ),
-            //                       ),
-            //                     );
-            //                   },
-            //                 ),
-            //               ),
-            //             ),
-            //           ],
-            //         ),
-            //       );
-            //     },
-            //   ),
-            // ),
           ],
         ),
       ),

@@ -4,17 +4,17 @@ import 'package:juz_amma_kids/locator/assets.dart';
 
 extension AudioPlayerExt on FlutterSoundPlayer {
   playButton() async {
-    await this.startPlayer(
+    await startPlayer(
         fromDataBuffer:
             await ResourceLoader.getFromAsset(Assets.audioAssets.button));
   }
   playOpenPanel() async {
-    await this.startPlayer(fromDataBuffer: await ResourceLoader.getFromAsset(Assets.audioAssets.openPanel));
+    await startPlayer(fromDataBuffer: await ResourceLoader.getFromAsset(Assets.audioAssets.openPanel));
   }
   playClosePanel() async {
-    await this.startPlayer(fromDataBuffer: await ResourceLoader.getFromAsset(Assets.audioAssets.closePanel));
+    await startPlayer(fromDataBuffer: await ResourceLoader.getFromAsset(Assets.audioAssets.closePanel));
   }
   playError() async {
-    await this.startPlayer(fromDataBuffer: await ResourceLoader.getFromAsset(Assets.audioAssets.negative));
+    await startPlayer(fromDataBuffer: await ResourceLoader.getFromAsset(Assets.audioAssets.negative));
   }
 }

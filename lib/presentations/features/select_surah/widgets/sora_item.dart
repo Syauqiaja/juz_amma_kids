@@ -1,19 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:juz_amma_kids/core/model/surah.dart';
-import 'package:juz_amma_kids/core/model/memorization_model.dart';
 import 'package:juz_amma_kids/locator/assets.dart';
-import 'package:juz_amma_kids/main.dart';
 import 'package:juz_amma_kids/presentations/features/select_surah/cubit/select_sora_cubit.dart';
 import 'package:juz_amma_kids/presentations/modals/button_scalable.dart';
-import 'package:juz_amma_kids/route/app_routes.dart';
-import 'package:juz_amma_kids/utils/audio_player_ext.dart';
 import 'package:juz_amma_kids/utils/context_ext.dart';
 import 'package:juz_amma_kids/utils/utilities.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -36,11 +29,9 @@ class SoraItem extends StatefulWidget {
 }
 
 class _SoraItemState extends State<SoraItem> {
-  late SelectSoraCubit _selectSoraCubit;
   late AppLocalizations _localization;
   @override
   void initState() {
-    _selectSoraCubit = context.read<SelectSoraCubit>();
     super.initState();
   }
 

@@ -12,5 +12,5 @@ final class LoadLocalization extends LocalizationEvent{}
 final class SaveLocalization extends LocalizationEvent{
   final LanguageEntity language;
 
-  SaveLocalization({required this.language});
+  const SaveLocalization({required this.language});
 }

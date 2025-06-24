@@ -5,6 +5,8 @@ import 'package:juz_amma_kids/presentations/features/select_surah/widgets/sora_s
 import 'package:loader_overlay/loader_overlay.dart';
 
 class SurahMenuPage extends StatefulWidget {
+  const SurahMenuPage({super.key});
+
   @override
   _SurahMenuPageState createState() => _SurahMenuPageState();
 }
@@ -12,7 +14,6 @@ class SurahMenuPage extends StatefulWidget {
 class _SurahMenuPageState extends State<SurahMenuPage> {
   late SelectSoraCubit _selectSoraCubit;
 
-  ScrollController _scrollController = ScrollController();
   final List<int> years = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   final List<double> sectionsBottomPadding = [4, -24, 40, 0, 40, 32, 40, 40, 40, 40, 40, 16];
 

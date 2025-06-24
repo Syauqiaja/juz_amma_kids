@@ -8,7 +8,6 @@ import 'package:juz_amma_kids/main.dart';
 import 'package:juz_amma_kids/presentations/features/select_surah/cubit/select_sora_cubit.dart';
 import 'package:juz_amma_kids/presentations/modals/frame_panel.dart';
 import 'package:juz_amma_kids/presentations/modals/frame_title.dart';
-import 'package:juz_amma_kids/presentations/modals/normal_button.dart';
 import 'package:juz_amma_kids/route/app_routes.dart';
 import 'package:juz_amma_kids/theme/quranic_theme.dart';
 import 'package:juz_amma_kids/utils/audio_player_ext.dart';

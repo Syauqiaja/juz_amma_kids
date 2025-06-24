@@ -12,7 +12,7 @@ final class SelectSoraLoading extends SelectSoraState {}
 final class SelectSoraError extends SelectSoraState{
   final String message;
 
-  SelectSoraError({required this.message});
+  const SelectSoraError({required this.message});
 }
 final class SelectSoraWithData extends SelectSoraState{
   final List<Surah> surahs;

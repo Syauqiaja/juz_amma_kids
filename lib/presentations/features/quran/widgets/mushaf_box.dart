@@ -8,7 +8,6 @@ import 'package:juz_amma_kids/locator/assets.dart';
 import 'package:juz_amma_kids/presentations/features/quran/bloc/quran_bloc.dart';
 import 'package:juz_amma_kids/presentations/features/quran/recitation/cubit/read_quran_cubit.dart';
 import 'package:juz_amma_kids/presentations/features/quran/widgets/cubit/mushaf_cubit.dart';
-import 'package:juz_amma_kids/presentations/features/select_surah/cubit/select_sora_cubit.dart';
 import 'package:juz_amma_kids/theme/quranic_theme.dart';
 import 'package:juz_amma_kids/utils/context_ext.dart';
 import 'package:sizer/sizer.dart';
@@ -17,7 +16,7 @@ class MushafBox extends StatefulWidget {
   final ScrollController scrollController;
   final Surah surah;
   final List<SurahWord> disabledWords;
-  MushafBox(
+  const MushafBox(
       {super.key,
       required this.scrollController,
       required this.surah,
@@ -34,9 +33,8 @@ class _MushafBoxState extends State<MushafBox> {
 
   List<Widget> _buildAyahSpans(int selectedAyahIndex) {
     List<Widget> widgets = [];
-    int ayahIndex = _quranBloc.surahWords.first.aya;
     int lineIndex = _quranBloc.surahWords.first.line;
-    List<InlineSpan> _line = [];
+    List<InlineSpan> line = [];
 
     List<SurahWord> words = widget.surah.words;
     if (widget.disabledWords.isNotEmpty &&
@@ -44,13 +42,13 @@ class _MushafBoxState extends State<MushafBox> {
       words.insertAll(0, widget.disabledWords);
     }
 
-    words.forEach((word) {
+    for (var word in words) {
       if (word.line != lineIndex) {
         lineIndex++;
         widgets.add(Text.rich(TextSpan(
-          children: [..._line],
+          children: [...line],
         )));
-        _line.clear();
+        line.clear();
       }
 
       BorderRadius border = BorderRadius.all(Radius.zero);
@@ -81,11 +79,11 @@ class _MushafBoxState extends State<MushafBox> {
           ),
         ),
       );
-      _line.insert(0, widgetSpan);
-    });
+      line.insert(0, widgetSpan);
+    }
 
     widgets.add(Text.rich(TextSpan(
-      children: [..._line],
+      children: [...line],
     )));
     return widgets;
   }

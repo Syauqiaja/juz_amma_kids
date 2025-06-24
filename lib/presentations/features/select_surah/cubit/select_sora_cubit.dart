@@ -1,8 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:juz_amma_kids/core/model/surah.dart';
-import 'package:juz_amma_kids/core/model/memorization_model.dart';
 import 'package:juz_amma_kids/core/services/database_service.dart';
 import 'package:juz_amma_kids/utils/ads_handler.dart';
 

@@ -9,10 +9,8 @@ import 'package:juz_amma_kids/main.dart';
 import 'package:juz_amma_kids/presentations/modals/frame_button.dart';
 import 'package:juz_amma_kids/presentations/modals/frame_title.dart';
 import 'package:juz_amma_kids/presentations/modals/normal_button.dart';
-import 'package:juz_amma_kids/theme/quranic_theme.dart';
 import 'package:juz_amma_kids/utils/audio_player_ext.dart';
 import 'package:juz_amma_kids/utils/list_ext.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:juz_amma_kids/utils/utilities.dart';
 
 class RepeatSettingsModal extends StatefulWidget {
@@ -20,8 +18,7 @@ class RepeatSettingsModal extends StatefulWidget {
   final int maxAya;
 
   const RepeatSettingsModal(
-      {Key? key, required this.onSave, required this.maxAya})
-      : super(key: key);
+      {super.key, required this.onSave, required this.maxAya});
 
   @override
   _RepeatSettingsModalState createState() => _RepeatSettingsModalState();
@@ -347,7 +344,7 @@ class _RepeatSettingsModalState extends State<RepeatSettingsModal> {
             top: 0,
             bottom: 0,
             child: Center(
-              child: Container(
+              child: SizedBox(
                 height: 24,
                 width: 24,
                 child: NormalButton(
@@ -378,7 +375,7 @@ class _RepeatSettingsModalState extends State<RepeatSettingsModal> {
             top: 0,
             bottom: 0,
             child: Center(
-              child: Container(
+              child: SizedBox(
                 height: 24,
                 width: 24,
                 child: NormalButton(
@@ -405,7 +402,7 @@ class _RepeatSettingsModalState extends State<RepeatSettingsModal> {
           right: 0,
           child: Center(
             child: number < 4
-                ? Container(
+                ? SizedBox(
                     height: 20,
                     width: 20,
                     child: selectedRepeatCount == number
@@ -422,7 +419,7 @@ class _RepeatSettingsModalState extends State<RepeatSettingsModal> {
                             fit: BoxFit.fill,
                           ),
                   )
-                : Container(
+                : SizedBox(
                     height: 20,
                     width: 20,
                     child: selectedRepeatCount >= number

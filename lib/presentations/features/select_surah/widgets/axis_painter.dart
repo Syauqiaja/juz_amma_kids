@@ -4,7 +4,7 @@ class AxisPainter extends CustomPainter {
   final double gridSize;
   final Color? color;
 
-  AxisPainter(this.gridSize, {this.color = null});
+  AxisPainter(this.gridSize, {this.color});
 
   @override
   void paint(Canvas canvas, Size size) {

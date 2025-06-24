@@ -30,13 +30,13 @@ class _MemorizationMushafBoxState extends State<MemorizationMushafBox> {
   List<Widget> _buildAyahSpans(int selectedAyahIndex) {
     List<Widget> widgets = [];
     int lineIndex = _quranBloc.surahWords.first.line;
-    List<InlineSpan> _line = [];
+    List<InlineSpan> line = [];
 
     List<int> ayas = widget.surah.words.map((e) => e.aya).toSet().toList();
     Map<int, SurahWord> points = {};
-    ayas.forEach((val) {
+    for (var val in ayas) {
       points[val] = widget.surah.words.lastWhere((e) => e.aya == val);
-    });
+    }
 
     int currentWord = 0;
     int currentAya = ayas.first;
@@ -46,16 +46,16 @@ class _MemorizationMushafBoxState extends State<MemorizationMushafBox> {
       words.insertAll(0, widget.disabledWords);
     }
 
-    words.forEach((word) {
+    for (var word in words) {
       if (word.line != lineIndex) {
         lineIndex++;
         widgets.add(Text.rich(TextSpan(
-          children: [..._line],
+          children: [...line],
         )));
-        _line.clear();
+        line.clear();
       }
 
-      bool? isCorrect = null;
+      bool? isCorrect;
       if (word == points[word.aya]) { //Check if current word is aya pointer
         currentWord = 0;
         currentAya++;
@@ -98,11 +98,11 @@ class _MemorizationMushafBoxState extends State<MemorizationMushafBox> {
         ),
       );
 
-      _line.insert(0, widgetSpan);
-    });
+      line.insert(0, widgetSpan);
+    }
 
     widgets.add(Text.rich(TextSpan(
-      children: [..._line],
+      children: [...line],
     )));
     return widgets;
   }

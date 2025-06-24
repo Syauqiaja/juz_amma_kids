@@ -18,7 +18,7 @@ final class QuranPlaying extends QuranState {
   final int? endAya;
   final int? repeatCount;
 
-  QuranPlaying({this.startAya, this.endAya, this.repeatCount});
+  const QuranPlaying({this.startAya, this.endAya, this.repeatCount});
   
   @override
   List<Object?> get props => [startAya];
@@ -27,13 +27,13 @@ final class QuranPlaying extends QuranState {
 final class QuranStopped extends QuranState{
   final int currentAya;
 
-  QuranStopped({required this.currentAya});
+  const QuranStopped({required this.currentAya});
 }
 
 final class QuranPaused extends QuranState {
   final bool isRepeating;
 
-  QuranPaused({required this.isRepeating});
+  const QuranPaused({required this.isRepeating});
 
   @override
   List<Object> get props => [isRepeating];

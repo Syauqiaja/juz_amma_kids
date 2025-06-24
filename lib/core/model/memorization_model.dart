@@ -65,7 +65,7 @@ class MemorizedVerse extends Equatable {
   final String verseNumber;
   final List<MemorizedWord> words;
 
-  MemorizedVerse({
+  const MemorizedVerse({
     required this.status,
     required this.transcription,
     required this.verseNumber,
