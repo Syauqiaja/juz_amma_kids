@@ -19,4 +19,7 @@ class AppRoutes{
   static const String existingStudents  =  "/auth/select/students";
   static const String loginStudents     = "/auth/login/students";
   static const String registerStudents  = "/auth/register/students";
+
+
+  static const String info  = "/info";
 }

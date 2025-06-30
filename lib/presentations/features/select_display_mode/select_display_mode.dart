@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:juz_amma_kids/locator/assets.dart';
+import 'package:juz_amma_kids/presentations/features/info/info_screen.dart';
 import 'package:juz_amma_kids/presentations/modals/button_scalable.dart';
+import 'package:juz_amma_kids/presentations/modals/normal_button.dart';
 import 'package:juz_amma_kids/route/app_routes.dart';
 import 'package:juz_amma_kids/theme/quranic_theme.dart';
 import 'package:juz_amma_kids/utils/context_ext.dart';
@@ -66,29 +68,37 @@ class _SelectDisplayModeState extends State<SelectDisplayMode>
                       const SizedBox(height: 32),
                       Expanded(
                         child: Padding(
-                          padding: context.isTablet() ? EdgeInsets.only(top: 40, bottom: 24, left: 72, right: 72) : isLargeScreen
+                          padding: context.isTablet()
                               ? EdgeInsets.only(
-                                  top: 40,
-                                  bottom: 24,
-                                )
-                              : EdgeInsets.all(0),
+                                  top: 40, bottom: 24, left: 72, right: 72)
+                              : isLargeScreen
+                                  ? EdgeInsets.only(
+                                      top: 40,
+                                      bottom: 24,
+                                    )
+                                  : EdgeInsets.all(0),
                           child: Center(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               textDirection: TextDirection.ltr,
                               children: [
-                                Image.asset(Assets.title, height: 150,),
+                                Image.asset(
+                                  Assets.title,
+                                  height: 150,
+                                ),
                                 const SizedBox(height: 48),
-                                ButtonScalable(child: Text(_localization.start, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),), onTap: (){
-                                    Navigator.of(context)
-                                        .pushNamed(AppRoutes.selectSurahList);
-                                }),
+                                ButtonScalable(
+                                    child: Text(
+                                      _localization.start,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    onTap: () {
+                                      Navigator.of(context)
+                                          .pushNamed(AppRoutes.selectSurahList);
+                                    }),
                                 const SizedBox(height: 16),
-                                // ButtonScalable(child: Text(_localization.settings, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),), onTap: (){
-                                //     showDialog(context: context, builder: (ctx){
-                                //       return SettingsDialog();
-                                //     });
-                                // }),
                               ],
                             ),
                           ),
@@ -96,6 +106,16 @@ class _SelectDisplayModeState extends State<SelectDisplayMode>
                       ),
                       const SizedBox(height: 32),
                     ],
+                  ),
+                  Positioned(
+                    top: 24,
+                    left: 24,
+                    child: NormalButton(
+                        onTap: () {
+                          showDialog(context: context, builder: (context){
+                            return InfoScreen();
+                          }, barrierColor: Colors.black.withAlpha(10));
+                        }, imageAsset: 'assets/images/ic_info.png'),
                   ),
                 ],
               ),

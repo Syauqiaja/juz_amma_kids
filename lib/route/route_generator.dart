@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:juz_amma_kids/core/model/surah.dart';
+import 'package:juz_amma_kids/presentations/features/info/info_screen.dart';
 import 'package:juz_amma_kids/presentations/features/quran/bloc/quran_bloc.dart';
 import 'package:juz_amma_kids/presentations/features/quran/memorization/cubit/memorization_cubit.dart';
 import 'package:juz_amma_kids/presentations/features/quran/memorization/memorization_screen.dart';
@@ -65,7 +66,8 @@ class RouteGenerator {
               child: MemorizationScreen(lesson: arguments),
             ),
             settings: settings);
-
+      case AppRoutes.info:
+        return buildRoute(InfoScreen(), settings: settings);
       default:
         return buildRoute(SurahMenuPage(), settings: settings);
     }
